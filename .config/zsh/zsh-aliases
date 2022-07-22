@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Verbosity
+alias \
+	cp="cp -iv" \
+	mv="mv -iv" \
+	rm="rm -vI" 
+
+# Colorize commands when possible.
+alias \
+	ls="ls -hN --color=auto --group-directories-first" \
+	grep="grep --color=auto" \
+	diff="diff --color=auto"
+
+# Get faster
+alias \
+    zrc="vim $ZDOTDIR/.zshrc" \
+    vimrc="vim ~/.config/nvim/init.vim" \
+    xmhs="vim ~/.xmonad/xmonad.hs" \
+    fin="~/.private/Finanza/fin" \
+    esc="scrcpy -m 1664"                        
+
+# Use neovim for vim if present.
+[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"

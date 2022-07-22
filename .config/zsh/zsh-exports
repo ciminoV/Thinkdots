@@ -1,0 +1,13 @@
+# Add custom script folder to PATH
+export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
+
+# History in cache directory
+HISTSIZE=10000000
+SAVEHIST=10000000
+HISTFILE=~/.cache/zsh/history
+
+# Default programs
+export EDITOR="nvim"
+export TERMINAL="st"
+export BROWSER="firefox"
+export MUSIC="spotify"
