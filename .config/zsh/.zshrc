@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Add custom script folder to PATH
-export PATH="$PATH:${$(find $HOME/.local/bin -type d -printf %p:)%%:}"
-
 # Options
 setopt autocd	# AUtomatically cd into typed directory
 stty stop undef
