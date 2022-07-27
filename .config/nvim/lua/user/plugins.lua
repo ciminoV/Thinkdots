@@ -41,14 +41,30 @@ packer.init {
 -- Install your plugins here
 return packer.startup(function(use)
   -- My plugins here
-  use "wbthomason/packer.nvim"  -- Have packer manage itself
-  use "nvim-lua/popup.nvim"     -- An implementation of the Popup API from vim in Neovim
-  use "nvim-lua/plenary.nvim"   -- Useful lua functions used by lots of plugins
+  use "wbthomason/packer.nvim"          -- Have packer manage itself
+  use "nvim-lua/popup.nvim"             -- An implementation of the Popup API from vim in Neovim
+  use "nvim-lua/plenary.nvim"           -- Useful lua functions used by lots of plugins
 
   -- Syntax
-  use "ap/vim-css-color"        -- CSS color
+  use "lervag/vimtex"                   -- Latex syntax
   use "tpope/vim-surround"
-  use "lervag/vimtex"           -- Latex syntax
+
+  -- Cmp plugins
+  use "hrsh7th/nvim-cmp"                -- The completion plugin
+  use "hrsh7th/cmp-buffer"              -- buffer completions
+  use "hrsh7th/cmp-path"                -- path completions
+  use "hrsh7th/cmp-nvim-lsp"            -- Lsp completion
+  use "hrsh7th/cmp-nvim-lua"            -- Lua completion
+  use "saadparwaiz1/cmp_luasnip"        -- snippet completions
+
+  -- Snippets
+  use "L3MON4D3/LuaSnip"                -- snippet engine
+  use "rafamadriz/friendly-snippets"    -- useful snippets
+
+  -- LSP
+  use "neovim/nvim-lspconfig"           -- enable LSP
+  use "williamboman/nvim-lsp-installer" -- Simple to use language server installer
+  use "RRethy/vim-illuminate"
 
   -- Colorschemes
   use "arcticicestudio/nord-vim"
