@@ -39,8 +39,9 @@ stack init
 # and extra_deps: [] to
 # extra_deps:
 #    - netlink-1.1.1.0
-sed -i 's/#flags: {}/flags:\n  xmobar:\n    all_extensions: true/g' stack.yaml
-sed -i 's/#extra-deps: \[\]/extra-deps:\n    - netlink-1\.1\.1\.0/g' stack.yaml
+sed -i 's/# flags: {}/flags:\n  xmobar:\n    all_extensions: true/g' stack.yaml
+sed -i 's/# extra-deps: \[\]/extra-deps:\n    - netlink-1\.1\.1\.0/g' stack.yaml
+sed -i 's/# system-ghc/system-ghc/g' stack.yaml
 
 stack install
 
