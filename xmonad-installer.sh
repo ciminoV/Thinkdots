@@ -3,7 +3,7 @@
 # XMonad install via stack
 
 # Install some useful packages
-sudo pacman -Sy xorg xorg-xinit dmenu picom nitrogen firefox terminator
+sudo pacman -Sy xorg xorg-xinit dmenu picom nitrogen firefox terminator haskell-x11-xft
 
 # Create default xmonad config file
 mkdir ~/.xmonad
