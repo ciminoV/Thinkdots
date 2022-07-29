@@ -4,8 +4,8 @@ if not status_ok then
 end
 
 configs.setup({
-	ensure_installed = {"bash", "lua", "bibtex", "c", "haskell", "latex", "python", "yaml"},
-	ignore_install = { "" }, -- List of parsers to ignore installing
+	ensure_installed = {"bash", "lua", "bibtex", "c", "haskell", "python", "yaml"},
+	ignore_install = { "latex" }, -- List of parsers to ignore installing
 	highlight = {
 		enable = true, -- false will disable the whole extension
 	},

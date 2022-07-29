@@ -58,3 +58,7 @@ keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
 
 -- NvimTree
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
+
+-- VimTex
+keymap("n", "<leader>v", ":VimtexView<CR>", opts)
+keymap("n", "<leader>c", ":VimtexCompile<CR>", opts)

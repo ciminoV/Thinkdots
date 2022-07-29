@@ -5,7 +5,7 @@ end
 
 local servers = {
   "sumneko_lua",
-  "ltex",
+  "texlab",
 --  "clangd",
 --  "yamlls"
 }
@@ -28,6 +28,11 @@ for _, server in pairs(servers) do
   if server == "sumneko_lua" then
     local sumneko_opts = require "user.lsp.settings.sumneko_lua"
     opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
+  end
+
+  if server == "texlab" then
+    local tex_opts = require "user.lsp.settings.texlab"
+    opts = vim.tbl_deep_extend("force", tex_opts, opts)
   end
 
   lspconfig[server].setup(opts)
