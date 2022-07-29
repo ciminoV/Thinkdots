@@ -1,0 +1,41 @@
+#!/bin/sh
+
+# Toggle play-pause spotify/browser
+# Dependencies: playerctl, dunst
+
+myplayer="spotify"
+mybrowser="librewolf"
+
+# Check whether the selected player is running or not
+isrun() { \
+    running=$(pidof $1)
+    [ -z "$running" ] && exit 0 # Exit if not
+}
+
+spotify() { \
+    status="$(playerctl --player=$myplayer play-pause && playerctl --player=$myplayer status)"
+
+    if [ "$status" = "Paused" ]; then
+        dunstify --urgency=LOW -h string:x-dunst-stack-tag:sstatus "$(playerctl --player=$myplayer metadata --format "{{ title }}: {{ album }} - {{ artist }}" | sed "s/: /\n/")"
+    fi
+}
+
+browser() { \
+    # my current browser is librewolf but playerctl recognize it as firefox
+    if [ "$mybrowser" = "librewolf" ]; then 
+        mybrowser="firefox" 
+    fi
+
+    status="$(playerctl --player=$mybrowser play-pause && playerctl --player=$mybrowser status)"
+
+    if [ "$status" = "Playing" ]; then
+        dunstify --urgency=LOW -h string:x-dunst-stack-tag:sstatus "$(playerctl --player=$mybrowser metadata --format "{{ title }}: {{ artist }}" | sed "s/: /\n/")"
+    fi
+}
+
+
+isrun $1
+case "$1" in
+    "$myplayer") spotify ;;
+    "$mybrowser") browser ;;
+esac

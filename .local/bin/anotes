@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# Backup my lecture notes from an android external device to a local directory.
+# Additionally copy them in a specific directory depending on the subject they're about.
+# Dependencies: adb, dmenu
+
+# Get external device directory, and local directories (source - destination)
+extDir=/sdcard/note
+srcDir=$HOME/Appunti
+dstDir=$HOME/Documents
+
+cd $srcDir || exit 1
+
+# If device is connected check for new/updated files and pull them
+check=$(adb devices | tail -2 | awk '{print $2}')
+if [ "$check" = "device" ]; then
+    adb shell ls "$extDir/*" | sed 's/[^[:print:]]//' > external.files
+    ls -1 -I external.files -I local.files -I update.files . > local.files
+    comm -13 local.files external.files > update.files
+
+    notify-send "Recuperando gli appunti..."
+    while IFS=  read -r q; do
+        dir=$(echo ${q} | sed 's/\.pdf//')
+        adb pull "$extDir/$dir/${q}"
+    done < "$srcDir"/update.files
+fi
+
+# A dmenu prompt to select specific subject notes.
+subject="$(ls -I external.files -I local.files -I update.files . | sed 's/\(.\{2\}\).*/\1/' | uniq | dmenu -i -p "Choose subject")" || exit 1
+dst="$(ls $dstDir | dmenu -i -p "Choose subject folder")" || exit 1
+
+# Find and copy subject notes to selected directory
+find . -iregex "./$subject.*\.pdf" -exec cp -f {} "$dstDir/$dst/Appunti/" \; && notify-send "Appunti di $dst correttamente copiati"

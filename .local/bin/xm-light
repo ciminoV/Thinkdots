@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Output light level formatted for xmobar
+# Dependencies: xbacklight, acpilight
+
+light="$(xbacklight -get)"
+echo "<fn=1></fn> $light%"

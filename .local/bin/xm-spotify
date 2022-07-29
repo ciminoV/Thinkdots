@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Spotify status in xmobar
+# Dependencies: spotify, playerctl 
+
+# Do nothing if spotify is not running
+running=$(pidof spotify)
+if [ -z "$running" ]; then 
+    echo ""
+else
+    status="$(playerctl --player=spotify status)"
+    playing=$(playerctl --player=spotify metadata --format "{{ title }} - {{ artist }}" | sed 's/\-.*\-/-/g' | cut -c 1-60)
+
+    if [ "$status" = "Playing" ]; then
+        ads=$(playerctl --player=spotify metadata album)
+        ([ -z "$ads" ] && pamixer -m) || ([ $(pamixer --get-mute) = "true" ] && pamixer -u)
+        echo "  <fc=#666666>|</fc>  <fn=1>契</fn> $playing"
+    else
+        echo "  <fc=#666666>|</fc>  <fn=1></fn> $playing"
+    fi
+fi

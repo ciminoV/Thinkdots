@@ -1,0 +1,6 @@
+#!/usr/bin/sh
+
+# Time and date
+# Dependencies: dunst
+
+dunstify -h string:x-dunst-stack-tag:date "Day & Time: " "$(date "+%A %d %b %Y - %H:%M")"

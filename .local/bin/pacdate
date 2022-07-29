@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Mirror list update via reflector, pacman packages update and upgrade and finally xmonad rebuild
+# Dependencies: reflector
+
+sudo reflector --country Italy --age 12 --sort rate --save /etc/pacman.d/mirrorlist
+
+sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+sudo pacman -Syu
+
+cd ~/.xmonad
+stack install

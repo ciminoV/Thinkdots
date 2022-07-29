@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# An entire terminal window showing yearly calendar
+# Dependencies: cal
+
+# Call a terminal window and run shell in interactive mode so that it stays opened and in command mode to run cal
+st -t myCal -g=70x34 sh -sic 'cal -my' 
