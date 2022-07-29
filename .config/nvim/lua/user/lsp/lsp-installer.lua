@@ -5,6 +5,7 @@ end
 
 local servers = {
   "sumneko_lua",
+  "ltex",
 --  "clangd",
 --  "yamlls"
 }
