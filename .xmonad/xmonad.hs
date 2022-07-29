@@ -80,7 +80,7 @@ myTerminal = "st"
 myBorderWidth = 1
 myEditor = myTerminal ++ " -e nvim "
 myBrowser = "brave"
-myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=9:antialias=true:hinting=true"
+myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=7:antialias=true:hinting=true"
 
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
@@ -177,25 +177,13 @@ treeselectAction a = TS.treeselectAction a
       , Node (TS.TSNode "Suspend" "Suspend the system" (spawn "systemctl suspend && slock")) []
       ]
 
-  -- Brightness settings
-   , Node (TS.TSNode "Brightness" "Screen brightness adjustment" (return ()))
-       [ Node (TS.TSNode "Bright" "100%" (spawn "sudo xbacklight -set 100")) []
-       , Node (TS.TSNode "Normal" "50%" (spawn "sudo xbacklight -set 50"))  []
-       , Node (TS.TSNode "Dim" "10%" (spawn "sudo xbacklight -set 10"))  []
-       ]
-
-  -- XMonad settings
-   , Node (TS.TSNode "XMonad" "XMonad recompile & restart" (return ()))
-       [ Node (TS.TSNode "Restart" "Restarts XMonad" (spawn "xmonad --restart")) []
-       , Node (TS.TSNode "Recompile" "Recompiles XMonad" (spawn "xmonad --recompile"))  []
-       ]
   -- Config files
    , Node (TS.TSNode "Config files" "Oftenly edited config files" (return ()))
        [ Node (TS.TSNode "XMonad" "xmonad.hs" (spawn (myEditor ++ "$HOME/.xmonad/xmonad.hs"))) []
-       , Node (TS.TSNode "Zsh" ".zshrc" (spawn (myEditor ++ "$HOME/.zshrc")))  []
+       , Node (TS.TSNode "Zsh" ".zshrc" (spawn (myEditor ++ "$HOME/.config/zsh/.zshrc")))  []
        , Node (TS.TSNode "Xinit" ".xinitrc" (spawn (myEditor ++ "$HOME/.xinitrc")))  []
        , Node (TS.TSNode "Xmobar" "xmobarrc" (spawn (myEditor ++ "$HOME/.config/xmobar/xmobarrc")))  []
-       , Node (TS.TSNode "Nvim" "init.vim" (spawn (myEditor ++ "$HOME/.config/nvim/init.vim")))  []
+       , Node (TS.TSNode "Nvim" "init.vim" (spawn (myEditor ++ "$HOME/.config/nvim/init.lua")))  []
        , Node (TS.TSNode "St" "config.h" (spawn (myEditor ++ "$HOME/.config/st/config.h")))  []
        , Node (TS.TSNode "Vifm" "vifmrc" (spawn (myEditor ++ "$HOME/.config/vifm/vifmrc")))  []
        , Node (TS.TSNode "Sxiv" "key-handler" (spawn (myEditor ++ "$HOME/.config/sxiv/exec/key-handler")))  []
@@ -393,9 +381,9 @@ myKeys =
         , ("M-,", prevScreen)                                                   -- Switch focus to prev screen
 
     -- Function keys
-        , ("<F1>", spawn "pamixer -t & $HOME/.local/bin/volumelevel")           -- Mute audio
-        , ("<F2>", spawn "pamixer -u -d 5 & $HOME/.local/bin/volumelevel")      -- Decrease audio level
-        , ("<F3>", spawn "pamixer -u -i 5 & $HOME/.local/bin/volumelevel")      -- Increase audio level
+        , ("<XF86AudioMute>", spawn "pamixer -t & $HOME/.local/bin/volumelevel")           -- Mute audio
+        , ("<XF86AudioLowerVolume>", spawn "pamixer -u -d 5 & $HOME/.local/bin/volumelevel")      -- Decrease audio level
+        , ("<XF86AudioRaiseVolume>", spawn "pamixer -u -i 5 & $HOME/.local/bin/volumelevel")      -- Increase audio level
         , ("<F10>", spawn "$HOME/.local/bin/displayselect")                     -- Select display if any
         , ("<F11>", spawn "sudo xbacklight -dec 5")                             -- Decrease light level 
         , ("<F12>", spawn "sudo xbacklight -inc 5")                             -- Increase light level
