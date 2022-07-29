@@ -13,5 +13,5 @@ cdd(){
 }
 
 se(){
-    vim "$(find $HOME/.dotfiles/.local/bin/ -type f | fzf)"
+    nvim "$(find $HOME/.dots/.local/bin/ -type f | fzf)"
 }
