@@ -6,8 +6,8 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 static char *font = "Hack:style=Regular:pixelsize=22:antialias=true:autohint=true";
-static char *font2[] = { "Symbols Nerd Font:pixelsize=13:antialias=true:autohint=true",
-                         "Font Awesome 5 Brands Regular:pixelsize=12:antialias=true:autohint=true"};
+static char *font2[] = { "Symbols Nerd Font:pixelsize=23:antialias=true:autohint=true",
+                         "Font Awesome 5 Brands Regular:pixelsize=22:antialias=true:autohint=true"};
 static int borderpx = 2;
 
 /*
