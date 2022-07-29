@@ -13,4 +13,4 @@ export BROWSER="firefox"
 export MUSIC="spotify"
 
 # Add ghcup folder to PATH
-export PATH="$PATH:/home/cimino/.ghcup/bin"
+#export PATH="$PATH:/home/cimino/.ghcup/bin"

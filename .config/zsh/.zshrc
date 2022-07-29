@@ -31,7 +31,7 @@ zsh_add_file "zsh-prompt"
 compinit
 
 # Plugins
-zsh_add_plugin "zsh-users/zsh-syntax-highlighting"
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh 2>/dev/null
 
 ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=blue,underline
 ZSH_HIGHLIGHT_STYLES[precommand]=fg=blue,underline
