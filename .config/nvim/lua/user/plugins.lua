@@ -44,6 +44,8 @@ return packer.startup(function(use)
   use "wbthomason/packer.nvim"          -- Have packer manage itself
   use "nvim-lua/popup.nvim"             -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim"           -- Useful lua functions used by lots of plugins
+  use "kyazdani42/nvim-tree.lua"
+  use "nvim-lualine/lualine.nvim"
 
   -- Syntax
   use "lervag/vimtex"                   -- Latex syntax
@@ -65,6 +67,12 @@ return packer.startup(function(use)
   use "neovim/nvim-lspconfig"           -- enable LSP
   use "williamboman/nvim-lsp-installer" -- Simple to use language server installer
   use "RRethy/vim-illuminate"
+
+  -- Telescope
+  use "nvim-telescope/telescope.nvim"
+
+  -- Treesitter
+  use "nvim-treesitter/nvim-treesitter"
 
   -- Colorschemes
   use "arcticicestudio/nord-vim"

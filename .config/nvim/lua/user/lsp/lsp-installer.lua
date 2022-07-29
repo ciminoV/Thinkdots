@@ -5,8 +5,9 @@ end
 
 local servers = {
   "sumneko_lua",
-  "hls",
-  "yamlls"
+--  "hls",
+--  "clangd",
+--  "yamlls"
 }
 
 lsp_installer.setup()
