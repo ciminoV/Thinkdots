@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Keyboard layout
-setxkbmap it &
-
 # Default cursor
 xsetroot -cursor_name left_ptr
 
