@@ -10,10 +10,10 @@ Config { font = "xft:Ubuntu:style=Bold:pixelsize=12:antialias=true:hinting=true"
        , allDesktops = True
        , commands = [ 
                 -- Cliclable workspaces
-                    Run UnsafeStdinReader
+                Run UnsafeStdinReader
 
                 -- Time and date
-                    , Run Date " <fc=#82aaff><fn=1></fn> %a %d</fc> <fc=#666666> | </fc> <fc=#c792ea><fn=1></fn> %H:%M</fc>" "date" 600
+               , Run Date " <fc=#82aaff><fn=1></fn> %a %d</fc> <fc=#666666> | </fc> <fc=#c792ea><fn=1></fn> %H:%M</fc>" "date" 600
 
                 -- System volume level
                , Run Alsa "default" "Master" ["-t" , "<fc=#ffcb6b><status> <volume>%</fc>" ,
