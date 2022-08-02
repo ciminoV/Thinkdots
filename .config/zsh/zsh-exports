@@ -9,8 +9,13 @@ HISTFILE=~/.cache/zsh/history
 # Default programs
 export EDITOR="nvim"
 export TERMINAL="st"
-export BROWSER="firefox"
+export BROWSER="brave"
 export MUSIC="spotify"
 
-# Add ghcup folder to PATH
-#export PATH="$PATH:/home/cimino/.ghcup/bin"
+# Default directories
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+# MATLAB fix
+export _JAVA_AWT_WM_NONREPARENTING=1
