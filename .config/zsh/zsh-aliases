@@ -15,10 +15,10 @@ alias \
 # Get faster
 alias \
     zrc="vim $ZDOTDIR/.zshrc" \
-    vimrc="vim ~/.config/nvim/init.vim" \
+    vimrc="vim $XDG_CONFIG_HOME/nvim/init.lua" \
     xmhs="vim ~/.xmonad/xmonad.hs" \
+    vifm="$XDG_CONFIG_HOME/vifm/scripts/vifmrun"
     fin="~/.private/Finanza/fin" \
-    esc="scrcpy -m 1664"                        
 
 # Use neovim for vim if present.
 [ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
