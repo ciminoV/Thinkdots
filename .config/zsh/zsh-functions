@@ -9,9 +9,13 @@ doc(){
 }
 
 cdd(){
-    cd "$(find $HOME/ -maxdepth 3 -type d | fzf)" 
+    cd "$(find $HOME/ -maxdepth 5 -type d | fzf)" 
 }
 
 se(){
     nvim "$(find $HOME/.dots/.local/bin/ -type f | fzf)"
+}
+
+conf(){
+    nvim "$(find $HOME/.dots/.config/ -type f | fzf)"
 }
