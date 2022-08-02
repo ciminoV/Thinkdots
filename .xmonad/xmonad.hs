@@ -1,5 +1,5 @@
 ---------------------------
--- Imports
+-- IMPORTS
 ---------------------------
 
 -- Base
@@ -71,7 +71,7 @@ import Control.Arrow (first)
 
 
 ---------------------------
--- Variables
+-- VARIABLES
 ---------------------------
 
 myModMask = mod4Mask
@@ -81,9 +81,6 @@ myBorderWidth = 1
 myEditor = myTerminal ++ " -e nvim "
 myBrowser = "brave"
 myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=7:antialias=true:hinting=true"
-
-windowCount :: X (Maybe String)
-windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 ------------------------------------------------------------------------
 -- Theme
@@ -170,28 +167,10 @@ myWorkspaces = clickable . (map xmobarEscape)
 treeselectAction :: TS.TSConfig (X ()) -> X ()
 treeselectAction a = TS.treeselectAction a
   -- Power settings
-   [Node (TS.TSNode "Power"    "Power options" (return())) 
-      [ Node (TS.TSNode "Shutdown" "Poweroff the system" (spawn "systemctl poweroff")) []
-      , Node (TS.TSNode "Reboot" "Reboot the system" (spawn "systemctl reboot")) []
---      , Node (TS.TSNode "Hibernate" "Hibernate the system" (spawn "systemctl hibernate")) []
-      , Node (TS.TSNode "Suspend" "Suspend the system" (spawn "systemctl suspend && slock")) []
-      ]
-
-  -- Config files
-   , Node (TS.TSNode "Config files" "Oftenly edited config files" (return ()))
-       [ Node (TS.TSNode "XMonad" "xmonad.hs" (spawn (myEditor ++ "$HOME/.xmonad/xmonad.hs"))) []
-       , Node (TS.TSNode "Zsh" ".zshrc" (spawn (myEditor ++ "$HOME/.config/zsh/.zshrc")))  []
-       , Node (TS.TSNode "Xinit" ".xinitrc" (spawn (myEditor ++ "$HOME/.xinitrc")))  []
-       , Node (TS.TSNode "Xmobar" "xmobarrc" (spawn (myEditor ++ "$HOME/.config/xmobar/xmobarrc")))  []
-       , Node (TS.TSNode "Nvim" "init.vim" (spawn (myEditor ++ "$HOME/.config/nvim/init.lua")))  []
-       , Node (TS.TSNode "St" "config.h" (spawn (myEditor ++ "$HOME/.config/st/config.h")))  []
-       , Node (TS.TSNode "Vifm" "vifmrc" (spawn (myEditor ++ "$HOME/.config/vifm/vifmrc")))  []
-       , Node (TS.TSNode "Sxiv" "key-handler" (spawn (myEditor ++ "$HOME/.config/sxiv/exec/key-handler")))  []
-       , Node (TS.TSNode "Zathura" "zathurarc" (spawn (myEditor ++ "$HOME/.config/zathura/zathurarc")))  []
-       , Node (TS.TSNode "Slock" "config.def.h" (spawn (myEditor ++ "$HOME/.config/slock/config.def.h")))  []
-       , Node (TS.TSNode "Dunst" "dunstrc" (spawn (myEditor ++ "$HOME/.config/dunst/dunstrc")))  []
-       ]
-   ]
+  [ Node (TS.TSNode "Suspend" "Suspend the system" (spawn "systemctl suspend && slock")) []
+  , Node (TS.TSNode "Shutdown" "Poweroff the system" (spawn "systemctl poweroff")) []
+  , Node (TS.TSNode "Reboot" "Reboot the system" (spawn "systemctl reboot")) []
+  ]
 
 -- TreeSelect configuration
 tsDefaultConfig :: TS.TSConfig a
@@ -225,7 +204,7 @@ myTreeNavigation = M.fromList
     ]
 
 ------------------------------------------------------------------------
--- XPrompt
+-- XPROMPT
 ------------------------------------------------------------------------
 
 -- XPrompt configuration
@@ -294,22 +273,17 @@ myXPKeymap = M.fromList $
      ]
 
 ------------------------------------------------------------------------
--- Named Scratchpads
+-- NAMED SCRATCHPADS
 ------------------------------------------------------------------------
 
 myScratchPads :: [NamedScratchpad]
 myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm
-                , NS "vifm" spawnVifm findVifm manageVifm
                 , NS "spotify" spawnSpotify findSpotify manageSpotify
                 ]
   where
     spawnTerm  = myTerminal ++ " -t st-scratchpad"
     findTerm   = title =? "st-scratchpad"
     manageTerm = customFloating $ W.RationalRect (0.1)(0.1)(0.8)(0.8)
-
-    spawnVifm  = myTerminal ++ " -t vifm-scratchpad -e ~/.config/vifm/scripts/vifmrun"
-    findVifm   = title =? "vifm-scratchpad"
-    manageVifm = customFloating $ W.RationalRect (0.1)(0.1)(0.8)(0.8)
 
     spawnSpotify  = "spotify"
     findSpotify   = className =? "Spotify"
@@ -340,9 +314,6 @@ myKeys =
 
     -- Floating windows
         , ("M-S-<Space>", withFocused toggleFloat)                              -- Toggle floating window
-        , ("M-C-v", spawn (myTerminal ++ " pulsemixer"))                        -- pulsemixer (onclick volicon)
-        , ("M-C-h", spawn (myTerminal ++ " htop"))                              -- htop (onclick battery)
-        , ("M-C-c", spawn "$HOME/.local/bin/xm-cal")                            -- xm-cal (onclick datetime)
 
     -- Increase/decrease spacing
         , ("M-z", sendMessage MirrorShrink)                                     -- Decrease vertical window space
@@ -381,9 +352,9 @@ myKeys =
         , ("M-,", prevScreen)                                                   -- Switch focus to prev screen
 
     -- Function keys
-        , ("<XF86AudioMute>", spawn "pamixer -t & $HOME/.local/bin/volumelevel")           -- Mute audio
-        , ("<XF86AudioLowerVolume>", spawn "pamixer -u -d 5 & $HOME/.local/bin/volumelevel")      -- Decrease audio level
-        , ("<XF86AudioRaiseVolume>", spawn "pamixer -u -i 5 & $HOME/.local/bin/volumelevel")      -- Increase audio level
+        , ("<F1>", spawn "pamixer -t & $HOME/.local/bin/volumelevel")           -- Mute audio
+        , ("<F2>", spawn "pamixer -u -d 5 & $HOME/.local/bin/volumelevel")      -- Decrease audio level
+        , ("<F3>", spawn "pamixer -u -i 5 & $HOME/.local/bin/volumelevel")      -- Increase audio level
         , ("<F10>", spawn "$HOME/.local/bin/displayselect")                     -- Select display if any
         , ("<F11>", spawn "sudo xbacklight -dec 5")                             -- Decrease light level 
         , ("<F12>", spawn "sudo xbacklight -inc 5")                             -- Increase light level
@@ -415,7 +386,6 @@ myKeys =
 
     -- Scratchpads
         , ("M-S-<Return>", namedScratchpadAction myScratchPads "terminal")      -- St scratchpad
-        , ("M-S-<Backspace>", namedScratchpadAction myScratchPads "vifm")       -- Vifm scratchpad
         , ("M-S-s", namedScratchpadAction myScratchPads "spotify")              -- Spotify scratchpad
 
     -- Tree Select
@@ -474,7 +444,6 @@ myManageHook = composeAll
     -- send them to specific ws
     , className =? "LibreWolf"                          --> doShift ( myWorkspaces !! 1 ) -- Open librewolf on www ws
     , className =? "MATLAB R2021a - academic use"       --> doShift ( myWorkspaces !! 4 ) -- Open matlab on mlb ws
-    , className =? "Microsoft Teams - Preview"          --> doShift ( myWorkspaces !! 5 ) -- Open teams on teams ws
 
     , title =? "pulsemixer"                             --> doCenterFloat                 -- Open pamixer floating
     , title =? "myCal"                                  --> doCenterFloat                 -- Open xm-cal floating
@@ -504,7 +473,7 @@ myStartupHook = do
           spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0 --transparent true --alpha 0 --tint 0x2e3440  --height 22 &"
 
 ------------------------------------------------------------------------
--- XMonad functions: 
+-- XMONAD FUNCTIONS
 ------------------------------------------------------------------------
 
 -- Quit XMonad
@@ -522,7 +491,7 @@ restartXmonad = do
     spawn "xmonad --restart"
 
 ------------------------------------------------------------------------
--- Main:
+-- MAIN
 ------------------------------------------------------------------------
 
 main :: IO ()
@@ -550,7 +519,7 @@ main = do
                         , ppTitle = xmobarColor  myppTitle "" . shorten 60          -- Title of active window in xmobar
                         , ppSep =  "<fc=#666666> | </fc>"                           -- Separators in xmobar
                         , ppUrgent = xmobarColor  myppUrgent "" . wrap "!" "!"      -- Urgent workspace
-                        , ppExtras  = [windowCount]                                 -- # of windows current workspace
+                        , ppExtras  = []
                         , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
                         }
         }`additionalKeysP` myKeys

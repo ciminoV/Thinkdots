@@ -14,8 +14,8 @@ else
     if [ "$status" = "Playing" ]; then
         ads=$(playerctl --player=spotify metadata album)
         ([ -z "$ads" ] && pamixer -m) || ([ $(pamixer --get-mute) = "true" ] && pamixer -u)
-        echo "  <fc=#666666>|</fc>  <fn=1>契</fn> $playing"
+        echo "  <fn=1>契</fn>  $playing "
     else
-        echo "  <fc=#666666>|</fc>  <fn=1></fn> $playing"
+        echo "  <fn=1></fn>  $playing "
     fi
 fi
