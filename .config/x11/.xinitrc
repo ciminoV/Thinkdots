@@ -12,8 +12,5 @@ xrdb -merge ~/.Xresources
 # Dunst fix
 systemctl --user import-environment DISPLAY
 
-# MATLAB fix
-export _JAVA_AWT_WM_NONREPARENTING=1
-
 # Start WM
 exec xmonad
