@@ -1,5 +1,4 @@
-Config { font = "xft:Ubuntu:style=Bold:pixelsize=12:antialias=true:hinting=true"
-       , additionalFonts = [ "xft:Symbols Nerd Font:style=1000-em:pixelsize=13" ]
+Config { font = "xft:Ubuntu Nerd Font:style=Bold:pixelsize=12:antialias=true:hinting=true"
        , borderColor = "#282c34"
        , bgColor = "#2e3440" -- basebg
        , fgColor = "#f07178" -- red0
