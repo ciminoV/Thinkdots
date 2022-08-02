@@ -10,4 +10,4 @@ xsetroot -cursor_name left_ptr
 xset r rate 210 40
 
 # Load .Xresources
-xrdb -merge ~/.Xresources
+xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/x11/.Xresources
