@@ -1,35 +1,16 @@
 #!/bin/sh
+# changeVolume
 
-# Volume progression/mute 
-# Dependencies: Dunst, pamixer
+# Arbitrary but unique message tag
+msgTag="myvolume"
 
-# Volume muted
-[ $(pamixer --get-mute) = "true" ] && dunstify -h string:x-dunst-stack-tag:volume " 婢 Volume disabled" && exit
-
-# Volume level
-vol="$(pamixer --get-volume)"
-if [ "$vol" -gt "70" ]; then
-    icon=""
-elif [ "$vol" -lt "30" ]; then
-    icon=" "
+# Query pamixer for the current volume and whether or not the speaker is muted
+volume="$(pamixer --get-volume)"
+mute="$(pamixer --get-mute)"
+if [[ $volume == 0 || "$mute" == "true" ]]; then
+    # Show the sound muted notification
+    dunstify -a "changeVolume" -u low -i audio-volume-muted -h string:x-dunst-stack-tag:$msgTag "Volume muted" 
 else
-    icon=" "
+    # Show the volume notification
+    dunstify -a "changeVolume" -u low -i audio-volume-high -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume" "Volume: ${volume}%"
 fi
-
-# Volume level bar
-case $vol in
-    0 | 5) bar="▒▒▒▒▒▒▒▒▒▒";;
-    10 | 15) bar="▒▒▒▒▒▒▒▒▒█";;
-    20 | 25) bar="▒▒▒▒▒▒▒▒██";;
-    30 | 35) bar="▒▒▒▒▒▒▒███";;
-    40 | 45) bar="▒▒▒▒▒▒████";;
-    50 | 55) bar="▒▒▒▒▒█████";;
-    60 | 65) bar="▒▒▒▒██████";;
-    70 | 75) bar="▒▒▒███████";;
-    80 | 85) bar="▒▒████████";;
-    90 | 95) bar="▒█████████";;
-    100) bar="██████████";;
-esac
-
-# Notify volume bar and icon with percenteage
-dunstify -h string:x-dunst-stack-tag:volume " $icon  $vol% " " $bar "
