@@ -1,0 +1,21 @@
+# Function to source files if they exist
+function zsh_add_file() {
+    [ -f "$ZDOTDIR/$1" ] && source "$ZDOTDIR/$1"
+}
+
+# Useful fzf functions
+doc(){
+    cd "$(find $HOME/Documents/* -maxdepth 1 -type d | fzf)" && vifm .
+}
+
+cdd(){
+    cd "$(find $HOME/ -maxdepth 5 -type d | fzf)" 
+}
+
+se(){
+    nvim "$(find $HOME/.dots/.local/bin/ -type f | fzf)"
+}
+
+conf(){
+    nvim "$(find $HOME/.dots/.config/ -type f | fzf)"
+}
