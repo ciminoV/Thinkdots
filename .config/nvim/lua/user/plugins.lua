@@ -50,6 +50,7 @@ return packer.startup(function(use)
   -- Syntax
   use "lervag/vimtex"                   -- Latex syntax
   use "tpope/vim-surround"
+  use "norcalli/nvim-colorizer.lua"
 
   -- Cmp plugins
   use "hrsh7th/nvim-cmp"                -- The completion plugin
