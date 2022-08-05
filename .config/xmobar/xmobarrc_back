@@ -1,5 +1,4 @@
-Config { overrideRedirect = False
-       , font = "xft:Ubuntu Nerd Font:style=Bold:pixelsize=12:antialias=true:hinting=true"
+Config { font = "xft:Ubuntu Nerd Font:style=Bold:pixelsize=12:antialias=true:hinting=true"
        , borderColor = "#282c34"
        , bgColor = "#2E3440" -- basebg
        , fgColor = "#D8DEE9"
@@ -10,7 +9,7 @@ Config { overrideRedirect = False
        , allDesktops = True
        , commands = [ 
                 -- Cliclable workspaces
-                Run UnsafeXMonadLog
+                Run UnsafeStdinReader
 
                 -- Time and date
                , Run Date "<fn=1></fn>  %a %d - %H:%M " "date" 600
@@ -58,7 +57,7 @@ Config { overrideRedirect = False
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %UnsafeXMonadLog% }\
+       , template = " %UnsafeStdinReader% }\
              \{ <box type=Bottom width=1 mb=1 color=#ffffff><fc=#ffffff>%locks%</fc></box> \
              \ <box type=Bottom width=1 mb=1 color=#89ddff><fc=#89ddff>%spotify%</fc></box> \
              \ <box type=Bottom width=1 mb=1 color=#B48EAD><action=`st pulsemixer`>%alsa:default:Master%</action></box> \
