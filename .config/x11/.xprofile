@@ -3,6 +3,12 @@
 # Start icon tray
 trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0 --transparent true --alpha 0 --tint 0x2e3440  --height 22 &
 
+# Start Redshift
+redshift-gtk &
+
+# Load .Xresources
+xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/x11/.Xresources
+
 # Set default cursor
 xsetroot -cursor_name left_ptr
 
@@ -17,15 +23,4 @@ picom &
 
 # Start dunst
 dunst &
-
-# Start network-manager applet
-nm-applet &
-
-# Start Redshift
-redshift-gtk &
-
-# Fix Dunst
 systemctl --user import-environment DISPLAY
-
-# Load .Xresources
-xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/x11/.Xresources

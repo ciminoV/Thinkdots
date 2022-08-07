@@ -1,8 +1,7 @@
-Config { overrideRedirect = False
-       , font = "xft:Ubuntu Nerd Font:style=Bold:pixelsize=12:antialias=true:hinting=true"
-       , borderColor = "#282c34"
-       , bgColor = "#2E3440" -- basebg
-       , fgColor = "#D8DEE9"
+Config { overrideRedirect = True
+       , font = "xft:Ubuntu Nerd Font:style=Bold:pixelsize=15:antialias=true:hinting=true"
+       , bgColor = "#2E3440"
+       , fgColor = "#FFFFFF"
        , position = TopSize L 100 24
        , lowerOnStart = True
        , persistent = True
@@ -16,54 +15,46 @@ Config { overrideRedirect = False
                , Run Date "<fn=1></fn>  %a %d - %H:%M " "date" 600
 
                 -- System volume level
-               , Run Alsa "default" "Master" ["-t" , "<fc=#B48EAD><status>  <volume>%</fc> " ,
+               , Run Alsa "default" "Master" ["-t" , "<fc=#C792EA><status>  <volume>%</fc> " ,
                                               "--" , 
                                               "-O" , "", "-o" , "<fn=1>婢</fn>" ,
-                                              "-C" , "#B48EAD", "-c" , "#B48EAD" ,
+                                              "-C" , "#C792EA", "-c" , "#C792EA" ,
                                               "-H" , "70.0", "-L" , "30.0" ,
                                               "-h" , "<fn=1></fn>" ,
                                               "-l" , "<fn=1></fn>" ,
                                               "-m" , "<fn=1></fn>"]
 
-               -- Internal battery status and level
-                    , Run BatteryP ["BAT0"]
-                                   ["-t", "<acstatus>  <left> "
-                                   , "-L", "30", "-H", "50"
-                                   , "-l", "#88C0D0", "-h", "#88C0D0"
-                                   , "--", "-O", "<fn=1></fn>"
-                                   , "-o", "<fn=1></fn>"
-                                   , "--lows", "<fn=1></fn>"
-                                   , "-i", "<fn=1></fn>"
-                                   ] 10
-               -- External battery status and level
-                    , Run BatteryP ["BAT1"]
-                                   ["-t", "<acstatus>  <left> "
-                                   , "-L", "30", "-H", "50"
-                                   , "-l", "#BF616A", "-h", "#BF616A"
-                                   , "--", "-O", "<fn=1></fn>"
-                                   , "-o", "<fn=1></fn>"
-                                   , "--lows", "<fn=1></fn>"
-                                   , "-i", "<fn=1></fn>"
-                                   ] 10
+               -- Battery status and level
+               , Run BatteryP ["BAT1"]
+                 ["-t", "<acstatus>  <left> "
+                 , "-L", "30", "-H", "50"
+                 , "-l", "#89DDFF", "-h", "#89DDFF"
+                 , "--", "-O", "<fn=1></fn>"
+                 , "-o", "<fn=1></fn>"
+                 , "--lows", "<fn=1></fn>"
+                 , "-i", "<fn=1></fn>"
+               ] 10
 
                -- Caps Lock on/off
-                    , Run Locks
+               , Run Locks
+
+               , Run Wireless "wlp3s0" [] 10
 
                -- Spotify status
-                    , Run Com "/home/cimino/.config/xmobar/xm-spotify" [] "spotify" 10
+               , Run Com "/home/cimino/.config/xmobar/xm-spotify" [] "spotify" 10
 
                -- Script that dynamically adjusts xmobar padding depending on number of trayer icons.
-                    , Run Com "/home/cimino/.config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 10
+               , Run Com "/home/cimino/.config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 10
 
-                    ]
+               ]
        , sepChar = "%"
        , alignSep = "}{"
        , template = " %UnsafeXMonadLog% }\
              \{ <box type=Bottom width=1 mb=1 color=#ffffff><fc=#ffffff>%locks%</fc></box> \
+             \ %wlp3s0wi% \
              \ <box type=Bottom width=1 mb=1 color=#89ddff><fc=#89ddff>%spotify%</fc></box> \
-             \ <box type=Bottom width=1 mb=1 color=#B48EAD><action=`st pulsemixer`>%alsa:default:Master%</action></box> \
-             \ <box type=Bottom width=1 mb=1 color=#88C0D0><action=`st htop`>%battery%</action></box> \
-             \ <box type=Bottom width=1 mb=1 color=#BF616A><action=`st htop`>%battery%</action></box> \
-             \ <box type=Bottom width=1 mb=1 color=#A3BE8C><fc=#A3BE8C><action=`st -t myCal -g=70x34 sh -sic 'cal -my'`>%date%</action></fc></box> \
+             \ <box type=Bottom width=1 mb=1 color=#C792EA><action=`st pulsemixer`>%alsa:default:Master%</action></box> \
+             \ <box type=Bottom width=1 mb=1 color=#89DDFF><action=`st htop`>%battery%</action></box> \
+             \ <box type=Bottom width=1 mb=1 color=#C3E88D><fc=#C3E88D><action=`st -t myCal -g=70x34 sh -sic 'cal -my'`>%date%</action></fc></box> \
              \%trayerpad%"
 		     }
