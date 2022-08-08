@@ -38,14 +38,14 @@ Config { overrideRedirect = True
                               ["-t", "<acstatus>  <left> "
                               , "-L", "10", "-H", "50"
                               , "-l", "#BF616A"
-                              , "--" 
+                              , "--", "-O", "<fn=1></fn>"
                               , "-o", "<fn=1></fn>"
                               , "-i", "<fn=1></fn>"
                               ] 50 "BAT0"
 
 
                , Run Wireless "wlp3s0" ["-t", "  <ssid> <quality> "
-                                       , "-x", "None"] 10
+                                       , "-x", "None"] 50
 
                -- Caps Lock on/off
                , Run Locks
