@@ -9,13 +9,18 @@ if [ -z "$running" ]; then
     echo ""
 else
     status="$(playerctl --player=spotify status)"
-    playing=$(playerctl --player=spotify metadata --format "{{ title }} - {{ artist }}" | sed 's/\-.*\-/-/g' | cut -c 1-60)
+    playing=$(playerctl --player=spotify metadata --format "{{ title }} - {{ artist }}" | sed 's/\-.*\-/ ... -/g' | cut -c 1-60)
 
     if [ "$status" = "Playing" ]; then
         ads=$(playerctl --player=spotify metadata album)
-        ([ -z "$ads" ] && pamixer -m) || ([ $(pamixer --get-mute) = "true" ] && pamixer -u)
-        echo "  <fn=1>契</fn>  $playing "
+#        ([ -z "$ads" ] && pamixer -m) || ([ $(pamixer --get-mute) = "true" ] && pamixer -u)
+        tmp="false"
+        ([ -z "$ads" ] && (pamixer -m && tmp="true")) 
+        if [ "$tmp" = "true" ];then
+          ([ $(pamixer --get-mute) = "true" ] && pamixer -u)
+        fi
+        echo "<fn=1>契</fn>  $playing "
     else
-        echo "  <fn=1></fn>  $playing "
+        echo "<fn=1></fn>  $playing "
     fi
 fi

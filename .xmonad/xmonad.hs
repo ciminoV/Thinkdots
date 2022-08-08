@@ -3,20 +3,21 @@
 ------------------------------------------------------------------------
 
 -- Base
-import XMonad hiding ( (|||) )
 import System.IO (hClose, hPutStr)
 import System.Exit (exitSuccess)
+import XMonad hiding ( (|||) )
 import qualified XMonad.StackSet as W
 
 -- Data
-import Data.Char (toUpper)
-import Data.Maybe (isJust)
 import qualified Data.Map as M
+import Data.Char (toUpper, isSpace)
+import Data.Maybe (isJust)
 
 -- Actions
 import XMonad.Actions.CopyWindow (kill1)
 import XMonad.Actions.CycleWS
 import XMonad.Actions.WithAll (sinkAll, killAll)
+import XMonad.Actions.Submap
 
 -- Hooks
 import XMonad.Hooks.DynamicLog
@@ -25,6 +26,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.DynamicProperty
 
 -- Util
 import XMonad.Util.EZConfig
@@ -32,7 +34,8 @@ import XMonad.Util.NamedActions
 import XMonad.Util.Loggers
 import XMonad.Util.ClickableWorkspaces
 import XMonad.Util.Ungrab
-import XMonad.Util.Run (spawnPipe)
+import XMonad.Util.Run (spawnPipe, runProcessWithInput)
+import XMonad.Util.NamedScratchpad
 
 -- Layout
 import XMonad.Layout.LayoutCombinators (JumpToLayout(..), (|||))
@@ -44,6 +47,16 @@ import XMonad.Layout.ResizableTile
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
 import XMonad.Layout.Renamed
+
+-- Prompt
+import XMonad.Prompt
+import XMonad.Prompt.Shell
+import XMonad.Prompt.ConfirmPrompt
+import XMonad.Prompt.FuzzyMatch
+import XMonad.Prompt.Input
+
+-- Text
+import Text.Printf
 
 -- Colors
 import Colors.XMColors
@@ -66,6 +79,7 @@ myConfig = def
     { modMask    = mod4Mask      -- Rebind Mod to the Super key
     , layoutHook = myLayout      -- Use custom layouts
     , manageHook = myManageHook  -- Match on certain windows
+    , handleEventHook = mySpotifyHook
     , workspaces = myWorkspaces
     , terminal   = myTerminal
     , borderWidth        = myBorderWidth
@@ -80,9 +94,13 @@ myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=9:antialias=true:hinting=
 
 myTerminal    = "st"
 
+myBinDir      = "~/.local/bin/"
+
+myConfDir     = "~/.config/"
+
 myBrowser     = "brave"
 
-myEditor = myTerminal ++ " -e nvim "
+myEditor      = myTerminal ++ " -e nvim "
 
 myFileManager = myTerminal ++ " -t vifm -e ~/.config/vifm/scripts/vifmrun"
 
@@ -108,7 +126,7 @@ myXmobarPP = def
     , ppExtras          = [lTitle]
     }
   where
-    lTitle = shortenL 50 (logTitle .| logConst " ")
+    lTitle = shortenL 60 (logTitle .| logConst " ")
 
     myppCurrent, myppSeparator, myppUrgent, myppHidden, myppHiddenNoWindows :: String -> String
     myppCurrent         = xmobarColor azure0 ""
@@ -128,8 +146,28 @@ myManageHook = composeAll
     , className =? "Brave-browser"                 --> doShift ( myWorkspaces !! 1 ) -- Open browser in www workspace
     , className =? "MATLAB R2021a - academic use"  --> doShift ( myWorkspaces !! 4 ) -- Open Matlab in mlab workspace
     , title =? "myCal"                             --> doCenterFloat                 -- Open calendar floating center
+    , title =? "XMonad keybindings"                --> doCenterFloat
     , isDialog                                     --> doFloat
-    ]
+    ]<+> namedScratchpadManageHook myScratchPads
+
+-- Spotify Hook
+mySpotifyHook = composeAll [ dynamicPropertyChange "WM_NAME" (className =? "Spotify" --> doCenterFloat) ]
+
+------------------------------------------------------------------------
+-- SCRATCHPADS
+------------------------------------------------------------------------
+
+myScratchPads :: [NamedScratchpad]
+myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm
+                , NS "spotify" spawnSpotify findSpotify manageSpotify ]
+  where
+    spawnTerm  = myTerminal ++ " -t st-scratchpad"
+    findTerm   = title =? "st-scratchpad"
+    manageTerm = customFloating $ W.RationalRect (0.1)(0.1)(0.8)(0.8)
+
+    spawnSpotify  = "spotify"
+    findSpotify   = className =? "Spotify"
+    manageSpotify = customFloating $ W.RationalRect (0.1)(0.1)(0.8)(0.8)
 
 ------------------------------------------------------------------------
 -- LAYOUT
@@ -153,6 +191,61 @@ myLayout = id
        $ noBorders Full
 
 ------------------------------------------------------------------------
+-- XPROMPTS
+------------------------------------------------------------------------
+
+-- Calculator prompt
+calcPrompt c ans =
+    inputPrompt c (trim ans) ?+ \input ->
+        liftIO(runProcessWithInput "qalc" [input] "") >>= calcPrompt c
+    where
+        trim  = f . f
+            where f = reverse . dropWhile isSpace
+
+-- Scrot prompt
+scrotPrompt :: String -> X ()
+scrotPrompt home = do
+    str <- inputPrompt myXPConfig "Rectangular/Window snip"
+    case str of
+        Just s  -> spawn $ printf "sleep 0.3 && scrot --select '%s' -e 'mv $f ~/Pictures' && notify-send 'Saving %s in' 'Pictures...'" s s
+        Nothing -> pure ()
+
+-- XPrompt configuration
+myXPConfig :: XPConfig
+myXPConfig = myPromptTheme
+      { promptKeymap        = vimLikeXPKeymap
+      , historySize         = 256
+      , historyFilter       = id
+      , defaultText         = []
+      , autoComplete        = Nothing       -- set Just 100000 for .1 sec
+      , showCompletionOnTab = False
+      , searchPredicate     = fuzzyMatch
+      , defaultPrompter     = id
+      , alwaysHighlight     = True
+      , maxComplRows        = Just 5        -- set to Nothing for whole screen
+      }
+
+-- XPrompts theme
+myPromptTheme = def
+    { font                  = myFont
+    , bgColor               = colorBack
+    , fgColor               = colorFore
+    , fgHLight              = black
+    , bgHLight              = azure0
+    , borderColor           = azure0
+    , promptBorderWidth     = 0
+    , height                = 24
+    , position              = Top
+    }
+
+-- ConfirmPrompts theme
+hotPromptTheme = myPromptTheme
+    { bgColor               = violet0
+    , fgColor               = white
+    , position              = Top
+    }
+
+------------------------------------------------------------------------
 -- KEYBINDINGS
 ------------------------------------------------------------------------
 
@@ -166,7 +259,7 @@ subtitle' x = ((0,0), NamedAction $ map toUpper
 -- Pipe the Named Actions output to yad
 showKeybindings :: [((KeyMask, KeySym), NamedAction)] -> NamedAction
 showKeybindings x = addName "Show Keybindings" $ io $ do
-  h <- spawnPipe $ "yad --text-info --fontname=\"Hack\" --fore=#46d9ff back=#282c36 --center --geometry=1200x800 --title \"XMonad keybindings\""
+  h <- spawnPipe $ "yad --text-info --fontname=\"Hack\" --fore=" ++ colorFore ++ " --back=" ++ colorBack ++ " --no-buttons --center --geometry=1200x1000 --title \"XMonad keybindings\""
   hPutStr h (unlines $ showKmSimple x) -- showKmSimple doesn't add ">>" to subtitles
   hClose h
   return ()
@@ -179,16 +272,21 @@ myKeys c =
     subKeys "Xmonad Essentials"
     [ ("M-r",   addName "Recompile XMonad"     $ spawn "xmonad --recompile")
     , ("M-S-r", addName "Restart XMonad"       $ spawn "xmonad --restart")
---    , ("M-S-q", addName "Quit XMonad"          $ confirmPrompt hotPromptTheme "Quit XMonad" $ (io exitSuccess))
-    , ("M-S-q", addName "Quit XMonad"          $ io exitSuccess)
-    , ("M-q",   addName "Kill focused window"  $ kill1)]
---    , ("M-S-a", addname "Kill all windows"     $ confirmPrompt hotPromptTheme "kill all" $ killAll)]
+    , ("M-S-q", addName "Quit XMonad"          $ confirmPrompt hotPromptTheme "Quit XMonad" $ (io exitSuccess))
+    , ("M-q",   addName "Kill focused window"  $ kill1)
+    , ("M-S-a", addName "Kill all windows"     $ confirmPrompt hotPromptTheme "kill all" $ killAll)]
 
     -- Main programs
     ^++^ subKeys "Run programs"
-    [ ("M-<Return>",    addName "Run prompt"     $ spawn "st")
-    , ("M-w",           addName "Run browser"    $ spawn myBrowser)
-    , ("M-<Backspace>", addName "Run Vifm"       $ spawn myFileManager)]
+    [ ("M-<Return>",    addName "Run terminal"               $ spawn myTerminal)
+    , ("M-S-<Return>",  addName "Run terminal scratchpad"    $ namedScratchpadAction myScratchPads "terminal")
+    , ("M-w",           addName "Run browser"                $ spawn myBrowser)
+    , ("M-<Backspace>", addName "Run Vifm"                   $ spawn myFileManager)]
+
+    -- Prompts
+    ^++^ subKeys "XPrompts"
+    [ ("M-p",    addName "Run shell prompt"    $ shellPrompt myXPConfig)
+    , ("M-c",    addName "Run qalc prompt"     $ calcPrompt myXPConfig "qalc")]
 
     -- Layouts settings
     ^++^ subKeys "Change layouts"
@@ -199,16 +297,23 @@ myKeys c =
 
     -- Multimedia keys
     ^++^ subKeys "Multimedia keys"
-    [ ("<XF86AudioMute>",         addName "Toggle audio mute"         $ spawn "pamixer -t & $HOME/.local/bin/volumelevel")
-    , ("<XF86AudioLowerVolume>",  addName "Lower volume"              $ spawn "pamixer -u -d 5 & $HOME/.local/bin/volumelevel")
-    , ("<XF86AudioRaiseVolume>",  addName "Raise volume"              $ spawn "pamixer -u -i 5 & $HOME/.local/bin/volumelevel")
+    [ ("<XF86AudioMute>",         addName "Toggle audio mute"         $ spawn ("pamixer -t & " ++ myBinDir ++ "volumelevel"))
+    , ("<XF86AudioLowerVolume>",  addName "Lower volume"              $ spawn ("pamixer -u -d 5 & " ++ myBinDir ++ "volumelevel"))
+    , ("<XF86AudioRaiseVolume>",  addName "Raise volume"              $ spawn ("pamixer -u -i 5 & " ++ myBinDir ++ "volumelevel"))
     , ("<XF86MonBrightnessDown>", addName "Decrease light"            $ spawn "sudo xbacklight -dec 5")
     , ("<XF86MonBrightnessUp>",   addName "Increase light"            $ spawn "sudo xbacklight -inc 5")
-    , ("<XF86Display>",           addName "Select display"            $ spawn "$HOME/.local/bin/displayselect")
+    , ("<XF86Display>",           addName "Select display"            $ spawn (myBinDir ++ "displayselect"))
 --    , ("<XF86Tools>",           addName ""     $ spawn "")
---    , ("<XF86Favorites>",       addName ""     $ spawn "")
---    , ("M-<Print>",             addName "Screen selected window"    $ scrotPrompt "home")
-    , ("<Print>",                 addName "Take screenshot"           $ spawn "scrot -e 'mv $f ~/Pictures' && notify-send 'Saving screenshot in' 'Pictures...'")]
+    , ("<XF86Favorites>",         addName "Run spotify scratchpad"    $ namedScratchpadAction myScratchPads "spotify")
+    , ("M-<Print>",               addName "Screen selected window"    $ scrotPrompt "home")
+    , ("<Print>",                 addName "Take screenshot"           $ spawn "scrot -e 'mv $f ~/Pictures' && notify-send 'Saving screenshot in' 'Pictures...'")
+    , ("<F1>",                    addName "Toggle play/pause browser" $ spawn (myBinDir ++ "mediatoggle " ++ myBrowser))]
+
+    -- Controls for spotify
+    ^++^ subKeys "Spotify"
+    [ ("M-s s",    addName "Toggle play/pause"    $ spawn (myBinDir ++ "mediatoggle spotify"))
+    , ("M-s n",    addName "Skip to next song"    $ spawn "playerctl --player=spotify next")
+    , ("M-s b",    addName "Skip to prev song"    $ spawn "playerctl --player=spotify previous")]
 
     -- Resize windows
     ^++^ subKeys "Window resizing"

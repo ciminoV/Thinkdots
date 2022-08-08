@@ -1,7 +1,7 @@
 Config { overrideRedirect = True
        , font = "xft:Ubuntu Nerd Font:style=Bold:pixelsize=15:antialias=true:hinting=true"
        , bgColor = "#2E3440"
-       , fgColor = "#FFFFFF"
+       , fgColor = "#D8DEE9"
        , position = TopSize L 100 24
        , lowerOnStart = True
        , persistent = True
@@ -15,30 +15,40 @@ Config { overrideRedirect = True
                , Run Date "<fn=1></fn>  %a %d - %H:%M " "date" 600
 
                 -- System volume level
-               , Run Alsa "default" "Master" ["-t" , "<fc=#C792EA><status>  <volume>%</fc> " ,
+               , Run Alsa "default" "Master" ["-t" , "<status>  <volume>% " ,
                                               "--" , 
                                               "-O" , "", "-o" , "<fn=1>婢</fn>" ,
-                                              "-C" , "#C792EA", "-c" , "#C792EA" ,
+                                              "-C" , "#D8DEE9", "-c" , "#D8DEE9" ,
                                               "-H" , "70.0", "-L" , "30.0" ,
                                               "-h" , "<fn=1></fn>" ,
                                               "-l" , "<fn=1></fn>" ,
                                               "-m" , "<fn=1></fn>"]
 
                -- Battery status and level
-               , Run BatteryP ["BAT1"]
-                 ["-t", "<acstatus>  <left> "
-                 , "-L", "30", "-H", "50"
-                 , "-l", "#89DDFF", "-h", "#89DDFF"
-                 , "--", "-O", "<fn=1></fn>"
-                 , "-o", "<fn=1></fn>"
-                 , "--lows", "<fn=1></fn>"
-                 , "-i", "<fn=1></fn>"
-               ] 10
+               , Run BatteryN ["BAT1"]
+                              ["-t", "<acstatus>  <left> "
+                              , "-L", "10", "-H", "50"
+                              , "-l", "#BF616A" 
+                              , "--", "-O", "<fn=1></fn>"
+                              , "-o", "<fn=1></fn>"
+                              , "-i", "<fn=1></fn>"
+                              ] 50 "BAT1"
+
+               , Run BatteryN ["BAT0"]
+                              ["-t", "<acstatus>  <left> "
+                              , "-L", "10", "-H", "50"
+                              , "-l", "#BF616A"
+                              , "--" 
+                              , "-o", "<fn=1></fn>"
+                              , "-i", "<fn=1></fn>"
+                              ] 50 "BAT0"
+
+
+               , Run Wireless "wlp3s0" ["-t", "  <ssid> <quality> "
+                                       , "-x", "None"] 10
 
                -- Caps Lock on/off
                , Run Locks
-
-               , Run Wireless "wlp3s0" [] 10
 
                -- Spotify status
                , Run Com "/home/cimino/.config/xmobar/xm-spotify" [] "spotify" 10
@@ -50,11 +60,12 @@ Config { overrideRedirect = True
        , sepChar = "%"
        , alignSep = "}{"
        , template = " %UnsafeXMonadLog% }\
-             \{ <box type=Bottom width=1 mb=1 color=#ffffff><fc=#ffffff>%locks%</fc></box> \
-             \ %wlp3s0wi% \
-             \ <box type=Bottom width=1 mb=1 color=#89ddff><fc=#89ddff>%spotify%</fc></box> \
-             \ <box type=Bottom width=1 mb=1 color=#C792EA><action=`st pulsemixer`>%alsa:default:Master%</action></box> \
-             \ <box type=Bottom width=1 mb=1 color=#89DDFF><action=`st htop`>%battery%</action></box> \
-             \ <box type=Bottom width=1 mb=1 color=#C3E88D><fc=#C3E88D><action=`st -t myCal -g=70x34 sh -sic 'cal -my'`>%date%</action></fc></box> \
+             \{ <box type=Bottom width=2 color=#ECEFF4>%locks%</box> \
+             \ <box type=Bottom width=2 color=#8FBCBB><action=`/home/cimino/.local/bin/mediatoggle spotify`>%spotify%</action></box> \
+             \ <box type=Bottom width=2 color=#EBCB8B><action=`st nmtui`>%wlp3s0wi%</action></box> \
+             \ <box type=Bottom width=2 color=#B48EAD><action=`st pulsemixer`>%alsa:default:Master%</action></box> \
+             \ <box type=Bottom width=2 color=#81A1C1><action=`st htop`>%BAT0%</action></box> \
+             \ <box type=Bottom width=2 color=#81A1C1><action=`st htop`>%BAT1%</action></box> \
+             \ <box type=Bottom width=2 color=#A3BE8C><action=`st -t myCal -g=70x34 sh -sic 'cal -my'`>%date%</action></box> \
              \%trayerpad%"
 		     }
