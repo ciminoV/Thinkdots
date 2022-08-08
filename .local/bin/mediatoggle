@@ -4,7 +4,7 @@
 # Dependencies: playerctl, dunst
 
 myplayer="spotify"
-mybrowser="librewolf"
+mybrowser="brave"
 
 # Check whether the selected player is running or not
 isrun() { \
@@ -22,8 +22,8 @@ spotify() { \
 
 browser() { \
     # my current browser is librewolf but playerctl recognize it as firefox
-    if [ "$mybrowser" = "librewolf" ]; then 
-        mybrowser="firefox" 
+    if [ "$mybrowser" = "brave" ]; then
+        mybrowser="chromium"
     fi
 
     status="$(playerctl --player=$mybrowser play-pause && playerctl --player=$mybrowser status)"
