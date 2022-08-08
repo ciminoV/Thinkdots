@@ -5,7 +5,8 @@ end
 
 local servers = {
   "sumneko_lua",
-  "texlab",
+--  "texlab",
+--  "bashls",
 --  "clangd",
 --  "yamlls"
 }
