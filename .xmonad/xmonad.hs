@@ -173,19 +173,18 @@ myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm
 -- LAYOUT
 ------------------------------------------------------------------------
 
-myLayout = id 
-  $ tiled ||| Mirror tiled ||| full ||| threeCol
+myLayout = tiled ||| Mirror tiled ||| full ||| threeCol
   where
     threeCol = renamed [Replace "ThreeCol"]
         $ magnifiercz' 1.3 
         $ limitWindows 5
         $ smartBorders
-        $ spacing 1
+        $ spacingRaw False (Border 0 4 4 4) True (Border 4 4 4 4) True
         $ ThreeColMid 1 (3/100) (1/2)
     tiled    = renamed [Replace "Tall"]
         $ limitWindows 5
         $ smartBorders
-        $ spacing 4
+        $ spacingRaw False (Border 0 4 4 4) True (Border 4 4 4 4) True
         $ ResizableTall 1 (3/100) (1/2) []
     full     = renamed [Replace "Full"]  
        $ noBorders Full
