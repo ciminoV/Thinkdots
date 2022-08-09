@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# A dmenu wrapper script for system functions
+
+ctl="systemctl"
+
+case "$(printf "sleep\nshutdown\nreboot" | dmenu -i -p 'See you soon: ')" in
+	'sleep') slock $ctl suspend -i ;;
+	'reboot') $ctl reboot -i ;;
+	'shutdown') $ctl poweroff -i ;;
+	*) exit 1 ;;
+esac
