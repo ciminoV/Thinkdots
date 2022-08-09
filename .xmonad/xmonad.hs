@@ -27,6 +27,7 @@ import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.DynamicProperty
+import XMonad.Hooks.WindowSwallowing
 
 -- Util
 import XMonad.Util.EZConfig
@@ -79,7 +80,7 @@ myConfig = def
     { modMask    = mod4Mask      -- Rebind Mod to the Super key
     , layoutHook = myLayout      -- Use custom layouts
     , manageHook = myManageHook  -- Match on certain windows
-    , handleEventHook = mySpotifyHook
+    , handleEventHook = mySpotifyHook <+> myHandleEventHook
     , workspaces = myWorkspaces
     , terminal   = myTerminal
     , borderWidth        = myBorderWidth
@@ -150,8 +151,12 @@ myManageHook = composeAll
     , isDialog                                     --> doFloat
     ]<+> namedScratchpadManageHook myScratchPads
 
+-- Window swallow hook
+myHandleEventHook = swallowEventHook (className =? "st" <||> className =? "terminator") (return True)
+
 -- Spotify Hook
 mySpotifyHook = composeAll [ dynamicPropertyChange "WM_NAME" (className =? "Spotify" --> doCenterFloat) ]
+
 
 ------------------------------------------------------------------------
 -- SCRATCHPADS
@@ -296,11 +301,11 @@ myKeys c =
 
     -- Multimedia keys
     ^++^ subKeys "Multimedia keys"
-    [ ("<XF86AudioMute>",         addName "Toggle audio mute"         $ spawn ("pamixer -t & " ++ myBinDir ++ "volumelevel"))
-    , ("<XF86AudioLowerVolume>",  addName "Lower volume"              $ spawn ("pamixer -u -d 5 & " ++ myBinDir ++ "volumelevel"))
-    , ("<XF86AudioRaiseVolume>",  addName "Raise volume"              $ spawn ("pamixer -u -i 5 & " ++ myBinDir ++ "volumelevel"))
-    , ("<XF86MonBrightnessDown>", addName "Decrease light"            $ spawn "sudo xbacklight -dec 5")
-    , ("<XF86MonBrightnessUp>",   addName "Increase light"            $ spawn "sudo xbacklight -inc 5")
+    [ ("<XF86AudioMute>",         addName "Toggle audio mute"         $ spawn ("pamixer -t && " ++ myBinDir ++ "volumelevel"))
+    , ("<XF86AudioLowerVolume>",  addName "Lower volume"              $ spawn ("pamixer -u -d 5 && " ++ myBinDir ++ "volumelevel"))
+    , ("<XF86AudioRaiseVolume>",  addName "Raise volume"              $ spawn ("pamixer -u -i 5 && " ++ myBinDir ++ "volumelevel"))
+    , ("<XF86MonBrightnessDown>", addName "Decrease light"            $ spawn ("sudo xbacklight -dec 5 && " ++ myBinDir ++ "lightlevel"))
+    , ("<XF86MonBrightnessUp>",   addName "Increase light"            $ spawn ("sudo xbacklight -inc 5 && " ++ myBinDir ++ "lightlevel"))
     , ("<XF86Display>",           addName "Select display"            $ spawn (myBinDir ++ "displayselect"))
 --    , ("<XF86Tools>",           addName ""     $ spawn "")
     , ("<XF86Favorites>",         addName "Run spotify scratchpad"    $ namedScratchpadAction myScratchPads "spotify")
