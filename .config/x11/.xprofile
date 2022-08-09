@@ -23,4 +23,3 @@ picom &
 
 # Start dunst
 dunst &
-systemctl --user import-environment DISPLAY
