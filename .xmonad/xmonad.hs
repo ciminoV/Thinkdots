@@ -274,11 +274,12 @@ myKeys c =
     let subKeys str ks = subtitle' str : mkNamedKeymap c ks in
     -- XMonad
     subKeys "Xmonad Essentials"
-    [ ("M-r",   addName "Recompile XMonad"     $ spawn "xmonad --recompile")
-    , ("M-S-r", addName "Restart XMonad"       $ spawn "xmonad --restart")
-    , ("M-S-q", addName "Quit XMonad"          $ confirmPrompt hotPromptTheme "Quit XMonad" $ (io exitSuccess))
-    , ("M-q",   addName "Kill focused window"  $ kill1)
-    , ("M-S-a", addName "Kill all windows"     $ confirmPrompt hotPromptTheme "kill all" $ killAll)]
+    [ ("M-r",       addName "Recompile XMonad"       $ spawn "xmonad --recompile")
+    , ("M-S-r",     addName "Restart XMonad"         $ spawn "xmonad --restart")
+    , ("M-S-q",     addName "Quit XMonad"            $ confirmPrompt hotPromptTheme "Quit XMonad" $ (io exitSuccess))
+    , ("M-q",       addName "Kill focused window"    $ kill1)
+    , ("M-S-a",     addName "Kill all windows"       $ confirmPrompt hotPromptTheme "kill all" $ killAll)
+    , ("M-S-l",     addName "Lock screen"            $ spawn "slock")]
 
     -- Main programs
     ^++^ subKeys "Run programs"
@@ -288,9 +289,10 @@ myKeys c =
     , ("M-<Backspace>", addName "Run Vifm"                   $ spawn myFileManager)]
 
     -- Prompts
-    ^++^ subKeys "XPrompts"
-    [ ("M-p",    addName "Run shell prompt"    $ shellPrompt myXPConfig)
-    , ("M-c",    addName "Run qalc prompt"     $ calcPrompt myXPConfig "qalc")]
+    ^++^ subKeys "XPrompts and dmenu"
+    [ ("M-p",        addName "Run shell prompt"          $ shellPrompt myXPConfig)
+    , ("M-c",        addName "Run qalc prompt"           $ calcPrompt myXPConfig "qalc")
+    , ("M-<Esc>",    addName "Run dmenu power prompt"    $ spawn (myBinDir ++ "syspower"))]
 
     -- Layouts settings
     ^++^ subKeys "Change layouts"
