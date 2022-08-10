@@ -290,9 +290,10 @@ myKeys c =
 
     -- Prompts
     ^++^ subKeys "XPrompts and dmenu"
-    [ ("M-p",        addName "Run shell prompt"          $ shellPrompt myXPConfig)
-    , ("M-c",        addName "Run qalc prompt"           $ calcPrompt myXPConfig "qalc")
-    , ("M-<Esc>",    addName "Run dmenu power prompt"    $ spawn (myBinDir ++ "syspower"))]
+    [ ("M-p",        addName "Run shell prompt"            $ shellPrompt myXPConfig)
+    , ("M-c",        addName "Run qalc prompt"             $ calcPrompt myXPConfig "qalc")
+    , ("M-n",        addName "Run dmenu anotes prompt "    $ spawn (myBinDir ++ "anotes"))
+    , ("M-<Esc>",    addName "Run dmenu power prompt"      $ spawn (myBinDir ++ "syspower"))]
 
     -- Layouts settings
     ^++^ subKeys "Change layouts"
