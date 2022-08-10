@@ -23,7 +23,7 @@ zsh_add_file "zsh-aliases"
 zsh_add_file "zsh-prompt"
 
 # Start graphical server on user's current tty if not already running
-[ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx $HOME/.xinitrc
+[ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx "$XDG_CONFIG_HOME/x11/xinitrc"
 
 # FZF
 [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh

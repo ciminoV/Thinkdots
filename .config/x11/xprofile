@@ -7,7 +7,7 @@ trayer --edge top --align right --widthtype request --padding 6 --SetDockType tr
 redshift-gtk &
 
 # Load .Xresources
-xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/x11/.Xresources
+xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/x11/Xresources
 
 # Set default cursor
 xsetroot -cursor_name left_ptr
