@@ -4,13 +4,19 @@
 # Arbitrary but unique message tag
 msgTag="myvolume"
 
-# Query pamixer for the current volume and whether or not the speaker is muted
+# Query pamixer whether or not the speaker is muted
+[ $(pamixer --get-mute) = "true" ] && dunstify -a "changeVolume" -u low -h string:x-dunst-stack-tag:$msgTag "婢 Volume muted" && exit 0
+
+# Query pamixer for the current volume
 volume="$(pamixer --get-volume)"
-mute="$(pamixer --get-mute)"
-if [[ $volume == 0 || "$mute" == "true" ]]; then
-    # Show the sound muted notification
-    dunstify -a "changeVolume" -u low -h string:x-dunst-stack-tag:$msgTag "婢 Volume muted" 
+
+if [ "${volume}" -ge "70" ]; then
+  icon=""
+elif [ "${volume}" -le "30" ]; then
+  icon=" "
 else
-    # Show the volume notification
-    dunstify -a "changeVolume" -u low -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume" " Volume: ${volume}%"
+  icon=" "
 fi
+
+# Show the volume notification
+dunstify -a "changeVolume" -u low -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume" "${icon} Volume: ${volume}%"

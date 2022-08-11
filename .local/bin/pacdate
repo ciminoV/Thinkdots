@@ -1,7 +1,9 @@
 #!/bin/sh
 
-# Mirror list update via reflector, pacman packages update and upgrade and finally xmonad rebuild
-# Dependencies: reflector
+# A script to backup and upgrade the system
+# Dependencies: reflector, btrfs
+
+sudo btrfs subv snapshot /home /home/.snapshots/$(date "+%Y-%m-%d")
 
 sudo reflector --country Italy --age 12 --sort rate --save /etc/pacman.d/mirrorlist
 
