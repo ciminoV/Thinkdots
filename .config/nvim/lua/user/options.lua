@@ -38,4 +38,8 @@ vim.opt.shortmess:append "c"
 vim.opt.whichwrap:append("<,>,[,],h,l")
 vim.opt.iskeyword:append("-")
 
+-- Vimtex settings
 vim.api.nvim_set_var('vimtex_view_method', 'zathura') -- pdf reader for latex
+vim.cmd("let g:tex_flavor='latex'")                   -- which type of text
+vim.cmd("set conceallevel=2")                         -- conceallevel
+vim.cmd("let g:vimtex_quickfix_enabled=0")            -- don't open quickfix
