@@ -14,10 +14,10 @@ alias \
 
 # Get faster
 alias \
-    xmhs="vim ~/.xmonad/xmonad.hs" \
-    zrc="vim $ZDOTDIR/.zshrc" \
-    vimrc="vim $XDG_CONFIG_HOME/nvim/init.lua" \
-    vifm="$XDG_CONFIG_HOME/vifm/scripts/vifmrun" \
+    xmhs="vim ${XMONAD_CONFIG_DIR}/xmonad.hs" \
+    zrc="vim ${ZDOTDIR}/.zshrc" \
+    vimrc="vim ${XDG_CONFIG_HOME}/nvim/init.lua" \
+    vifm="${XDG_CONFIG_HOME}/vifm/scripts/vifmrun" \
     fin="~/.private/Finanza/fin" \
 
 # Use neovim for vim if present.
