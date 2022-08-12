@@ -63,3 +63,4 @@ keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 -- VimTex
 keymap("n", "<leader>v", ":VimtexView<CR>", opts)
 keymap("n", "<leader>c", ":VimtexCompile<CR>", opts)
+keymap("i", "<C-l>", "<C-g>u<Esc>[s1z=`]a<C-g>u", opts) -- spell check on the fly

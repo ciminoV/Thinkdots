@@ -2,8 +2,8 @@ vim.opt.backup = false                          -- creates a backup file
 vim.opt.clipboard = "unnamedplus"               -- allows neovim to access the system clipboard
 vim.opt.cmdheight = 1                           -- more space in the neovim command line for displaying messages
 vim.opt.completeopt = { "menuone", "noselect" } -- mostly just for cmp
-vim.opt.conceallevel = 0                        -- so that `` is visible in markdown files
 vim.opt.fileencoding = "utf-8"                  -- the encoding written to a file
+vim.opt_local.spell=true
 vim.opt.hlsearch = false			                  -- highlight all matches on previous search pattern
 vim.opt.ignorecase = true                       -- ignore case in search patterns
 vim.opt.mouse = "a"                             -- allow the mouse to be used in neovim
@@ -39,7 +39,9 @@ vim.opt.whichwrap:append("<,>,[,],h,l")
 vim.opt.iskeyword:append("-")
 
 -- Vimtex settings
-vim.api.nvim_set_var('vimtex_view_method', 'zathura') -- pdf reader for latex
-vim.cmd("let g:tex_flavor='latex'")                   -- which type of text
-vim.cmd("set conceallevel=2")                         -- conceallevel
-vim.cmd("let g:vimtex_quickfix_enabled=0")            -- don't open quickfix
+vim.g.tex_flavor= 'latex'
+vim.g.vimtex_view_method = 'zathura'
+vim.g.vimtex_quickfix_enabled = 0
+vim.opt.conceallevel = 1
+vim.g.tex_conceal='abdmg'
+--vim.api.nvim_exec('language it_IT.utf-8', true)
