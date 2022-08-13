@@ -286,6 +286,8 @@ myKeys c =
     [ ("M-<Return>",    addName "Run terminal"               $ spawn myTerminal)
     , ("M-S-<Return>",  addName "Run terminal scratchpad"    $ namedScratchpadAction myScratchPads "terminal")
     , ("M-w",           addName "Run browser"                $ spawn myBrowser)
+    , ("M-e",           addName "Run nvim"                   $ spawn (myTerminal ++ " -e nvim ~"))
+    , ("M-S-e",         addName "Run nvim note"              $ spawn (myTerminal ++ " -e nvim ~/Documents/note-$(date '+%Y-%m-%d')"))
     , ("M-<Backspace>", addName "Run Vifm"                   $ spawn myFileManager)]
 
     -- Prompts
