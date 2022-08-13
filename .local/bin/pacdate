@@ -10,5 +10,5 @@ sudo reflector --country Italy --age 12 --sort rate --save /etc/pacman.d/mirrorl
 sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 sudo pacman -Syu
 
-cd ~/.xmonad
+cd ${XMONAD_CONFIG_DIR}
 stack install
