@@ -40,6 +40,10 @@ keymap("n", "n", "nzzzv", opts)
 keymap("n", "N", "Nzzzv", opts)
 keymap("n", "J", "mzJ`z", opts)
 
+-- Markdown files
+keymap("n", "mc", ":! computils %<CR><CR>", opts)
+keymap("n", "mv", ":! opout %<CR><CR>", opts)
+
 -- Visual --
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
@@ -50,7 +54,7 @@ keymap("v", ">", ">gv", opts)
 keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 
--- Plugins
+-- Plugins --
 -- Telescope
 keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
 keymap("n", "<leader>ft", ":Telescope live_grep<CR>", opts)
@@ -61,6 +65,6 @@ keymap("n", "<leader>fg", ":Telescope git_files<CR>", opts)
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 
 -- VimTex
-keymap("n", "<leader>v", ":VimtexView<CR>", opts)
-keymap("n", "<leader>c", ":VimtexCompile<CR>", opts)
+keymap("n", "<leader>vv", ":VimtexView<CR>", opts)
+keymap("n", "<leader>vc", ":VimtexCompile<CR>", opts)
 keymap("i", "<C-l>", "<C-g>u<Esc>[s1z=`]a<C-g>u", opts) -- spell check on the fly

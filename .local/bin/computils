@@ -1,0 +1,11 @@
+#!/bin/sh
+# General handler for compiling files
+
+file=$(realpath "$1")
+base="${file%.*}"
+
+case "$1" in
+    *.md) pandoc --filter pandoc-crossref "$file" -o "$base".pdf;;
+    *.py) python "$file" ;;
+    *) echo "Can't compile" ;;
+esac
