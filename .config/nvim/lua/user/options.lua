@@ -52,11 +52,6 @@ vim.opt.shortmess:append "c"
 vim.opt.whichwrap:append("<,>,[,],h,l")
 vim.opt.iskeyword:append("-")
 
-vim.opt.formatoptions = vim.opt.formatoptions
-  + "c" -- comments respect textwidth
-  - "o" -- O and o, don't continue comments
-  + "r" -- But do continue when pressing enter.
-
 -- Vimtex settings
 vim.g.tex_flavor= 'latex'
 vim.g.vimtex_view_method = 'zathura'
