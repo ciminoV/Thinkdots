@@ -6,8 +6,8 @@
 
 # Get external device directory, and local directories (source - destination)
 extDir=/sdcard/note
-srcDir=$HOME/Appunti
-dstDir=$HOME/Documents
+srcDir=$HOME/appunti
+dstDir=$HOME/documents
 
 cd $srcDir || exit 1
 

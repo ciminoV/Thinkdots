@@ -1,10 +1,10 @@
 #!/bin/sh
 
-# Toggle play-pause spotify/browser
+# Toggle play-pause music player/browser
 # Dependencies: playerctl, dunst
 
-myplayer="spotify"
-mybrowser="brave"
+myplayer=$MUSIC
+mybrowser=$BROWSER
 
 # Check whether the selected player is running or not
 isrun() { \
@@ -12,7 +12,7 @@ isrun() { \
     [ -z "$running" ] && exit 0 # Exit if not
 }
 
-spotify() { \
+player() { \
     status="$(playerctl --player=$myplayer play-pause && playerctl --player=$myplayer status)"
 
     if [ "$status" = "Paused" ]; then
@@ -36,6 +36,6 @@ browser() { \
 
 isrun $1
 case "$1" in
-    "$myplayer") spotify ;;
+    "$myplayer") player ;;
     "$mybrowser") browser ;;
 esac
