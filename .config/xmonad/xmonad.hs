@@ -235,7 +235,7 @@ scrotPrompt :: String -> X ()
 scrotPrompt home = do
     str <- inputPrompt myXPConfig "Rectangular/Window snip"
     case str of
-        Just s  -> spawn $ printf "sleep 0.3 && scrot --select '%s' -e 'mv $f ~/Pictures' && notify-send 'Saving %s in' 'Pictures...'" s s
+        Just s  -> spawn $ printf "sleep 0.3 && scrot --select '%s' -e 'mv $f ~/pictures' && notify-send 'Saving %s in' 'Pictures...'" s s
         Nothing -> pure ()
 
 -- XPrompt configuration
@@ -344,7 +344,7 @@ myKeys c =
 --    , ("<XF86Tools>",           addName ""     $ spawn "")
     , ("<XF86Favorites>",         addName "Run spotify scratchpad"    $ namedScratchpadAction myScratchPads "spotify")
     , ("M-<Print>",               addName "Screen selected window"    $ scrotPrompt "home")
-    , ("<Print>",                 addName "Take screenshot"           $ spawn "scrot -e 'mv $f ~/Pictures' && notify-send 'Saving screenshot in' 'Pictures...'")
+    , ("<Print>",                 addName "Take screenshot"           $ spawn "scrot -e 'mv $f ~/pictures' && notify-send 'Saving screenshot in' 'Pictures...'")
     , ("<F1>",                    addName "Toggle play/pause browser" $ spawn (myBinDir ++ "mediatoggle " ++ myBrowser))]
 
     -- Controls for spotify
