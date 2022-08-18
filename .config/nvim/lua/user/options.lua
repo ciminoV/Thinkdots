@@ -2,8 +2,8 @@ vim.opt.backup = false                          -- creates a backup file
 vim.opt.writebackup = false                     -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 vim.opt.undofile = true                         -- enable persistent undo
 vim.opt.swapfile = false                        -- creates a swapfile
-vim.opt.fileencoding = "utf-8"                  -- the encoding written to a file
 
+vim.opt.fileencoding = "utf-8"                  -- the encoding written to a file
 vim.opt.clipboard = "unnamedplus"               -- allows neovim to access the system clipboard
 
 vim.opt.cmdheight = 1                           -- more space in the neovim command line for displaying messages
