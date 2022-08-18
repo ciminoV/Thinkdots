@@ -18,6 +18,7 @@ import XMonad.Actions.CopyWindow (kill1)
 import XMonad.Actions.CycleWS
 import XMonad.Actions.WithAll (sinkAll, killAll)
 import XMonad.Actions.Submap
+import XMonad.Actions.GridSelect
 
 -- Hooks
 import XMonad.Hooks.DynamicLog
@@ -195,6 +196,29 @@ myLayout = tiled ||| Mirror tiled ||| full ||| threeCol
        $ noBorders Full
 
 ------------------------------------------------------------------------
+-- GRIDSELECT
+------------------------------------------------------------------------
+
+-- GridSelect menu layout
+mygridConfig :: p -> GSConfig Window
+mygridConfig colorizer = (buildDefaultGSConfig myColorizer)
+    { gs_cellheight   = 40
+    , gs_cellwidth    = 200
+    , gs_cellpadding  = 6
+    , gs_originFractX = 0.5
+    , gs_originFractY = 0.5
+    , gs_font         = myFont
+    }
+
+myColorizer :: Window -> Bool -> X (String, String)
+myColorizer = colorRangeFromClassName
+                (0x2e,0x34,0x40) -- lowest inactive bg
+                (0x2e,0x34,0x40) -- highest inactive bg
+                (0x88,0xc0,0xd0) -- active bg
+                (0xd8,0xde,0xe9) -- inactive fg
+                (0xd8,0xde,0xe9) -- active fg
+
+------------------------------------------------------------------------
 -- XPROMPTS
 ------------------------------------------------------------------------
 
@@ -296,6 +320,11 @@ myKeys c =
     , ("M-c",        addName "Run qalc prompt"             $ calcPrompt myXPConfig "qalc")
     , ("M-n",        addName "Run dmenu anotes prompt "    $ spawn (myBinDir ++ "anotes"))
     , ("M-<Esc>",    addName "Run dmenu power prompt"      $ spawn (myBinDir ++ "syspower"))]
+
+    -- Gridselect
+    ^++^ subKeys "GridSelect"
+    [ ("M-S-g",    addName "Bring selected window"        $ bringSelected $ mygridConfig myColorizer)
+    , ("M-g",      addName "Switch to selected window"    $ goToSelected $ mygridConfig myColorizer)]
 
     -- Layouts settings
     ^++^ subKeys "Change layouts"
