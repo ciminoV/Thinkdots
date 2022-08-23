@@ -60,8 +60,8 @@ import XMonad.Prompt.Input
 -- Text
 import Text.Printf
 
--- Colors
-import Colors.XMColors
+-- Headers
+import Headers.XMHeaders
 
 ------------------------------------------------------------------------
 -- MAIN
@@ -88,29 +88,6 @@ myConfig = def
     , normalBorderColor  = myNormColor
     , focusedBorderColor = myFocusColor
     }
-
--- Main variables
-myWorkspaces  = [" dev ", " www ", " doc ", " fm ", " mlab ", " var "]
-
-myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=9:antialias=true:hinting=true"
-
-myTerminal    = "st"
-
-myBinDir      = "~/.local/bin/"
-
-myConfDir     = "~/.config/"
-
-myBrowser     = "brave"
-
-myEditor      = myTerminal ++ " -e nvim "
-
-myFileManager = myTerminal ++ " -t vifm -e ~/.config/vifm/scripts/vifmrun"
-
-myBorderWidth = 1           -- Sets border width for windows
-
-myNormColor   = colorBack   -- Border color of normal windows
-
-myFocusColor  = azure0      -- Border color of focused windows
 
 ------------------------------------------------------------------------
 -- XMOBAR
@@ -157,7 +134,6 @@ myHandleEventHook = swallowEventHook (className =? "st" <||> className =? "termi
 
 -- Spotify Hook
 mySpotifyHook = composeAll [ dynamicPropertyChange "WM_NAME" (className =? "Spotify" --> doCenterFloat) ]
-
 
 ------------------------------------------------------------------------
 -- SCRATCHPADS
@@ -223,6 +199,7 @@ myColorizer = colorRangeFromClassName
 ------------------------------------------------------------------------
 
 -- Calculator prompt
+calcPrompt :: XPConfig -> String -> X ()
 calcPrompt c ans =
     inputPrompt c (trim ans) ?+ \input ->
         liftIO(runProcessWithInput "qalc" [input] "") >>= calcPrompt c
@@ -318,8 +295,8 @@ myKeys c =
     ^++^ subKeys "XPrompts and dmenu"
     [ ("M-p",        addName "Run shell prompt"            $ shellPrompt myXPConfig)
     , ("M-c",        addName "Run qalc prompt"             $ calcPrompt myXPConfig "qalc")
-    , ("M-n",        addName "Run dmenu anotes prompt "    $ spawn (myBinDir ++ "anotes"))
-    , ("M-<Esc>",    addName "Run dmenu power prompt"      $ spawn (myBinDir ++ "syspower"))]
+    , ("M-n",        addName "Run dmenu anotes prompt "    $ spawn "anotes")
+    , ("M-<Esc>",    addName "Run dmenu power prompt"      $ spawn "syspower")]
 
     -- Gridselect
     ^++^ subKeys "GridSelect"
@@ -335,21 +312,21 @@ myKeys c =
 
     -- Multimedia keys
     ^++^ subKeys "Multimedia keys"
-    [ ("<XF86AudioMute>",         addName "Toggle audio mute"         $ spawn ("pamixer -t && " ++ myBinDir ++ "volumelevel"))
-    , ("<XF86AudioLowerVolume>",  addName "Lower volume"              $ spawn ("pamixer -u -d 5 && " ++ myBinDir ++ "volumelevel"))
-    , ("<XF86AudioRaiseVolume>",  addName "Raise volume"              $ spawn ("pamixer -u -i 5 && " ++ myBinDir ++ "volumelevel"))
-    , ("<XF86MonBrightnessDown>", addName "Decrease light"            $ spawn ("sudo xbacklight -dec 5 && " ++ myBinDir ++ "lightlevel"))
-    , ("<XF86MonBrightnessUp>",   addName "Increase light"            $ spawn ("sudo xbacklight -inc 5 && " ++ myBinDir ++ "lightlevel"))
-    , ("<XF86Display>",           addName "Select display"            $ spawn (myBinDir ++ "displayselect"))
+    [ ("<XF86AudioMute>",         addName "Toggle audio mute"         $ spawn "pamixer -t && volumelevel")
+    , ("<XF86AudioLowerVolume>",  addName "Lower volume"              $ spawn "pamixer -u -d 5 && volumelevel")
+    , ("<XF86AudioRaiseVolume>",  addName "Raise volume"              $ spawn "pamixer -u -i 5 && volumelevel")
+    , ("<XF86MonBrightnessDown>", addName "Decrease light"            $ spawn "sudo xbacklight -dec 5 && lightlevel")
+    , ("<XF86MonBrightnessUp>",   addName "Increase light"            $ spawn "sudo xbacklight -inc 5 && lightlevel")
+    , ("<XF86Display>",           addName "Select display"            $ spawn "displayselect")
 --    , ("<XF86Tools>",           addName ""     $ spawn "")
     , ("<XF86Favorites>",         addName "Run spotify scratchpad"    $ namedScratchpadAction myScratchPads "spotify")
     , ("M-<Print>",               addName "Screen selected window"    $ scrotPrompt "home")
     , ("<Print>",                 addName "Take screenshot"           $ spawn "scrot -e 'mv $f ~/pictures' && notify-send 'Saving screenshot in' 'Pictures...'")
-    , ("<F1>",                    addName "Toggle play/pause browser" $ spawn (myBinDir ++ "mediatoggle " ++ myBrowser))]
+    , ("<F1>",                    addName "Toggle play/pause browser" $ spawn ("mediatoggle " ++ myBrowser))]
 
     -- Controls for spotify
     ^++^ subKeys "Spotify"
-    [ ("M-s s",    addName "Toggle play/pause"    $ spawn (myBinDir ++ "mediatoggle spotify"))
+    [ ("M-s s",    addName "Toggle play/pause"    $ spawn "mediatoggle spotify")
     , ("M-s n",    addName "Skip to next song"    $ spawn "playerctl --player=spotify next")
     , ("M-s b",    addName "Skip to prev song"    $ spawn "playerctl --player=spotify previous")]
 
