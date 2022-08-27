@@ -11,14 +11,14 @@ import qualified XMonad.StackSet as W
 -- Data
 import qualified Data.Map as M
 import Data.Char (toUpper, isSpace)
-import Data.Maybe (isJust)
+import Data.Maybe (isJust, fromMaybe)
 
 -- Actions
 import XMonad.Actions.CopyWindow (kill1)
 import XMonad.Actions.CycleWS
 import XMonad.Actions.WithAll (sinkAll, killAll)
 import XMonad.Actions.Submap
-import XMonad.Actions.GridSelect
+import XMonad.Actions.Commands (defaultCommands)
 
 -- Hooks
 import XMonad.Hooks.DynamicLog
@@ -53,6 +53,8 @@ import XMonad.Layout.Renamed
 -- Prompt
 import XMonad.Prompt
 import XMonad.Prompt.Shell
+import XMonad.Prompt.XMonad
+import XMonad.Prompt.Window
 import XMonad.Prompt.ConfirmPrompt
 import XMonad.Prompt.FuzzyMatch
 import XMonad.Prompt.Input
@@ -125,6 +127,7 @@ myManageHook = composeAll
     , className =? "Brave-browser"                 --> doShift ( myWorkspaces !! 1 ) -- Open browser in www workspace
     , className =? "MATLAB R2021a - academic use"  --> doShift ( myWorkspaces !! 4 ) -- Open Matlab in mlab workspace
     , title =? "myCal"                             --> doCenterFloat                 -- Open calendar floating center
+    , title =? "myNote"                            --> doCenterFloat
     , title =? "XMonad keybindings"                --> doCenterFloat
     , isDialog                                     --> doFloat
     ]<+> namedScratchpadManageHook myScratchPads
@@ -172,31 +175,16 @@ myLayout = tiled ||| Mirror tiled ||| full ||| threeCol
        $ noBorders Full
 
 ------------------------------------------------------------------------
--- GRIDSELECT
-------------------------------------------------------------------------
-
--- GridSelect menu layout
-mygridConfig :: p -> GSConfig Window
-mygridConfig colorizer = (buildDefaultGSConfig myColorizer)
-    { gs_cellheight   = 40
-    , gs_cellwidth    = 200
-    , gs_cellpadding  = 6
-    , gs_originFractX = 0.5
-    , gs_originFractY = 0.5
-    , gs_font         = myFont
-    }
-
-myColorizer :: Window -> Bool -> X (String, String)
-myColorizer = colorRangeFromClassName
-                (0x2e,0x34,0x40) -- lowest inactive bg
-                (0x2e,0x34,0x40) -- highest inactive bg
-                (0x88,0xc0,0xd0) -- active bg
-                (0xd8,0xde,0xe9) -- inactive fg
-                (0xd8,0xde,0xe9) -- active fg
-
-------------------------------------------------------------------------
 -- XPROMPTS
 ------------------------------------------------------------------------
+
+-- Power prompt
+sysCtlPrompt :: X ()
+sysCtlPrompt = xmonadPromptCT "See you soon" commands myXPConfig
+  where
+    commands = [ ("1: Sleep"       , spawn "systemctl suspend -i")
+               , ("2: Shutdown"    , spawn "systemctl poweroff -i")
+               , ("3: Reboot"      , spawn "systemctl reboot -i")]
 
 -- Calculator prompt
 calcPrompt :: XPConfig -> String -> X ()
@@ -225,6 +213,7 @@ myXPConfig = myPromptTheme
       , autoComplete        = Nothing       -- set Just 100000 for .1 sec
       , showCompletionOnTab = False
       , searchPredicate     = fuzzyMatch
+      , sorter              = fuzzySort
       , defaultPrompter     = id
       , alwaysHighlight     = True
       , maxComplRows        = Just 5        -- set to Nothing for whole screen
@@ -288,20 +277,17 @@ myKeys c =
     , ("M-S-<Return>",  addName "Run terminal scratchpad"    $ namedScratchpadAction myScratchPads "terminal")
     , ("M-w",           addName "Run browser"                $ spawn myBrowser)
     , ("M-e",           addName "Run nvim"                   $ spawn (myTerminal ++ " -e nvim ~"))
-    , ("M-S-e",         addName "Run nvim note"              $ spawn (myTerminal ++ " -e nvim ~/Documents/note-$(date '+%Y-%m-%d')"))
+    , ("M-S-e",         addName "Run nvim note"              $ spawn (myTerminal ++ " -t myNote -e nvim ~/documents/note-$(date '+%Y-%m-%d')"))
     , ("M-<Backspace>", addName "Run Vifm"                   $ spawn myFileManager)]
 
     -- Prompts
     ^++^ subKeys "XPrompts and dmenu"
     [ ("M-p",        addName "Run shell prompt"            $ shellPrompt myXPConfig)
+    , ("M-S-g",      addName "Bring selected window"       $ windowPrompt myXPConfig Bring allWindows)
+    , ("M-g",        addName "Switch to selected window"   $ windowPrompt myXPConfig Goto allWindows)
     , ("M-c",        addName "Run qalc prompt"             $ calcPrompt myXPConfig "qalc")
-    , ("M-n",        addName "Run dmenu anotes prompt "    $ spawn "anotes")
-    , ("M-<Esc>",    addName "Run dmenu power prompt"      $ spawn "syspower")]
-
-    -- Gridselect
-    ^++^ subKeys "GridSelect"
-    [ ("M-S-g",    addName "Bring selected window"        $ bringSelected $ mygridConfig myColorizer)
-    , ("M-g",      addName "Switch to selected window"    $ goToSelected $ mygridConfig myColorizer)]
+    , ("M-<Esc>",    addName "Run power prompt"            $ sysCtlPrompt)
+    , ("M-n",        addName "Run dmenu anotes prompt "    $ spawn "anotes")]
 
     -- Layouts settings
     ^++^ subKeys "Change layouts"
