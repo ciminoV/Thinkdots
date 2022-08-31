@@ -1,7 +1,7 @@
 local ls = require("luasnip")
 local with_priority = require("user.snippets.util.utils").with_priority
 
-local math_wA_no_backslash = {
+local math_wA = {
   with_priority(ls.parser.parse_snippet({ trig = "arcsin", name = "arcsin" }, "\\arcsin "), 10),
   with_priority(ls.parser.parse_snippet({ trig = "arctan", name = "arctan" }, "\\arctan "), 10),
   with_priority(ls.parser.parse_snippet({ trig = "arcsec", name = "arcsec" }, "\\arcsec "), 10),
@@ -21,4 +21,4 @@ local math_wA_no_backslash = {
   ),
 }
 
-return math_wA_no_backslash
+return math_wA

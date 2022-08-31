@@ -3,81 +3,78 @@ local conds = require("luasnip.extras.expand_conditions")
 
 local utils = require("user.snippets.util.utils")
 local pipe = utils.pipe
-local no_backslash = utils.no_backslash
 
 local is_math = utils.with_opts(utils.is_math)
 local not_math = utils.with_opts(utils.not_math)
 
 ls.config.setup({ enable_autosnippets = true })
 
--- TEXT SNIPPETS
-ls.add_snippets("tex", {
-  ls.parser.parse_snippet(
-    { trig = "pac", name = "Package" },
-    "\\usepackage[${1:options}]{${2:package}}$0"
-  ),
-})
+-- The following convention is used for naming lua tables and respective files:
+-- 
+-- A: Automatic snippet expansion - snippets will activate as soon as their trigger
+-- matches.
+-- 
+-- w: Word boundary - With this option the snippet trigger will match when the
+-- trigger is a word boundary character. This is the default behavior.
+-- 
+-- b: Beginning of line expansion - A snippet with this option is expanded only if
+-- the trigger is the first word on the line (i.e., only whitespace precedes the
+-- trigger).
+--
+-- i: Inword expansion - Triggers are also expanded in the middle of a word.
+--
+-- r: Regular expression 
 
--- MATH SNIPPETS
-local math_i = require("./user/snippets/math_i")
-for _, snip in ipairs(math_i) do
+-- LATEX SNIPPETS
+local texsnipspets = {}
+
+for _, snip in ipairs(require("./user/snippets/texsnips/math_i")) do
   snip.condition = pipe({ is_math })
   snip.show_condition = is_math
   snip.wordTrig = false
+  table.insert(texsnipspets, snip)
 end
 
-ls.add_snippets("tex", math_i, { default_priority = 0 })
+for _, snip in ipairs(require("./user/snippets/texsnips/normal_b")) do
+  snip.condition = pipe({ conds.line_begin, not_math })
+  table.insert(texsnipspets, snip)
+end
 
--- MATH AUTOSNIPPETS
+ls.add_snippets("tex", texsnipspets, { default_priority = 0 })
+
+-- LATEX AUTOSNIPPETS
 local autosnippets = {}
 
-for _, snip in ipairs(require("./user/snippets/math_wRA_no_backslash")) do
-  snip.regTrig = true
-  snip.condition = pipe({ is_math, no_backslash })
-  table.insert(autosnippets, snip)
-end
-
-for _, snip in ipairs(require("./user/snippets/math_rA_no_backslash")) do
+for _, snip in ipairs(require("./user/snippets/texsnips/math_rA")) do
   snip.wordTrig = false
   snip.regTrig = true
-  snip.condition = pipe({ is_math, no_backslash })
+  snip.condition = pipe({ is_math })
   table.insert(autosnippets, snip)
 end
 
-for _, snip in ipairs(require("./user/snippets/normal_wA")) do
+for _, snip in ipairs(require("./user/snippets/texsnips/normal_wA")) do
   snip.condition = pipe({ not_math })
   table.insert(autosnippets, snip)
 end
 
-for _, snip in ipairs(require("./user/snippets/math_wrA")) do
+for _, snip in ipairs(require("./user/snippets/texsnips/math_wrA")) do
   snip.regTrig = true
   snip.condition = pipe({ is_math })
   table.insert(autosnippets, snip)
 end
 
-for _, snip in ipairs(require("./user/snippets/math_wA_no_backslash")) do
-  snip.condition = pipe({ is_math, no_backslash })
+for _, snip in ipairs(require("./user/snippets/texsnips/math_wA")) do
+  snip.condition = pipe({ is_math })
   table.insert(autosnippets, snip)
 end
 
-for _, snip in ipairs(require("./user/snippets/math_iA")) do
+for _, snip in ipairs(require("./user/snippets/texsnips/math_iA")) do
   snip.wordTrig = false
   snip.condition = pipe({ is_math })
   table.insert(autosnippets, snip)
 end
 
-for _, snip in ipairs(require("./user/snippets/math_iA_no_backslash")) do
-  snip.wordTrig = false
-  snip.condition = pipe({ is_math, no_backslash })
-  table.insert(autosnippets, snip)
-end
-
-for _, snip in ipairs(require("./user/snippets/math_bwA")) do
-  snip.condition = pipe({ conds.line_begin, is_math })
-  table.insert(autosnippets, snip)
-end
-
-for _, snip in ipairs(require("./user/snippets/bwA")) do
+for _, snip in ipairs(require("./user/snippets/texsnips/normal_bwA")) do
   snip.condition = pipe({ conds.line_begin, not_math })
   table.insert(autosnippets, snip)
 end

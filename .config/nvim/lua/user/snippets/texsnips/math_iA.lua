@@ -28,12 +28,16 @@ local math_iA = {
       return string.format("\\hat{%s}", snip.captures[1])
     end, {})
   ),
-
+  with_priority(ls.parser.parse_snippet({ trig = "hat", name = "hat" }, "\\hat{$1}$0 "), 10),
+  with_priority(ls.parser.parse_snippet({ trig = "bar", name = "bar" }, "\\overline{$1}$0 "), 10),
   ls.parser.parse_snippet({ trig = "td", name = "to the ... power ^{}" }, "^{$1}$0 "),
   ls.parser.parse_snippet({ trig = "rd", name = "to the ... power ^{()}" }, "^{($1)}$0 "),
   ls.parser.parse_snippet({ trig = "cb", name = "Cube ^3" }, "^3 "),
-  ls.parser.parse_snippet({ trig = "sr", name = "Square ^2" }, "^2"),
-
+  ls.parser.parse_snippet({ trig = "sq", name = "Square ^2" }, "^2"),
+  ls.parser.parse_snippet(
+    { trig = "sr", name = "\\sqrt{}" },
+    "\\sqrt{${1:${TM_SELECTED_TEXT}}} $0"
+  ),
   ls.parser.parse_snippet({ trig = "EE", name = "exists" }, "\\exists "),
   ls.parser.parse_snippet({ trig = "AA", name = "forall" }, "\\forall "),
   ls.parser.parse_snippet({ trig = "xnn", name = "xn" }, "x_{n}"),
@@ -45,7 +49,7 @@ local math_iA = {
   ls.parser.parse_snippet({ trig = "xp1", name = "x" }, "x_{n+1}"),
   ls.parser.parse_snippet({ trig = "xmm", name = "x" }, "x_{m}"),
   ls.parser.parse_snippet({ trig = "R0+", name = "R0+" }, "\\mathbb{R}_0^+"),
-
+  ls.parser.parse_snippet({ trig = "inn", name = "in " }, "\\in "),
   ls.parser.parse_snippet({ trig = "notin", name = "not in " }, "\\not\\in "),
 
   ls.parser.parse_snippet({ trig = "cc", name = "subset" }, "\\subset "),
@@ -132,6 +136,7 @@ local math_iA = {
   ls.parser.parse_snippet({ trig = "invs", name = "inverse" }, "^{-1}"),
   ls.parser.parse_snippet({ trig = "~~", name = "~" }, "\\sim "),
   ls.parser.parse_snippet({ trig = "conj", name = "conjugate" }, "\\overline{$1}$0"),
+  ls.parser.parse_snippet({ trig = "SI", name = "SI" }, "\\SI{$1}{$2}"),
 }
 
 return math_iA

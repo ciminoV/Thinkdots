@@ -39,10 +39,10 @@ local postfix_completions = function()
   return vim.tbl_map(build, vim.split(re, "|"))
 end
 
-local math_rA_no_backslash = {}
+local math_ra = {}
 
-vim.list_extend(math_rA_no_backslash, greek_postfix_completions())
-vim.list_extend(math_rA_no_backslash, postfix_completions())
-vim.list_extend(math_rA_no_backslash, { build_snippet(postfix_trig, postfix_node, "q?quad", 200) })
+vim.list_extend(math_ra, greek_postfix_completions())
+vim.list_extend(math_ra, postfix_completions())
+vim.list_extend(math_ra, { build_snippet(postfix_trig, postfix_node, "q?quad", 200) })
 
-return math_rA_no_backslash
+return math_ra
