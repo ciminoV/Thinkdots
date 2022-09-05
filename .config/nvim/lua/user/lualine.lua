@@ -19,7 +19,7 @@ local diagnostics = {
 local diff = {
   "diff",
   colored = false,
-  symbols = { added = "", modified = "", removed = "" }, -- changes diff symbols
+  symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
   cond = hide_in_width,
 }
 
@@ -33,17 +33,13 @@ local location = {
   padding = 0,
 }
 
-local spaces = function()
-  return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
-end
-
 lualine.setup {
   options = {
     globalstatus = true,
     icons_enabled = true,
     theme = "auto",
-    component_separators = { left = "", right = "" },
-    section_separators = { left = "", right = "" },
+    component_separators = { left = " ", right = " " },
+    section_separators = { left = " ", right = " " },
     disabled_filetypes = { "alpha", "dashboard" },
     always_divide_middle = true,
   },
