@@ -13,7 +13,9 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 })
 
 -- Enable spell check 
-vim.api.nvim_create_autocmd(
-    { "BufRead", "BufNewFile" },
-    { pattern = { "*.txt", "*.md", "*.tex" }, command = "setlocal spell spelllang=it,en,cjk" }
-)
+vim.api.nvim_create_autocmd( { "BufRead", "BufNewFile" }, {
+  pattern = { "*.txt", "*.md", "*.tex" },
+  callback = function ()
+    vim.cmd "setlocal spell spelllang=it,en,cjk"
+  end,
+})
