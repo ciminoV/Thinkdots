@@ -28,7 +28,6 @@ import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.DynamicProperty
-import XMonad.Hooks.WindowSwallowing
 
 -- Util
 import XMonad.Util.EZConfig
@@ -83,7 +82,7 @@ myConfig = def
     { modMask    = mod4Mask      -- Rebind Mod to the Super key
     , layoutHook = myLayout      -- Use custom layouts
     , manageHook = myManageHook  -- Match on certain windows
-    , handleEventHook = mySpotifyHook <+> myHandleEventHook
+    , handleEventHook = mySpotifyHook
     , workspaces = myWorkspaces
     , terminal   = myTerminal
     , borderWidth        = myBorderWidth
@@ -127,13 +126,9 @@ myManageHook = composeAll
     , className =? "Brave-browser"                 --> doShift ( myWorkspaces !! 1 ) -- Open browser in www workspace
     , className =? "MATLAB R2021a - academic use"  --> doShift ( myWorkspaces !! 4 ) -- Open Matlab in mlab workspace
     , title =? "myCal"                             --> doCenterFloat                 -- Open calendar floating center
-    , title =? "myNote"                            --> doCenterFloat
     , title =? "XMonad keybindings"                --> doCenterFloat
     , isDialog                                     --> doFloat
     ]<+> namedScratchpadManageHook myScratchPads
-
--- Window swallow hook
-myHandleEventHook = swallowEventHook (className =? "st" <||> className =? "terminator") (return True)
 
 -- Spotify Hook
 mySpotifyHook = composeAll [ dynamicPropertyChange "WM_NAME" (className =? "Spotify" --> doCenterFloat) ]
@@ -144,7 +139,8 @@ mySpotifyHook = composeAll [ dynamicPropertyChange "WM_NAME" (className =? "Spot
 
 myScratchPads :: [NamedScratchpad]
 myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm
-                , NS "spotify" spawnSpotify findSpotify manageSpotify ]
+                , NS "spotify" spawnSpotify findSpotify manageSpotify
+                , NS "note" spawnNote findNote manageNote ]
   where
     spawnTerm  = myTerminal ++ " -t st-scratchpad"
     findTerm   = title =? "st-scratchpad"
@@ -153,6 +149,10 @@ myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm
     spawnSpotify  = "spotify"
     findSpotify   = className =? "Spotify"
     manageSpotify = customFloating $ W.RationalRect (0.1)(0.1)(0.8)(0.8)
+
+    spawnNote  = myTerminal ++ " -t myNote -e nvim ~/documents/note-$(date '+%Y-%m-%d').md"
+    findNote   = title =? "myNote"
+    manageNote = customFloating $ W.RationalRect (0.1)(0.1)(0.8)(0.8)
 
 ------------------------------------------------------------------------
 -- LAYOUT
@@ -206,7 +206,7 @@ scrotPrompt home = do
 -- XPrompt configuration
 myXPConfig :: XPConfig
 myXPConfig = myPromptTheme
-      { promptKeymap        = vimLikeXPKeymap
+      { promptKeymap        = defaultXPKeymap
       , historySize         = 256
       , historyFilter       = id
       , defaultText         = []
@@ -245,8 +245,7 @@ hotPromptTheme = myPromptTheme
 
 -- Subtitle format
 subtitle' ::  String -> ((KeyMask, KeySym), NamedAction)
-subtitle' x = ((0,0), NamedAction $ map toUpper
-                      $ sep ++ "\n-- " ++ x ++ " --\n" ++ sep)
+subtitle' x = ((0,0), NamedAction $ map toUpper $ sep ++ "\n-- " ++ x ++ " --\n" ++ sep)
   where
     sep = replicate (6 + length x) '-'
 
@@ -277,7 +276,7 @@ myKeys c =
     , ("M-S-<Return>",  addName "Run terminal scratchpad"    $ namedScratchpadAction myScratchPads "terminal")
     , ("M-w",           addName "Run browser"                $ spawn myBrowser)
     , ("M-e",           addName "Run nvim"                   $ spawn (myTerminal ++ " -e nvim ~"))
-    , ("M-S-e",         addName "Run nvim note"              $ spawn (myTerminal ++ " -t myNote -e nvim ~/documents/note-$(date '+%Y-%m-%d')"))
+    , ("M-S-e",         addName "Run nvim note"              $ namedScratchpadAction myScratchPads "note")
     , ("M-<Backspace>", addName "Run Vifm"                   $ spawn myFileManager)]
 
     -- Prompts
