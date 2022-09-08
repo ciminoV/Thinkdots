@@ -28,6 +28,7 @@ import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.DynamicProperty
+import XMonad.Hooks.ScreenCorners
 
 -- Util
 import XMonad.Util.EZConfig
@@ -79,12 +80,13 @@ main = xmonad
 
 -- Main configuration
 myConfig = def
-    { modMask    = mod4Mask      -- Rebind Mod to the Super key
-    , layoutHook = myLayout      -- Use custom layouts
-    , manageHook = myManageHook  -- Match on certain windows
-    , handleEventHook = mySpotifyHook
-    , workspaces = myWorkspaces
-    , terminal   = myTerminal
+    { modMask            = mod4Mask
+    , layoutHook         = myLayout
+    , manageHook         = myManageHook
+    , handleEventHook    = mySpotifyHook <+> screenCornerEventHook
+    , startupHook        = myStartupHook
+    , workspaces         = myWorkspaces
+    , terminal           = myTerminal
     , borderWidth        = myBorderWidth
     , normalBorderColor  = myNormColor
     , focusedBorderColor = myFocusColor
@@ -133,6 +135,11 @@ myManageHook = composeAll
 -- Spotify Hook
 mySpotifyHook = composeAll [ dynamicPropertyChange "WM_NAME" (className =? "Spotify" --> doCenterFloat) ]
 
+-- Startup Hoook
+myStartupHook :: X ()
+myStartupHook = do
+    addScreenCorner SCLowerLeft sysCtlPrompt -- Add event to upperleft screen corner
+
 ------------------------------------------------------------------------
 -- SCRATCHPADS
 ------------------------------------------------------------------------
@@ -142,14 +149,17 @@ myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm
                 , NS "spotify" spawnSpotify findSpotify manageSpotify
                 , NS "note" spawnNote findNote manageNote ]
   where
+    -- Terminal scratchpad
     spawnTerm  = myTerminal ++ " -t st-scratchpad"
     findTerm   = title =? "st-scratchpad"
     manageTerm = customFloating $ W.RationalRect (0.1)(0.1)(0.8)(0.8)
 
+    -- Spotify scratchpad
     spawnSpotify  = "spotify"
     findSpotify   = className =? "Spotify"
     manageSpotify = customFloating $ W.RationalRect (0.1)(0.1)(0.8)(0.8)
 
+    -- Custom note scratchpad
     spawnNote  = myTerminal ++ " -t myNote -e nvim ~/documents/note-$(date '+%Y-%m-%d').md"
     findNote   = title =? "myNote"
     manageNote = customFloating $ W.RationalRect (0.1)(0.1)(0.8)(0.8)
@@ -158,7 +168,8 @@ myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm
 -- LAYOUT
 ------------------------------------------------------------------------
 
-myLayout = tiled ||| Mirror tiled ||| full ||| threeCol
+-- Modified layouts which support screen corner events
+myLayout = screenCornerLayoutHook $ tiled ||| Mirror tiled ||| full ||| threeCol
   where
     threeCol = renamed [Replace "ThreeCol"]
         $ magnifiercz' 1.3 
