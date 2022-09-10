@@ -25,6 +25,9 @@ ls.config.setup({ enable_autosnippets = true })
 --
 -- r: Regular expression 
 
+-- JSON SNIPPETS
+ls.add_snippets("json", require("./user/snippets/jsonsnip"))
+
 -- LATEX SNIPPETS
 local texsnipspets = {}
 
