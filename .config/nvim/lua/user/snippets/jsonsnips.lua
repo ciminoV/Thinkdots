@@ -18,12 +18,14 @@ local get_last_id = function(position)
     local root = syntax_tree[1]:root()
 
     -- treesitter query to match all the ids
-    local q = vim.treesitter.parse_query("json", [[
-(object
-  (pair
-    value: (number) @value
-  )
-) ]])
+    local q = vim.treesitter.parse_query("json",
+                                        [[
+                                        (object
+                                          (pair
+                                            value: (number) @value
+                                          )
+                                        ) 
+                                        ]])
 
     local result = {}
     for _, match, _ in q:iter_matches(root, bufnr, root:start(), root:end_()) do
@@ -31,7 +33,7 @@ local get_last_id = function(position)
     end
 
     -- Increase the last element
-    local my_id = tostring(tonumber(result[2])+1)
+    local my_id = tostring(tonumber(result[5])+1)
     return sn(nil, t(my_id))
   end, {})
 end
@@ -39,17 +41,21 @@ end
 local jsonsnip = {
   -- add a new book
   s("book",
-    fmt([[
-{{
-  "id": {},
-  "title": "{}",
-  "author": "{}",
-  "publisher": "{}",
-  "edition": "{}",
-  "year": "{}",
-  "pages": "{}",
-  "tags": ["{}","{}","{}"]
-}}, ]], {
+    fmt(
+      [[
+      {{
+        "id": {},
+        "title": "{}",
+        "author": "{}",
+        "publisher": "{}",
+        "edition": "{}",
+        "year": {},
+        "pages": {},
+        "ISBN": "{}",
+        "ebook": {},
+        "tags": ["{}","{}","{}"]
+      }}, 
+      ]], {
         get_last_id(1),
         i(2),
         i(3),
@@ -57,7 +63,9 @@ local jsonsnip = {
         i(5),
         i(6),
         i(7),
-        i(8),i(9),i(0) })
+        i(8),
+        i(9),
+        i(10),i(11),i(0) })
   ),
 }
 

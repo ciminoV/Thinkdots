@@ -1,14 +1,14 @@
 local ls = require("luasnip")
 local conds = require("luasnip.extras.expand_conditions")
 
-local utils = require("user.snippets.util.utils")
-local pipe = utils.pipe
-
-local is_math = utils.with_opts(utils.is_math)
-local not_math = utils.with_opts(utils.not_math)
-
 ls.config.setup({ enable_autosnippets = true })
 
+
+-- JSON SNIPPETS
+ls.add_snippets("json", require("./user/snippets/jsonsnips"))
+
+
+-- LATEX SNIPPETS
 -- The following convention is used for naming lua tables and respective files:
 -- 
 -- A: Automatic snippet expansion - snippets will activate as soon as their trigger
@@ -25,10 +25,11 @@ ls.config.setup({ enable_autosnippets = true })
 --
 -- r: Regular expression 
 
--- JSON SNIPPETS
-ls.add_snippets("json", require("./user/snippets/jsonsnip"))
+local utils = require("user.snippets.util.utils")
+local pipe = utils.pipe
+local is_math = utils.with_opts(utils.is_math)
+local not_math = utils.with_opts(utils.not_math)
 
--- LATEX SNIPPETS
 local texsnipspets = {}
 
 for _, snip in ipairs(require("./user/snippets/texsnips/math_i")) do
