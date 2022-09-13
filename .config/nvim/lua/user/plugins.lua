@@ -51,6 +51,7 @@ return packer.startup(function(use)
   use "lervag/vimtex"                   -- Latex syntax
   use "tpope/vim-surround"
   use "norcalli/nvim-colorizer.lua"
+  use "RRethy/vim-illuminate"
 
   -- Cmp plugins
   use "hrsh7th/nvim-cmp"                -- The completion plugin
@@ -67,7 +68,7 @@ return packer.startup(function(use)
   -- LSP
   use "neovim/nvim-lspconfig"           -- enable LSP
   use "williamboman/nvim-lsp-installer" -- Simple to use language server installer
-  use "RRethy/vim-illuminate"
+  use "jose-elias-alvarez/null-ls.nvim" -- Formatters
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
