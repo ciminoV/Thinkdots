@@ -23,6 +23,7 @@ local get_last_id = function(position)
 			[[
       (object
         (pair
+          key: (string) @key (#eq? @key "\"id\"")
           value: (number) @value
         )
       ) 
@@ -31,11 +32,11 @@ local get_last_id = function(position)
 
 		local result = {}
 		for _, match, _ in q:iter_matches(root, bufnr, root:start(), root:end_()) do
-			table.insert(result, vim.treesitter.query.get_node_text(match[1], bufnr))
+			table.insert(result, vim.treesitter.query.get_node_text(match[2], bufnr))
 		end
 
 		-- Increase the last element
-		local my_id = tostring(tonumber(result[5]) + 1)
+		local my_id = tostring(tonumber(result[2]) + 1)
 		return sn(nil, t(my_id))
 	end, {})
 end
