@@ -5,7 +5,7 @@ function zsh_add_file() {
 
 # Useful fzf functions
 doc(){
-    cd "$(find $HOME/Documents/* -maxdepth 1 -type d | fzf)" && vifm .
+    cd "$(find $HOME/documents/* -maxdepth 1 -type d | fzf)" && vifm .
 }
 
 cdd(){

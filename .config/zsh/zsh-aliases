@@ -21,4 +21,4 @@ alias \
     fin="~/.private/Finanza/fin" \
 
 # Use neovim for vim if present.
-[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
+[ -x "$(command -v nvim)" ] && alias vim="nvim"
