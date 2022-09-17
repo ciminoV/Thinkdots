@@ -8,7 +8,7 @@ local formatting = null_ls.builtins.formatting
 null_ls.setup {
   debug = false,
   sources = {
-    --formatting.black.with { extra_args = { "--fast" } },
-    formatting.stylua,
+    --formatting.black.with { extra_args = { "--fast" } }, -- python
+    formatting.stylua,    -- lua
   },
 }

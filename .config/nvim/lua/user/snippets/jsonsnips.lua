@@ -52,7 +52,7 @@ local jsonsnip = {
         "title": "{}",
         "author": "{}",
         "publisher": "{}",
-        "edition": "{}",
+        "edition": {},
         "series": "{}",
         "year": {},
         "pages": {},
@@ -62,19 +62,19 @@ local jsonsnip = {
       }}, 
       ]],
 			{
-				get_last_id(1),
-				i(2),
-				i(3),
-				i(4),
-				i(5),
-				i(6),
-				i(7),
-				i(8),
-				i(9),
-				i(10),
-				i(11),
-				i(12),
-				i(0),
+				get_last_id(1),   -- id
+				i(2),             -- title
+				i(3),             -- author 
+				i(4),             -- publisher
+				i(5, "0"),        -- edition
+				i(6),             -- series
+				i(7),             -- year
+				i(8),             -- pages
+				i(9),             -- ISBN
+				i(10),            -- printed
+				i(11),            -- tags1
+				i(12),            -- tags2
+				i(0),             -- tags3
 			}
 		)
 	),
