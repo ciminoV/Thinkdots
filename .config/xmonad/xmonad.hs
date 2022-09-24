@@ -96,6 +96,7 @@ myConfig = def
 -- XMOBAR
 ------------------------------------------------------------------------
 
+-- XMonad configuration of xmobar
 myXmobarPP :: PP
 myXmobarPP = def
     { ppSep             = myppSeparator " • "
@@ -128,7 +129,7 @@ myManageHook = composeAll
     , className =? "Brave-browser"                 --> doShift ( myWorkspaces !! 1 ) -- Open browser in www workspace
     , className =? "MATLAB R2021a - academic use"  --> doShift ( myWorkspaces !! 4 ) -- Open Matlab in mlab workspace
     , title =? "myCal"                             --> doCenterFloat                 -- Open calendar floating center
-    , title =? "XMonad keybindings"                --> doCenterFloat
+    , title =? "XMonad keybindings"                --> doCenterFloat                 -- Open xmonad keybindings floating center
     , isDialog                                     --> doFloat
     ]<+> namedScratchpadManageHook myScratchPads
 
@@ -138,7 +139,7 @@ mySpotifyHook = composeAll [ dynamicPropertyChange "WM_NAME" (className =? "Spot
 -- Startup Hoook
 myStartupHook :: X ()
 myStartupHook = do
-    addScreenCorner SCLowerLeft sysCtlPrompt -- Add event to upperleft screen corner
+    addScreenCorner SCLowerLeft sysCtlPrompt -- Add event to lowerleft screen corner
 
 ------------------------------------------------------------------------
 -- SCRATCHPADS
@@ -302,7 +303,7 @@ myKeys c =
     -- Layouts settings
     ^++^ subKeys "Change layouts"
     [ ("M-<Tab>",   addName "Switch Layout"          $ sendMessage NextLayout )
-    , ("M-<Space>", addName "Toggle float window"    $ withFocused toggleFloat)
+    , ("<F1>",      addName "Toggle float window"    $ withFocused toggleFloat)
     , ("M-f",       addName "Toggle full layout"     $ sendMessage $ JumpToLayout "Full")
     , ("M-t",       addName "Toggle tall layout"     $ sendMessage $ JumpToLayout "Tall")]
 
@@ -317,14 +318,14 @@ myKeys c =
 --    , ("<XF86Tools>",           addName ""     $ spawn "")
     , ("<XF86Favorites>",         addName "Run spotify scratchpad"    $ namedScratchpadAction myScratchPads "spotify")
     , ("M-<Print>",               addName "Screen selected window"    $ scrotPrompt "home")
-    , ("<Print>",                 addName "Take screenshot"           $ spawn "scrot -e 'mv $f ~/pictures' && notify-send 'Saving screenshot in' 'Pictures...'")
-    , ("<F1>",                    addName "Toggle play/pause browser" $ spawn ("mediatoggle " ++ myBrowser))]
+    , ("<Print>",                 addName "Take screenshot"           $ spawn "scrot -e 'mv $f ~/pictures' && notify-send 'Saving screenshot in' 'Pictures...'")]
 
-    -- Controls for spotify
+    -- Controls for multimedia
     ^++^ subKeys "Spotify"
-    [ ("M-s s",    addName "Toggle play/pause"    $ spawn "mediatoggle spotify")
-    , ("M-s n",    addName "Skip to next song"    $ spawn "playerctl --player=spotify next")
-    , ("M-s b",    addName "Skip to prev song"    $ spawn "playerctl --player=spotify previous")]
+    [ ("M-s s",         addName "Toggle play/pause"            $ spawn "mediatoggle spotify")
+    , ("M-s n",         addName "Skip to next song"            $ spawn "playerctl --player=spotify next")
+    , ("M-s b",         addName "Skip to prev song"            $ spawn "playerctl --player=spotify previous")
+    , ("M-<Space>",     addName "Toggle play/pause browser"    $ spawn ("mediatoggle " ++ myBrowser))]
 
     -- Resize windows
     ^++^ subKeys "Window resizing"
