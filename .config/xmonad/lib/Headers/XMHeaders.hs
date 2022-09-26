@@ -25,7 +25,7 @@ white   = "#ECEFF4"
 
 -- Variables 
 myWorkspaces :: [String]
-myWorkspaces  = [" dev ", " www ", " doc ", " fm ", " mlab ", " var "]
+myWorkspaces  = [" dev ", " www ", " doc ", " fm ", " mlab ", " var ", ""]
 
 myFont :: String
 myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=9:antialias=true:hinting=true"

@@ -139,7 +139,10 @@ mySpotifyHook = composeAll [ dynamicPropertyChange "WM_NAME" (className =? "Spot
 -- Startup Hoook
 myStartupHook :: X ()
 myStartupHook = do
-    addScreenCorner SCLowerLeft sysCtlPrompt -- Add event to lowerleft screen corner
+    addScreenCorner SCLowerLeft sysCtlPrompt    -- Add event to lowerleft screen corner
+    addScreenCorner SCLowerRight emptyWS        -- Add event to lowerright screen corner
+  where
+    emptyWS = (windows $ W.greedyView $ last $ myWorkspaces)
 
 ------------------------------------------------------------------------
 -- SCRATCHPADS
