@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Add custom script folder to PATH
 export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
 

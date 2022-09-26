@@ -6,7 +6,7 @@ alias \
 	mv="mv -iv" \
 	rm="rm -vI" 
 
-# Colorize commands when possible.
+# Colorize commands when possible
 alias \
 	ls="ls -hN --color=auto --group-directories-first" \
 	grep="grep --color=auto" \
@@ -14,11 +14,12 @@ alias \
 
 # Get faster
 alias \
-    xmhs="vim ${XMONAD_CONFIG_DIR}/xmonad.hs" \
-    zrc="vim ${ZDOTDIR}/.zshrc" \
-    vimrc="vim ${XDG_CONFIG_HOME}/nvim/init.lua" \
+    xmhs="cd ${XMONAD_CONFIG_DIR}; $EDITOR xmonad.hs" \
+    zrc="cd ${ZDOTDIR}; $EDITOR .zshrc" \
+    vimrc="cd ${XDG_CONFIG_HOME}/nvim/; $EDITOR init.lua" \
     vifm="${XDG_CONFIG_HOME}/vifm/scripts/vifmrun" \
-    fin="~/.private/Finanza/fin" \
+    fins="$HOME/private/Finanza/fin" \
+    fine="cd $HOME/.private/Finanza/; $EDITOR 2022.csv" \
 
-# Use neovim for vim if present.
+# Use neovim for vim if present
 [ -x "$(command -v nvim)" ] && alias vim="nvim"
