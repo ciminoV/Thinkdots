@@ -301,7 +301,7 @@ myKeys c =
     , ("M-g",        addName "Switch to selected window"   $ windowPrompt myXPConfig Goto allWindows)
     , ("M-c",        addName "Run qalc prompt"             $ calcPrompt myXPConfig "qalc")
     , ("M-<Esc>",    addName "Run power prompt"            $ sysCtlPrompt)
-    , ("M-n",        addName "Run dmenu anotes prompt "    $ spawn "anotes")]
+    , ("M-n",        addName "Run dmenu uninotes prompt"   $ spawn "uninotes")]
 
     -- Layouts settings
     ^++^ subKeys "Change layouts"
@@ -312,14 +312,13 @@ myKeys c =
 
     -- Multimedia keys
     ^++^ subKeys "Multimedia keys"
-    [ ("<XF86AudioMute>",         addName "Toggle audio mute"         $ spawn "pamixer -t && volumelevel")
-    , ("<XF86AudioLowerVolume>",  addName "Lower volume"              $ spawn "pamixer -u -d 5 && volumelevel")
-    , ("<XF86AudioRaiseVolume>",  addName "Raise volume"              $ spawn "pamixer -u -i 5 && volumelevel")
-    , ("<XF86MonBrightnessDown>", addName "Decrease light"            $ spawn "sudo xbacklight -dec 5 && lightlevel")
-    , ("<XF86MonBrightnessUp>",   addName "Increase light"            $ spawn "sudo xbacklight -inc 5 && lightlevel")
-    , ("<XF86Display>",           addName "Select display"            $ spawn "displayselect")
---    , ("<XF86Tools>",           addName ""     $ spawn "")
-    , ("<XF86Favorites>",         addName "Run spotify scratchpad"    $ namedScratchpadAction myScratchPads "spotify")
+    [ ("<XF86AudioMute>",         addName "Toggle audio mute"         $ spawn "pamixer -t && volumelevel")              -- F1
+    , ("<XF86AudioLowerVolume>",  addName "Lower volume"              $ spawn "pamixer -u -d 5 && volumelevel")         -- F2
+    , ("<XF86AudioRaiseVolume>",  addName "Raise volume"              $ spawn "pamixer -u -i 5 && volumelevel")         -- F3
+    , ("<XF86MonBrightnessDown>", addName "Decrease light"            $ spawn "sudo xbacklight -dec 5 && lightlevel")   -- F5
+    , ("<XF86MonBrightnessUp>",   addName "Increase light"            $ spawn "sudo xbacklight -inc 5 && lightlevel")   -- F6
+    , ("<XF86Display>",           addName "Select display"            $ spawn "displayselect")                          -- F7
+    , ("<XF86Favorites>",         addName "Run spotify scratchpad"    $ namedScratchpadAction myScratchPads "spotify")  -- F12
     , ("M-<Print>",               addName "Screen selected window"    $ scrotPrompt "home")
     , ("<Print>",                 addName "Take screenshot"           $ spawn "scrot -e 'mv $f ~/pictures' && notify-send 'Saving screenshot in' 'Pictures...'")]
 
