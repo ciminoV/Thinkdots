@@ -1,17 +1,18 @@
 #!/bin/sh
 
-# Backup my lecture notes from an android external device to a local directory.
-# Additionally copy them in a specific directory depending on the subject they're about.
+# I take lecture notes on an android device, this script allows me to backup them in a local directory.
+# Every note is a pdf file with a standard name, e.g:
+# DSP01 <- Notes of the first Digital Signal Processing lecture
 # Dependencies: adb, dmenu
 
-# Get external device directory, and local directories (source - destination)
+# External device directory and local directories (Source and Destination)
 extDir=/sdcard/note
 srcDir=$HOME/appunti
 dstDir=$HOME/documents
 
 cd $srcDir || exit 1
 
-# If device is connected check for new/updated files and pull them
+# If device is connected check if new notes has been added
 check=$(adb devices | tail -2 | awk '{print $2}')
 if [ "$check" = "device" ]; then
     adb shell ls "$extDir/*" | sed 's/[^[:print:]]//' > external.files
@@ -25,8 +26,8 @@ if [ "$check" = "device" ]; then
     done < "$srcDir"/update.files
 fi
 
-# A dmenu prompt to select specific subject notes.
-subject="$(ls -I external.files -I local.files -I update.files . | sed 's/\(.\{2\}\).*/\1/' | uniq | dmenu -i -p "Choose subject")" || exit 1
+# A dmenu prompt to select specific subject notes to backup
+subject="$(ls -I external.files -I local.files -I update.files . | sed -n 's/\(^[A-Z]*\)[0-9]\{1,\}/\1/p' | uniq | dmenu -i -p "Choose subject")" || exit 1
 dst="$(ls $dstDir | dmenu -i -p "Choose subject folder")" || exit 1
 
 # Find and copy subject notes to selected directory
