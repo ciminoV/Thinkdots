@@ -18,7 +18,7 @@ alias \
     zrc="cd ${ZDOTDIR}; $EDITOR .zshrc" \
     vimrc="cd ${XDG_CONFIG_HOME}/nvim/; $EDITOR init.lua" \
     vifm="${XDG_CONFIG_HOME}/vifm/scripts/vifmrun" \
-    fins="$HOME/private/Finanza/fin" \
+    fins="$HOME/.private/Finanza/fin" \
     fine="cd $HOME/.private/Finanza/; $EDITOR 2022.csv" \
 
 # Use neovim for vim if present
