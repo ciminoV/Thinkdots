@@ -7,6 +7,9 @@ ls.config.setup({ enable_autosnippets = true })
 -- JSON SNIPPETS
 ls.add_snippets("json", require("./user/snippets/jsonsnips"))
 
+-- MARKDOWN SNIPPETS
+ls.add_snippets("markdown", require("./user/snippets/mdsnips"))
+
 
 -- LATEX SNIPPETS
 -- The following convention is used for naming lua tables and respective files:
@@ -45,6 +48,7 @@ for _, snip in ipairs(require("./user/snippets/texsnips/normal_b")) do
 end
 
 ls.add_snippets("tex", texsnipspets, { default_priority = 0 })
+ls.add_snippets("markdown", texsnipspets, { default_priority = 0 })
 
 -- LATEX AUTOSNIPPETS
 local autosnippets = {}
