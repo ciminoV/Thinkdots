@@ -19,3 +19,11 @@ vim.api.nvim_create_autocmd( { "BufRead", "BufNewFile" }, {
     vim.cmd "setlocal spell spelllang=it,en,cjk"
   end,
 })
+
+-- Enable text conceal only in LaTeX files
+vim.api.nvim_create_autocmd( { "BufRead", "BufNewFile" }, {
+  pattern = {"*.tex" },
+  callback = function ()
+    vim.opt.conceallevel = 1
+  end,
+})
