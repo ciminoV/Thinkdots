@@ -6,7 +6,7 @@ function zsh_add_file() {
 }
 
 # Quick open vifm under documents directory
-doc(){ cd "$(find $HOME/documents/* -maxdepth 1 -type d | fzf)" && vifm . }
+doc(){ cd "$(find $HOME/documents/* -maxdepth 2 -type d | fzf)" && vifm . }
 
 # Edit scripts fast
 se(){ cd $HOME/.local/bin/ && $EDITOR $(fzf); }
