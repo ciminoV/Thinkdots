@@ -8,7 +8,7 @@
 # External device directory and local directories (Source and Destination)
 extDir=/sdcard/note
 srcDir=$HOME/appunti
-dstDir=$HOME/documents/unipd
+dstDir=$HOME/documents/laptop_sync/unipd
 
 cd $srcDir || exit 1
 
