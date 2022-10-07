@@ -46,7 +46,19 @@ local bwA = {
 		t("\\end{figure}"),
 	}),
 
-	s("eqa", {
+  -- Normal equation
+	s("eq", {
+		t({ "\\begin{equation}", "\t" }),
+		i(0),
+		t({ "", ""}),
+		t("\\label{eq:"),
+		i(1),
+		t({ "}", "" }),
+		t("\\end{equation}"),
+	}),
+
+  -- Aligned equation
+	s("aeq", {
 		t({ "\\begin{equation}", "\t" }),
 		t({ "\\begin{split}", "\t" }),
 		i(2, "x(t)"),
