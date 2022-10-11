@@ -20,10 +20,18 @@ vim.api.nvim_create_autocmd( { "BufRead", "BufNewFile" }, {
   end,
 })
 
--- Enable text conceal only in LaTeX files
+-- Enable text conceal only in LaTeX & Markdown files
 vim.api.nvim_create_autocmd( { "BufRead", "BufNewFile" }, {
-  pattern = {"*.tex" },
+  pattern = {"*.tex", "*.md"},
   callback = function ()
     vim.opt.conceallevel = 1
+  end,
+})
+
+-- Compile specific Markwdown files
+vim.api.nvim_create_autocmd( { "BufWritePost" }, {
+  pattern = {"PTLC*.md"},
+  callback = function ()
+    vim.cmd [[:! computils %]]
   end,
 })
