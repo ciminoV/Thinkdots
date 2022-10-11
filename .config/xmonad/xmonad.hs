@@ -128,7 +128,10 @@ myManageHook = composeAll
     [ className =? "Gimp"                          --> doFloat
     , className =? "Brave-browser"                 --> doShift ( myWorkspaces !! 1 ) -- Open browser in www workspace
     , className =? "MATLAB R2021a - academic use"  --> doShift ( myWorkspaces !! 4 ) -- Open Matlab in mlab workspace
+    , title =? "htop"                              --> doFloat                       -- Open htop floating
     , title =? "myCal"                             --> doCenterFloat                 -- Open calendar floating center
+    , title =? "pulsemixer"                        --> doCenterFloat                 -- Open pulsemixer floating center
+    , title =? "nmtui"                             --> doCenterFloat                 -- Open nmtui floating center
     , title =? "XMonad keybindings"                --> doCenterFloat                 -- Open xmonad keybindings floating center
     , isDialog                                     --> doFloat
     ]<+> namedScratchpadManageHook myScratchPads
