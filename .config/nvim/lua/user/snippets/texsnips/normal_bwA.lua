@@ -31,7 +31,7 @@ local bwA = {
 	}),
 
 	s("figh", {
-		t({ "\\begin{figure}[h]", "" }),
+		t({ "\\begin{figure}[ht]", "" }),
 		t({ "\\begin{center}", "" }),
 		t("\\includegraphics[width=0.95\\textwidth]{"),
 		i(1),
@@ -59,7 +59,7 @@ local bwA = {
 
   -- Aligned equation
 	s("aeq", {
-		t({ "\\begin{equation}", "\t" }),
+		t({ "\\begin{equation*}", "\t" }),
 		t({ "\\begin{split}", "\t" }),
 		i(2, "x(t)"),
 		t(" &= "),
@@ -69,8 +69,20 @@ local bwA = {
 		t("\\label{eq:"),
 		i(1),
 		t({ "}", "" }),
-		t("\\end{equation}"),
+		t("\\end{equation*}"),
 	}),
+
+  -- System of equations
+	s("seq", {
+		t({ "\\[", "\t" }),
+		i(1, "x(t)"),
+		t(" = "),
+		t({ " \\left\\{\\begin{array}{@{}l{}}", "\t"}),
+		i(0),
+    t({ "", ""}),
+		t({ "\\end{array}\\right.", "" }),
+		t("\\]"),
+  }),
 }
 
 return bwA
