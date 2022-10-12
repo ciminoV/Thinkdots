@@ -121,6 +121,7 @@ mark c ~/.config
 mark d ~/documents
 mark w ~/downloads
 mark p ~/pictures
+mark u ~/documents/laptop_sync/unipd/
 
 " ------------------------------------------------------------------------------
 
