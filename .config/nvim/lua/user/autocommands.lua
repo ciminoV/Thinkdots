@@ -12,23 +12,23 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
   end,
 })
 
--- Enable spell check 
-vim.api.nvim_create_autocmd( { "BufRead", "BufNewFile" }, {
-  pattern = { "*.txt", "*.md", "*.tex" },
+-- Enable spell check  for specific file types
+vim.api.nvim_create_autocmd( { "FileType"}, {
+  pattern = { "text", "markdown", "tex" },
   callback = function ()
     vim.cmd "setlocal spell spelllang=it,en,cjk"
   end,
 })
 
--- Enable text conceal only in LaTeX & Markdown files
-vim.api.nvim_create_autocmd( { "BufRead", "BufNewFile" }, {
-  pattern = {"*.tex", "*.md"},
+-- Enable text conceal for specific file types
+vim.api.nvim_create_autocmd( { "FileType" }, {
+  pattern = {"tex", "markdown"},
   callback = function ()
     vim.opt.conceallevel = 1
   end,
 })
 
--- Compile specific Markwdown files
+-- Compile on save specific files
 vim.api.nvim_create_autocmd( { "BufWritePost" }, {
   pattern = {"PTLC*.md"},
   callback = function ()
