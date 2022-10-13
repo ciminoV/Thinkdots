@@ -32,6 +32,6 @@ vim.api.nvim_create_autocmd( { "BufRead", "BufNewFile" }, {
 vim.api.nvim_create_autocmd( { "BufWritePost" }, {
   pattern = {"PTLC*.md"},
   callback = function ()
-    vim.cmd [[:! computils %]]
+    vim.cmd [[:silent  !computils %]]
   end,
 })
