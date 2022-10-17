@@ -304,6 +304,7 @@ myKeys c =
     , ("M-g",        addName "Switch to selected window"   $ windowPrompt myXPConfig Goto allWindows)
     , ("M-c",        addName "Run qalc prompt"             $ calcPrompt myXPConfig "qalc")
     , ("M-<Esc>",    addName "Run power prompt"            $ sysCtlPrompt)
+    , ("M-S-n",      addName "Run dmenu unibooks prompt"   $ spawn "unibooks")
     , ("M-n",        addName "Run dmenu uninotes prompt"   $ spawn "uninotes")]
 
     -- Layouts settings

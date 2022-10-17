@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Script to quickly copy uni slides from computer to android device.
+# Dependencies: adb, dmenu
+
+srcDir=$HOME/documents/laptop_sync/unipd
+dstDir=/sdcard/Books
+
+src="$srcDir/$(ls $srcDir | dmenu -i -p "Choose subject folder")/Lezioni" || exit 1
+dst="$dstDir/$(adb shell ls $dstDir -l | grep "^d" | cut -d" " -f19 | grep '\w[A-Z]' | sed 's/.$//' | dmenu -i -p "Choose subject folder")" || exit 1
+
+adb push --sync "$src"/*.pdf $dst
