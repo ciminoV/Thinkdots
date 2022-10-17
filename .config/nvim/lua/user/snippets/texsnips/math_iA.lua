@@ -28,8 +28,21 @@ local math_iA = {
       return string.format("\\hat{%s}", snip.captures[1])
     end, {})
   ),
+  s(
+    {
+      trig = "(%a)tilde",
+      wordTrig = false,
+      regTrig = true,
+      name = "tilde",
+      priority = 100,
+    },
+    f(function(_, snip)
+      return string.format("\\tilde{%s}", snip.captures[1])
+    end, {})
+  ),
   with_priority(ls.parser.parse_snippet({ trig = "hat", name = "hat" }, "\\hat{$1}$0 "), 10),
   with_priority(ls.parser.parse_snippet({ trig = "bar", name = "bar" }, "\\overline{$1}$0 "), 10),
+  with_priority(ls.parser.parse_snippet({ trig = "tilde", name = "tilde" }, "\\tilde{$1}$0 "), 10),
   ls.parser.parse_snippet({ trig = "td", name = "to the ... power ^{}" }, "^{$1}$0 "),
   ls.parser.parse_snippet({ trig = "rd", name = "to the ... power ^{()}" }, "^{($1)}$0 "),
   ls.parser.parse_snippet({ trig = "cb", name = "Cube ^3" }, "^3 "),
