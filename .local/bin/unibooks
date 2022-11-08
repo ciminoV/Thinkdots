@@ -3,7 +3,7 @@
 # Script to quickly copy uni slides from computer to android device.
 # Dependencies: adb, dmenu
 
-srcDir=$HOME/documents/laptop_sync/unipd
+srcDir=$HOME/documents/unipd
 dstDir=/sdcard/Books
 
 src="$srcDir/$(ls $srcDir | dmenu -i -p "Choose subject folder")/Lezioni" || exit 1
