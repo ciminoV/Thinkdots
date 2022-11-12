@@ -143,9 +143,9 @@ mySpotifyHook = composeAll [ dynamicPropertyChange "WM_NAME" (className =? "Spot
 myStartupHook :: X ()
 myStartupHook = do
     addScreenCorner SCLowerLeft sysCtlPrompt    -- Add event to lowerleft screen corner
-    addScreenCorner SCLowerRight emptyWS        -- Add event to lowerright screen corner
-  where
-    emptyWS = (windows $ W.greedyView $ last $ myWorkspaces)
+--    addScreenCorner SCLowerRight emptyWS        -- Add event to lowerright screen corner
+--  where
+--    emptyWS = (windows $ W.greedyView $ last $ myWorkspaces)
 
 ------------------------------------------------------------------------
 -- SCRATCHPADS
@@ -304,6 +304,7 @@ myKeys c =
     , ("M-g",        addName "Switch to selected window"   $ windowPrompt myXPConfig Goto allWindows)
     , ("M-c",        addName "Run qalc prompt"             $ calcPrompt myXPConfig "qalc")
     , ("M-<Esc>",    addName "Run power prompt"            $ sysCtlPrompt)
+    , ("M-S-p",      addName "Run passmenu"                $ spawn "passmenu")
     , ("M-S-n",      addName "Run dmenu unibooks prompt"   $ spawn "unibooks")
     , ("M-n",        addName "Run dmenu uninotes prompt"   $ spawn "uninotes")]
 
