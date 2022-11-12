@@ -115,6 +115,7 @@ local math_iA = {
   ),
   ls.parser.parse_snippet({ trig = "ceil", name = "ceil" }, "\\left\\lceil $1 \\right\\rceil $0"),
   ls.parser.parse_snippet({ trig = "OO", name = "emptyset" }, "\\O"),
+  ls.parser.parse_snippet({ trig = "CC", name = "C" }, "\\mathbb{C}"),
   ls.parser.parse_snippet({ trig = "RR", name = "R" }, "\\mathbb{R}"),
   ls.parser.parse_snippet({ trig = "QQ", name = "Q" }, "\\mathbb{Q}"),
   ls.parser.parse_snippet({ trig = "ZZ", name = "Z" }, "\\mathbb{Z}"),
