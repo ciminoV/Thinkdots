@@ -58,6 +58,7 @@ import XMonad.Prompt.Window
 import XMonad.Prompt.ConfirmPrompt
 import XMonad.Prompt.FuzzyMatch
 import XMonad.Prompt.Input
+import XMonad.Prompt.Pass
 
 -- Text
 import Text.Printf
@@ -304,7 +305,7 @@ myKeys c =
     , ("M-g",        addName "Switch to selected window"   $ windowPrompt myXPConfig Goto allWindows)
     , ("M-c",        addName "Run qalc prompt"             $ calcPrompt myXPConfig "qalc")
     , ("M-<Esc>",    addName "Run power prompt"            $ sysCtlPrompt)
-    , ("M-S-p",      addName "Run passmenu"                $ spawn "passmenu")
+    , ("M-S-p",      addName "Run passmenu"                $ passPrompt myXPConfig)
     , ("M-S-n",      addName "Run dmenu unibooks prompt"   $ spawn "unibooks")
     , ("M-n",        addName "Run dmenu uninotes prompt"   $ spawn "uninotes")]
 
