@@ -200,7 +200,7 @@ filextype {*.ps,*.eps,*.ps.gz},<application/postscript>
 " Djvu
 filextype {*.djvu},<image/vnd.djvu>
         \ {View in zathura}
-        \ zathura %f,
+        \ zathura %f &,
         \ {View in apvlv}
         \ apvlv %f,
 
