@@ -306,6 +306,8 @@ myKeys c =
     , ("M-c",        addName "Run qalc prompt"             $ calcPrompt myXPConfig "qalc")
     , ("M-<Esc>",    addName "Run power prompt"            $ sysCtlPrompt)
     , ("M-S-p",      addName "Run passmenu"                $ passPrompt myXPConfig)
+    , ("M-d m",      addName "Run dmenu mount prompt"      $ spawn "dmount")
+    , ("M-d u",      addName "Run dmenu unmount prompt"    $ spawn "dumount")
     , ("M-S-n",      addName "Run dmenu unibooks prompt"   $ spawn "unibooks")
     , ("M-n",        addName "Run dmenu uninotes prompt"   $ spawn "uninotes")]
 
