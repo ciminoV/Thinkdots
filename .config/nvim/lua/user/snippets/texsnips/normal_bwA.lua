@@ -77,7 +77,7 @@ local bwA = {
 		t({ "\\[", "\t" }),
 		i(1, "x(t)"),
 		t(" = "),
-		t({ " \\left\\{\\begin{array}{@{}l@{}}", "\t"}),
+		t({ " \\left\\{\\begin{array}{@{}lr}", "\t"}),
 		i(0),
     t({ "", ""}),
 		t({ "\\end{array}\\right.", "" }),

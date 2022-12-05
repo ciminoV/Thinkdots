@@ -41,6 +41,23 @@ local b = {
 		t({ "", "" }),
 		t({ "\\end{document}", "" }),
 	}),
+
+  s("exercise", {
+    t("\\textbf{\\textit{Exercise"),
+    i(1),
+    t({ "}}", ""}),
+    t({ "", ""}),
+    t({ "\\begin{tcolorbox}[colback=lightgray!50]", ""}),
+    i(2),
+    t({ "", ""}),
+    t({ "\\end{tcolorbox}", ""}),
+    t({ "", ""}),
+    i(3),
+    t({ "", ""}),
+    t({ "\\par\\noindent\\rule{\\textwidth}{0.4pt}", ""}),
+    t({ "", ""}),
+    i(0),
+  }),
 }
 
 return b
