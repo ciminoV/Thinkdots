@@ -27,8 +27,8 @@ if [ "$check" = "device" ]; then
 fi
 
 # A dmenu prompt to select specific subject notes to backup
-subject="$(ls -I external.files -I local.files -I update.files . | sed -n 's/\(^[A-Z]*\)[0-9]\{1,\}\.pdf/\1/p' | uniq | dmenu -i -p "Choose subject")" || exit 1
-dst="$(ls $dstDir | dmenu -i -p "Choose subject folder")" || exit 1
+subject="$(ls -I external.files -I local.files -I update.files . | sed -n 's/\(^[A-Z]*\)[0-9]\{1,\}\.pdf/\1/p' | uniq | dmenu -i -l 5 -p "Choose subject")" || exit 1
+dst="$(ls $dstDir | dmenu -i -l 5 -p "Choose subject folder")" || exit 1
 
 # Find and copy subject notes to selected directory
 find . -iregex "./$subject.*\.pdf" -exec cp -f {} "$dstDir/$dst/Appunti/" \; && notify-send "Appunti di $dst correttamente copiati"
