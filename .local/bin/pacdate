@@ -1,13 +1,13 @@
 #!/bin/sh
 
-# A script to backup and upgrade the system
+# Script to backup and upgrade the system
 # Dependencies: reflector, btrfs
 
 sudo btrfs subv snapshot /home /home/.snapshots/$(date "+%Y-%m-%d")
 
+sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 sudo reflector --country Italy --age 12 --sort rate --save /etc/pacman.d/mirrorlist
 
-sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 sudo pacman -Syu
 
 cd ${XMONAD_CONFIG_DIR}
