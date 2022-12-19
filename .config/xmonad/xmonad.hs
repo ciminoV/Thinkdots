@@ -154,8 +154,7 @@ myStartupHook = do
 
 myScratchPads :: [NamedScratchpad]
 myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm
-                , NS "spotify" spawnSpotify findSpotify manageSpotify
-                , NS "note" spawnNote findNote manageNote ]
+                , NS "spotify" spawnSpotify findSpotify manageSpotify ]
   where
     -- Terminal scratchpad
     spawnTerm  = myTerminal ++ " -t st-scratchpad"
@@ -166,11 +165,6 @@ myScratchPads = [ NS "terminal" spawnTerm findTerm manageTerm
     spawnSpotify  = "spotify"
     findSpotify   = className =? "Spotify"
     manageSpotify = customFloating $ W.RationalRect (0.1)(0.1)(0.8)(0.8)
-
-    -- Custom note scratchpad
-    spawnNote  = myTerminal ++ " -t myNote -e nvim ~/documents/note-$(date '+%Y-%m-%d').md"
-    findNote   = title =? "myNote"
-    manageNote = customFloating $ W.RationalRect (0.1)(0.1)(0.8)(0.8)
 
 ------------------------------------------------------------------------
 -- LAYOUT
@@ -294,8 +288,8 @@ myKeys c =
     [ ("M-<Return>",    addName "Run terminal"               $ spawn myTerminal)
     , ("M-S-<Return>",  addName "Run terminal scratchpad"    $ namedScratchpadAction myScratchPads "terminal")
     , ("M-w",           addName "Run browser"                $ spawn myBrowser)
-    , ("M-e",           addName "Run nvim"                   $ spawn (myTerminal ++ " -e nvim ~"))
-    , ("M-S-e",         addName "Run nvim note"              $ namedScratchpadAction myScratchPads "note")
+    , ("M-e",           addName "Run dmenu notes prompt"     $ spawn "dnotes")
+    , ("M-S-e",         addName "Run nvim"                   $ spawn (myTerminal ++ " -e nvim ~/documents/notes/"))
     , ("M-<Backspace>", addName "Run Vifm"                   $ spawn myFileManager)]
 
     -- Prompts
