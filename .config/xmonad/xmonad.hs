@@ -308,7 +308,7 @@ myKeys c =
     -- Layouts settings
     ^++^ subKeys "Change layouts"
     [ ("M-<Tab>",   addName "Switch Layout"          $ sendMessage NextLayout )
-    , ("<F1>",      addName "Toggle float window"    $ withFocused toggleFloat)
+    , ("M-<F2>",    addName "Toggle float window"    $ withFocused toggleFloat)
     , ("M-f",       addName "Toggle full layout"     $ sendMessage $ JumpToLayout "Full")
     , ("M-t",       addName "Toggle tall layout"     $ sendMessage $ JumpToLayout "Tall")]
 
