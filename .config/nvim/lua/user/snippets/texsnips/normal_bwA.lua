@@ -33,7 +33,7 @@ local bwA = {
 	s("figh", {
 		t({ "\\begin{figure}[ht]", "" }),
 		t({ "\\begin{center}", "" }),
-		t("\\includegraphics[width=0.95\\textwidth]{"),
+		t("\\includegraphics[width=0.55\\textwidth]{"),
 		i(1),
 		t({ "}", "" }),
 		t({ "\\end{center} ", "" }),
