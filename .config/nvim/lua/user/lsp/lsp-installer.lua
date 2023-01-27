@@ -7,7 +7,8 @@ local servers = {
   "sumneko_lua",
   "texlab",
   "bashls",
-  "clangd"
+  "clangd",
+  "gopls"
 }
 
 lsp_installer.setup()
