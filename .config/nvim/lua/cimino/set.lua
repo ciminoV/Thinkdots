@@ -5,9 +5,9 @@ vim.opt.relativenumber = true
 vim.opt.fileencoding = "utf-8"                  -- the encoding written to a file
 vim.opt.clipboard = "unnamedplus"               -- allows neovim to access the system clipboard
 
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
 vim.opt.smartcase = true
