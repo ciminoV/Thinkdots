@@ -85,7 +85,6 @@ myConfig = def
     , layoutHook         = myLayout
     , manageHook         = myManageHook
     , handleEventHook    = mySpotifyHook <+> screenCornerEventHook
-    , startupHook        = myStartupHook
     , workspaces         = myWorkspaces
     , terminal           = myTerminal
     , borderWidth        = myBorderWidth
@@ -139,14 +138,6 @@ myManageHook = composeAll
 
 -- Spotify Hook
 mySpotifyHook = composeAll [ dynamicPropertyChange "WM_NAME" (className =? "Spotify" --> doCenterFloat) ]
-
--- Startup Hoook
-myStartupHook :: X ()
-myStartupHook = do
-    addScreenCorner SCLowerLeft sysCtlPrompt    -- Add event to lowerleft screen corner
---    addScreenCorner SCLowerRight emptyWS        -- Add event to lowerright screen corner
---  where
---    emptyWS = (windows $ W.greedyView $ last $ myWorkspaces)
 
 ------------------------------------------------------------------------
 -- SCRATCHPADS
