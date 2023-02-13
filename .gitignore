@@ -1,0 +1,8 @@
+.zcompdump
+plugin/
+plugins/
+!after/plugins/
+vifm-help.txt
+*.hi
+*.o
+*.json*
