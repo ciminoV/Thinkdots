@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd $HOME/documents/notes/
+cd $HOME/.private/notes/
 
 ls | dmenu -p "Open note" -l 10 | xargs st -e nvim
 # Todo: aggiungere un file nuovo nella cartella e controllare se modificato, e in caso crearne un'altro con data corrente
