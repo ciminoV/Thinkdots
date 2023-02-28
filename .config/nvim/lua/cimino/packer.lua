@@ -38,6 +38,9 @@ return require('packer').startup(function(use)
   -- Terminal
   use { "akinsho/toggleterm.nvim", tag = '*' }
 
+  -- Latex
+  use('lervag/vimtex')
+
   -- LSP
   use {
     'VonHeikemen/lsp-zero.nvim',
