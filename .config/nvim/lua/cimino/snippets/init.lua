@@ -1,15 +1,8 @@
 local ls = require("luasnip")
 local conds = require("luasnip.extras.expand_conditions")
 
-ls.config.setup({ enable_autosnippets = true })
-
-
 -- JSON SNIPPETS
-ls.add_snippets("json", require("./user/snippets/jsonsnips"))
-
--- MARKDOWN SNIPPETS
-ls.add_snippets("markdown", require("./user/snippets/mdsnips"))
-
+ls.add_snippets("json", require("./cimino/snippets/jsonsnips"))
 
 -- LATEX SNIPPETS
 -- The following convention is used for naming lua tables and respective files:
@@ -28,61 +21,60 @@ ls.add_snippets("markdown", require("./user/snippets/mdsnips"))
 --
 -- r: Regular expression 
 
-local utils = require("user.snippets.util.utils")
+local utils = require("cimino.snippets.util.utils")
 local pipe = utils.pipe
 local is_math = utils.with_opts(utils.is_math)
 local not_math = utils.with_opts(utils.not_math)
 
 local texsnipspets = {}
 
-for _, snip in ipairs(require("./user/snippets/texsnips/math_i")) do
+for _, snip in ipairs(require("./cimino/snippets/texsnips/math_i")) do
   snip.condition = pipe({ is_math })
   snip.show_condition = is_math
   snip.wordTrig = false
   table.insert(texsnipspets, snip)
 end
 
-for _, snip in ipairs(require("./user/snippets/texsnips/normal_b")) do
+for _, snip in ipairs(require("./cimino/snippets/texsnips/normal_b")) do
   snip.condition = pipe({ conds.line_begin, not_math })
   table.insert(texsnipspets, snip)
 end
 
 ls.add_snippets("tex", texsnipspets, { default_priority = 0 })
-ls.add_snippets("markdown", texsnipspets, { default_priority = 0 })
 
 -- LATEX AUTOSNIPPETS
 local autosnippets = {}
 
-for _, snip in ipairs(require("./user/snippets/texsnips/math_rA")) do
+for _, snip in ipairs(require("./cimino/snippets/texsnips/math_rA")) do
   snip.wordTrig = false
   snip.regTrig = true
   snip.condition = pipe({ is_math })
   table.insert(autosnippets, snip)
 end
 
-for _, snip in ipairs(require("./user/snippets/texsnips/normal_wA")) do
+for _, snip in ipairs(require("./cimino/snippets/texsnips/normal_wA")) do
   snip.condition = pipe({ not_math })
   table.insert(autosnippets, snip)
 end
 
-for _, snip in ipairs(require("./user/snippets/texsnips/math_wrA")) do
+for _, snip in ipairs(require("./cimino/snippets/texsnips/math_wrA")) do
   snip.regTrig = true
   snip.condition = pipe({ is_math })
   table.insert(autosnippets, snip)
 end
 
-for _, snip in ipairs(require("./user/snippets/texsnips/math_wA")) do
+for _, snip in ipairs(require("./cimino/snippets/texsnips/math_wA")) do
   snip.condition = pipe({ is_math })
   table.insert(autosnippets, snip)
 end
 
-for _, snip in ipairs(require("./user/snippets/texsnips/math_iA")) do
+for _, snip in ipairs(require("./cimino/snippets/texsnips/math_iA")) do
   snip.wordTrig = false
   snip.condition = pipe({ is_math })
   table.insert(autosnippets, snip)
 end
 
-for _, snip in ipairs(require("./user/snippets/texsnips/normal_bwA")) do
+for _, snip in ipairs(require("./cimino/snippets/texsnips/normal_bwA")) do
   snip.condition = pipe({ conds.line_begin, not_math })
   table.insert(autosnippets, snip)
 end

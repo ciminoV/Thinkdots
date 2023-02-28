@@ -27,11 +27,3 @@ vim.api.nvim_create_autocmd( { "FileType" }, {
     vim.opt.conceallevel = 1
   end,
 })
-
--- Compile on save specific files
-vim.api.nvim_create_autocmd( { "BufWritePost" }, {
-  pattern = {"PTLC*.md"},
-  callback = function ()
-    vim.cmd [[:silent  !computils %]]
-  end,
-})

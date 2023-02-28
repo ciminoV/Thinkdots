@@ -1,5 +1,5 @@
 local ls = require("luasnip")
-local with_priority = require("user.snippets.util.utils").with_priority
+local with_priority = require("cimino.snippets.util.utils").with_priority
 
 local math_wA = {
   with_priority(ls.parser.parse_snippet({ trig = "arcsin", name = "arcsin" }, "\\arcsin "), 10),

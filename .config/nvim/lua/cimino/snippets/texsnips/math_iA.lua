@@ -1,7 +1,7 @@
 local ls = require("luasnip")
 local s = ls.snippet
 local f = ls.function_node
-local with_priority = require("user.snippets.util.utils").with_priority
+local with_priority = require("cimino.snippets.util.utils").with_priority
 
 local math_iA = {
   s(
