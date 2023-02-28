@@ -4,7 +4,7 @@ if not status_ok then
 end
 
 local servers = {
-  "sumneko_lua",
+  "lua_ls",
   "texlab",
   "bashls",
   "clangd",
@@ -26,8 +26,8 @@ for _, server in pairs(servers) do
     capabilities = require("user.lsp.handlers").capabilities,
   }
 
-  if server == "sumneko_lua" then
-    local sumneko_opts = require "user.lsp.settings.sumneko_lua"
+  if server == "lua_ls" then
+    local sumneko_opts = require "user.lsp.settings.lua_ls"
     opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
   end
 
