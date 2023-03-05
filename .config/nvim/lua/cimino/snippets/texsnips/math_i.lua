@@ -70,6 +70,10 @@ local math_i = {
     { trig = "sequence", name = "Sequence indexed by n, from m to infinity" },
     "(${1:a}_${2:n})_{${2:n}=${3:m}}^{${4:\\infty}}"
   ),
+  ls.parser.parse_snippet(
+    { trig = "bold", name = "Bold math symbol" },
+    "\\boldsymbol{${1:${TM_SELECTED_TEXT}}}"
+  ),
 }
 
 return math_i

@@ -15,6 +15,7 @@ local b = {
 		t({ "\\usepackage{amsmath, amssymb}", "" }),
 		t({ "\\usepackage{imakeidx}", "" }),
 		t({ "\\usepackage{graphicx}", "" }),
+		t({ "\\usepackage{fancyhdr}", "" }),
 		t({ "\\graphicspath{ {./images/} }", "" }),
 		t({ "%%%%%%%%%%%%%%%%%% Margins %%%%%%%%%%%%%%%%%%%%%%", "" }),
     t({ "\\topmargin = 0cm", ""}),
