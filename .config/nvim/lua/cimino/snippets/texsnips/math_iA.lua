@@ -130,6 +130,7 @@ local math_iA = {
   ls.parser.parse_snippet({ trig = "uuu", name = "bigcup" }, "\\bigcup_{${1:i \\in ${2: I}}} $0"),
   ls.parser.parse_snippet({ trig = "DD", name = "D" }, "\\mathbb{D}"),
   ls.parser.parse_snippet({ trig = "HH", name = "H" }, "\\mathbb{H}"),
+  ls.parser.parse_snippet({ trig = "PP", name = "probability" }, "\\mathbb{P}"),
   ls.parser.parse_snippet({ trig = "lll", name = "l" }, "\\ell"),
   with_priority(
     ls.parser.parse_snippet(
