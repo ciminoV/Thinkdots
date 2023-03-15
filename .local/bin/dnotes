@@ -1,6 +1,5 @@
 #!/bin/sh
 
-cd $HOME/.private/notes/
+cd $HOME/documents/notes/
 
-ls | dmenu -p "Open note" -l 10 | xargs st -e nvim
-# Todo: aggiungere un file nuovo nella cartella e controllare se modificato, e in caso crearne un'altro con data corrente
+ls -I "index.json" | dmenu -i -p "Open note" -l 10 | xargs -d '\n' st -e nvim
