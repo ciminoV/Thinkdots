@@ -61,14 +61,11 @@ local bwA = {
 	s("aeq", {
 		t({ "\\begin{equation*}", "\t" }),
 		t({ "\\begin{split}", "\t" }),
-		i(2, "x(t)"),
+		i(1, "x(t)"),
 		t(" &= "),
 		i(0),
 		t({ " \\\\", "\t"}),
-		t({ "\\end{split} ", "\t" }),
-		t("\\label{eq:"),
-		i(1),
-		t({ "}", "" }),
+		t({ "\\end{split} ", "" }),
 		t("\\end{equation*}"),
 	}),
 
