@@ -122,6 +122,7 @@ mark d ~/documents
 mark w ~/downloads
 mark p ~/pictures
 mark u ~/documents/unipd/
+mark z ~/.private/
 
 " ------------------------------------------------------------------------------
 
