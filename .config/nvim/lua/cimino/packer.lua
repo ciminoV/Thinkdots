@@ -41,6 +41,18 @@ return require('packer').startup(function(use)
 
   -- Latex
   use('lervag/vimtex')
+  use {
+    "iurimateus/luasnip-latex-snippets.nvim",
+    -- vimtex isn't required if using treesitter
+    requires = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
+    config = function()
+      require'luasnip-latex-snippets'.setup({
+		use_treesitter = false,
+		allow_on_markdown = false,
+	  })
+      require("luasnip").config.setup { enable_autosnippets = true }
+    end,
+  }
 
   -- LSP
   use {

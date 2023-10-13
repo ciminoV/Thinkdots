@@ -1,12 +1,20 @@
 local ls = require("luasnip")
+local utils = require("luasnip-latex-snippets.util.utils")
+local not_math = utils.with_opts(utils.not_math, false)
 
-local normal_wA = {
-  ls.parser.parse_snippet({ trig = "mk", name = "Math" }, "\\( ${1:${TM_SELECTED_TEXT}} \\)$0"),
+local s = ls.snippet
+local i = ls.insert_node
+local t = ls.text_node
 
-  ls.parser.parse_snippet(
-    { trig = "dm", name = "Block Math" },
-    "\\[\n\t${1:${TM_SELECTED_TEXT}}\n\\] $0"
-  ),
+local M = {
+	s({ trig = "dm", snippetType = "autosnippet", priority = 10 }, {
+		t({ "", "" }),
+		t({ "\\[", "" }),
+		i(1),
+		t({ "", "" }),
+		t({ "\\]", "" }),
+		i(0),
+	}, { condition = not_math }),
 }
 
-return normal_wA
+return M

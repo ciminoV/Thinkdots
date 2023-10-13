@@ -1,35 +1,15 @@
 local ls = require("luasnip")
+local utils = require("luasnip-latex-snippets.util.utils")
+local conds = require("luasnip.extras.expand_conditions")
+local pipe = utils.pipe
+
+local not_math = utils.with_opts(utils.not_math, false)
+
 local s = ls.snippet
 local t = ls.text_node
 local i = ls.insert_node
 
-local bwA = {
-	s({ trig = "ali", name = "Align" }, { t({ "\\begin{align*}", "\t" }), i(1), t({ "", ".\\end{align*}" }) }),
-
-	ls.parser.parse_snippet({ trig = "beg", name = "begin{} / end{}" }, "\\begin{$1}\n\t$0\n\\end{$1}"),
-
-	ls.parser.parse_snippet({ trig = "case", name = "cases" }, "\\begin{cases}\n\t$1\n\\end{cases}"),
-
-	s({ trig = "bigfun", name = "Big function" }, {
-		t({ "\\begin{align*}", "\t" }),
-		i(1),
-		t(":"),
-		t(" "),
-		i(2),
-		t("&\\longrightarrow "),
-		i(3),
-		t({ " \\", "\t" }),
-		i(4),
-		t("&\\longmapsto "),
-		i(1),
-		t("("),
-		i(4),
-		t(")"),
-		t(" = "),
-		i(0),
-		t({ "", ".\\end{align*}" }),
-	}),
-
+local M = {
 	s("figh", {
 		t({ "\\begin{figure}[ht]", "" }),
 		t({ "\\begin{center}", "" }),
@@ -44,7 +24,7 @@ local bwA = {
 		i(0),
 		t({ "}", "" }),
 		t("\\end{figure}"),
-	}),
+	}, {condition = pipe({conds.line_begin, not_math})}),
 
   -- Normal equation
 	s("eq", {
@@ -55,7 +35,7 @@ local bwA = {
 		i(1),
 		t({ "}", "" }),
 		t("\\end{equation}"),
-	}),
+	}, {condition = pipe({conds.line_begin, not_math})}),
 
   -- Aligned equation
 	s("aeq", {
@@ -67,7 +47,7 @@ local bwA = {
 		t({ " \\\\", "\t"}),
 		t({ "\\end{split} ", "" }),
 		t("\\end{equation*}"),
-	}),
+	}, {condition = pipe({conds.line_begin, not_math})}),
 
   -- System of equations
 	s("seq", {
@@ -79,7 +59,7 @@ local bwA = {
     t({ "", ""}),
 		t({ "\\end{array}\\right.", "" }),
 		t("\\]"),
-  }),
+  }, {condition = pipe({conds.line_begin, not_math})}),
 }
 
-return bwA
+return M
