@@ -147,6 +147,7 @@ command! make !!make %a
 command! mkcd :mkdir %a | cd %a
 command! vgrep nvim "+grep %a"
 command! reload :write | restart full
+command! dragon dragon-drop -a -x %f
 
 " ------------------------------------------------------------------------------
 
@@ -515,6 +516,8 @@ nnoremap <a-i> :sync<cr>
 nnoremap <a-o> :sync %c<cr>
 " Swap panes
 nnoremap <c-u> <c-w>x
+
+nmap <C-d> :dragon<CR>
 
 " ------------------------------------------------------------------------------
 
