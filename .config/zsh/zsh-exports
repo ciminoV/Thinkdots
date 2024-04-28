@@ -2,7 +2,7 @@
 
 # Add custom script folder to PATH
 export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
-source /home/cimino/documents/unipd/DESERT_Underwater/DESERT_buildCopy_LOCAL/environment
+#source /home/cimino/documents/unipd/DESERT_Underwater/DESERT_buildCopy_LOCAL/environment
 # History in cache directory
 HISTSIZE=10000000
 SAVEHIST=10000000

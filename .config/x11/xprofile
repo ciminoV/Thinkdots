@@ -15,6 +15,9 @@ xsetroot -cursor_name left_ptr
 # Get speedy keys
 xset r rate 210 40
 
+# Disable screen save for inactivity
+xset s off
+
 # Lock the screen before going to sleep
 xss-lock -- /usr/local/bin/slock &
 

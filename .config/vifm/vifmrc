@@ -123,6 +123,7 @@ mark w ~/downloads
 mark p ~/pictures
 mark u ~/documents/unipd/
 mark z ~/.private/
+mark s ~/documents/unipd/DESERT_Underwater_private/DESERT_Framework/DESERT/samples/desert_samples/
 
 " ------------------------------------------------------------------------------
 
