@@ -9,14 +9,6 @@ vim.api.nvim_create_user_command("NoteRemove", "!python3 " .. script_path .. "re
 local simple_augroup = vim.api.nvim_create_augroup("simplesync", { clear = false })
 local note_path = vim.fn.expand("$HOME") .. "/documents/notes/"
 
---vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
---	pattern = { note_path .. "*.md" },
---  group = simple_augroup,
---  callback = function ()
---    vim.cmd.NoteSync()
---  end
---})
-
 vim.api.nvim_create_autocmd({ "BufWritePost", "BufLeave" }, {
 	pattern = { note_path .. "*.md" },
   group = simple_augroup,
