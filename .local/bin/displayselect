@@ -57,6 +57,18 @@ onescreen() { # If only one output available or chosen.
 postrun() { # Stuff to run to clean up.
     nitrogen --restore &
     { killall dunst ; setsid -f dunst ;} >/dev/null 2>&1 # Restart dunst to ensure proper location on screen
+
+	# Manually update the DPI
+	dpi=$(echo "96\\n144\\n192" | dmenu -i -p "Select DPI")
+	echo "Xft.dpi: $dpi" | xrdb -override -
+
+	# Restart apps which use gnome settings
+	dpi_xsd=$(echo $dpi*1024 | bc)
+	sed -i -E "/DPI/s/[0-9.]+/$dpi_xsd/" $XDG_CONFIG_HOME/xsettingsd/xsettingsd.conf
+	killall -HUP xsettingsd
+
+	# Restart xmonad
+	xmonad --restart
     }
 
 # Get all possible displays
@@ -67,7 +79,7 @@ screens=$(echo "$allposs" | awk '/ connected/ {print $1}')
 
 # If there's only one screen
 [ "$(echo "$screens" | wc -l)" -lt 2 ] &&
-    { onescreen "$screens"; postrun; notify-send "Only one screen detected." "Using it in its optimal settings...";  exit ;}
+    { onescreen "$screens"; notify-send "Only one screen detected." "Using it in its optimal settings...";  exit ;}
 
 # Get user choice including multi-monitor and manual selection:
 chosen=$(printf "%s\\nmulti-monitor\\nmanual selection" "$screens" | dmenu -i -p "Select display arangement:") &&
