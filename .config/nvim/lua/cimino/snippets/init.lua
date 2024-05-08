@@ -13,21 +13,21 @@ ls.add_snippets("json", require("./cimino/snippets/jsonsnips"))
 -- the trigger is the first word on the line (i.e., only whitespace precedes the
 -- trigger).
 -- i: Inword expansion - Triggers are also expanded in the middle of a word.
--- r: Regular expression 
+-- r: Regular expression
 local autosnippets = {}
 
 for _, snips in ipairs(require("./cimino/snippets/texsnips/normal_b")) do
-   table.insert(autosnippets, snips)
+	table.insert(autosnippets, snips)
 end
 
 for _, snips in ipairs(require("./cimino/snippets/texsnips/normal_wA")) do
-   table.insert(autosnippets, snips)
+	table.insert(autosnippets, snips)
 end
 
 for _, snips in ipairs(require("./cimino/snippets/texsnips/normal_bwA")) do
-   table.insert(autosnippets, snips)
- end
+	table.insert(autosnippets, snips)
+end
 
 ls.add_snippets("tex", autosnippets, {
-    type = "autosnippets",
+	type = "autosnippets",
 })
