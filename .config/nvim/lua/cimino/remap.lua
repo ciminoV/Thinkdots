@@ -39,6 +39,7 @@ vim.keymap.set("n", "mv", ":! opout %<CR><CR>")
 
 -- Nice remaps
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("n", "<C-i>", "<C-a>")
 
 -- VimTex
 vim.keymap.set("n", "<leader>vv", ":VimtexView<CR>")
