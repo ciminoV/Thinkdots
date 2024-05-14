@@ -52,6 +52,7 @@ multimon() { # Multi-monitor handler.
 
 onescreen() { # If only one output available or chosen.
     xrandr --output "$1" --auto --scale 1.0x1.0 $(echo "$allposs" | grep -v "\b$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ' -)
+	postrun
     }
 
 postrun() { # Stuff to run to clean up.
@@ -60,17 +61,19 @@ postrun() { # Stuff to run to clean up.
 
 	# Manually update the DPI
 	dpi=$(echo "96\\n144\\n192" | dmenu -i -p "Select DPI")
-	echo "Xft.dpi: $dpi" | xrdb -override -
+	if [ -n dpi ]; then
+		echo "Xft.dpi: $dpi" | xrdb -override -
 
-	# Restart apps which use gnome settings
-	dpi_xsd=$(echo "${dpi}*1024" | bc)
-	sed -i -E "/DPI/s/[0-9]+/$dpi_xsd/" $XDG_CONFIG_HOME/xsettingsd/xsettingsd.conf
-	killall -HUP xsettingsd
+		# Restart apps which use gnome settings
+		dpi_xsd=$(echo "${dpi}*1024" | bc)
+		sed -i -E "/DPI/s/[0-9]+/$dpi_xsd/" $XDG_CONFIG_HOME/xsettingsd/xsettingsd.conf
+		killall -HUP xsettingsd
 
-	# Update st font size
-	pixel_size=$(echo "${dpi}/16+9" | bc)
-	sed -i -E "/pixelsize/s/[0-9]+/${pixel_size}/" $XDG_CONFIG_HOME/st/config.h
-	cd $XDG_CONFIG_HOME/st/ && sudo -A make clean install
+		# Update st font size
+		pixel_size=$(echo "${dpi}/16+9" | bc)
+		sed -i -E "/pixelsize/s/[0-9]+/${pixel_size}/" $XDG_CONFIG_HOME/st/config.h
+		cd $XDG_CONFIG_HOME/st/ && sudo -A make clean install
+	fi
 
 	# Restart xmonad
 	xmonad --restart
