@@ -299,7 +299,7 @@ myKeys c =
     -- Layouts settings
     ^++^ subKeys "Change layouts"
     [ ("M-<Tab>",   addName "Switch Layout"          $ sendMessage NextLayout )
-    , ("M-<F2>",    addName "Toggle float window"    $ withFocused toggleFloat)
+    , ("M-M1-f",    addName "Toggle float window"    $ withFocused toggleFloat)
     , ("M-f",       addName "Toggle full layout"     $ sendMessage $ JumpToLayout "Full")
     , ("M-t",       addName "Toggle tall layout"     $ sendMessage $ JumpToLayout "Tall")]
 
@@ -313,14 +313,14 @@ myKeys c =
     , ("<XF86MonBrightnessUp>",   addName "Increase light"            $ spawn "sudo xbacklight -inc 5 && lightlevel")                               -- F6
     , ("<XF86Display>",           addName "Select display"            $ spawn "displayselect")                                                      -- F7
     , ("<XF86Favorites>",         addName "Run spotify scratchpad"    $ namedScratchpadAction myScratchPads "spotify")                              -- F12
-	, ("<F1>",					  addName "Toggle audio mute"         $ spawn "pamixer -t && volumelevel")
-	, ("<F2>",					  addName "Lower volume"              $ spawn "pamixer -u -d 5 && volumelevel")
-	, ("<F3>",					  addName "Raise volume"              $ spawn "pamixer -u -i 5 && volumelevel")
-	, ("<F4>",					  addName "Toggle mic mute"           $ spawn "pamixer --source \"alsa_input.pci-0000_00_1f.3.analog-stereo\" -t")
-	, ("<F5>",					  addName "Decrease light"            $ spawn "sudo xbacklight -dec 5 && lightlevel")
-	, ("<F6>",					  addName "Increase light"            $ spawn "sudo xbacklight -inc 5 && lightlevel")
-	, ("<F7>",					  addName "Select display"            $ spawn "displayselect")
-	, ("<F12>",					  addName "Run spotify scratchpad"    $ namedScratchpadAction myScratchPads "spotify")
+	, ("M1-<F1>",					  addName "Toggle audio mute"         $ spawn "pamixer -t && volumelevel")
+	, ("M1-<F2>",					  addName "Lower volume"              $ spawn "pamixer -u -d 5 && volumelevel")
+	, ("M1-<F3>",					  addName "Raise volume"              $ spawn "pamixer -u -i 5 && volumelevel")
+	, ("M1-<F4>",					  addName "Toggle mic mute"           $ spawn "pamixer --source \"alsa_input.pci-0000_00_1f.3.analog-stereo\" -t")
+	, ("M1-<F5>",					  addName "Decrease light"            $ spawn "sudo xbacklight -dec 5 && lightlevel")
+	, ("M1-<F6>",					  addName "Increase light"            $ spawn "sudo xbacklight -inc 5 && lightlevel")
+	, ("M1-<F7>",					  addName "Select display"            $ spawn "displayselect")
+	, ("M1-<F12>",					  addName "Run spotify scratchpad"    $ namedScratchpadAction myScratchPads "spotify")
     , ("M-<Print>",               addName "Screen selected window"    $ scrotPrompt "home")
     , ("<Print>",                 addName "Take screenshot"           $ spawn "scrot -e 'mv $f ~/pictures' && notify-send 'Saving screenshot in' 'Pictures...'")]
 
