@@ -1,6 +1,6 @@
 require("cimino.remap")
 require("cimino.set")
-require("cimino.packer")
 require("cimino.autocmd")
+require("cimino.lazy_init")
 require("cimino.snippets")
 require("cimino.simplesync")
