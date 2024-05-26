@@ -6,3 +6,5 @@ vifm-help.txt
 *.hi
 *.o
 *.json*
+.config/dmenu/dmenu
+.config/dmenu/stest
