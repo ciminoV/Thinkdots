@@ -38,6 +38,7 @@ vim.keymap.set("n", "mc", ":! computils %<CR><CR>")
 vim.keymap.set("n", "mv", ":! opout %<CR><CR>")
 
 -- Nice remaps
+vim.keymap.set("n", "<leader>rs", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<C-i>", "<C-a>")
 
