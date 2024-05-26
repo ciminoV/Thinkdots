@@ -71,6 +71,15 @@ return {
 				},
 			}
 
+			-- Handle diangostic messages
+			vim.lsp.handlers["textDocument/publishDiagnostics"] =
+				vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+					underline = false,
+					virtual_text = {
+						spacing = 4,
+					},
+				})
+
 			require("mason").setup()
 
 			local ensure_installed = vim.tbl_keys(servers or {})
