@@ -34,7 +34,7 @@ myTerminal :: String
 myTerminal    = "st"
 
 myBrowser :: String
-myBrowser     = "brave"
+myBrowser     = "firefox"
 
 myEditor :: String
 myEditor      = myTerminal ++ " -e nvim "

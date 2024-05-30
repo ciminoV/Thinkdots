@@ -126,7 +126,7 @@ myXmobarPP = def
 myManageHook :: ManageHook
 myManageHook = composeAll
     [ className =? "Gimp"                          --> doFloat
-    , className =? "Brave-browser"                 --> doShift ( myWorkspaces !! 1 ) -- Open browser in www workspace
+    , className =? "firefox"					   --> doShift ( myWorkspaces !! 1 ) -- Open browser in www workspace
     , className =? "MATLAB R2021a - academic use"  --> doShift ( myWorkspaces !! 4 ) -- Open Matlab in mlab workspace
     , title =? "htop"                              --> doFloat                       -- Open htop floating
     , title =? "myCal"                             --> doCenterFloat                 -- Open calendar floating center
