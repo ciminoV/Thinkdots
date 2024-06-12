@@ -6,7 +6,7 @@ return {
 			ensure_installed = { "bash", "c", "lua", "luadoc", "markdown" },
 			ignore_install = { "tcl", "latex" },
 			-- Autoinstall languages that are not installed
-			auto_install = true,
+			auto_install = false,
 			highlight = {
 				enable = true,
 				additional_vim_regex_highlighting = false,
