@@ -15,8 +15,8 @@ xsetroot -cursor_name left_ptr
 # Get speedy keys
 xset r rate 210 40
 
-# Disable screen save for inactivity
-xset s off
+# Disable screen saver for inactivity (and suspend)
+xset -dpms
 
 # Start xsettingsd
 xsettingsd &
