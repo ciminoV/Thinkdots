@@ -126,7 +126,7 @@ myXmobarPP = def
 myManageHook :: ManageHook
 myManageHook = composeAll
     [ className =? "Gimp"                          --> doFloat
-    , className =? "firefox"					   --> doShift ( myWorkspaces !! 1 ) -- Open browser in www workspace
+    , className =? "firefox"                       --> doShift ( myWorkspaces !! 1 ) -- Open browser in www workspace
     , className =? "MATLAB R2021a - academic use"  --> doShift ( myWorkspaces !! 4 ) -- Open Matlab in mlab workspace
     , title =? "htop"                              --> doFloat                       -- Open htop floating
     , title =? "myCal"                             --> doCenterFloat                 -- Open calendar floating center
@@ -313,7 +313,7 @@ myKeys c =
     , ("<XF86MonBrightnessUp>",   addName "Increase light"            $ spawn "sudo xbacklight -inc 5 && lightlevel")                               -- F6
     , ("<XF86Display>",           addName "Select display"            $ spawn "displayselect")                                                      -- F7
     , ("<XF86Favorites>",         addName "Run spotify scratchpad"    $ namedScratchpadAction myScratchPads "spotify")                              -- F12
-	, ("M1-<F1>",					  addName "Toggle audio mute"         $ spawn "pamixer -t && volumelevel")
+    , ("M1-<F1>",					  addName "Toggle audio mute"         $ spawn "pamixer -t && volumelevel")
 	, ("M1-<F2>",					  addName "Lower volume"              $ spawn "pamixer -u -d 5 && volumelevel")
 	, ("M1-<F3>",					  addName "Raise volume"              $ spawn "pamixer -u -i 5 && volumelevel")
 	, ("M1-<F4>",					  addName "Toggle mic mute"           $ spawn "pamixer --source \"alsa_input.pci-0000_00_1f.3.analog-stereo\" -t")

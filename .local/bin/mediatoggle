@@ -4,7 +4,7 @@
 # Dependencies: playerctl, dunst
 
 myplayer=$MUSIC
-mybrowser=$BROWSER
+mybrowser="firefox"
 
 # Check whether the selected player is running or not
 isrun() { \
@@ -21,11 +21,6 @@ player() { \
 }
 
 browser() { \
-    # my current browser is librewolf but playerctl recognize it as firefox
-    if [ "$mybrowser" = "brave" ]; then
-        mybrowser="chromium"
-    fi
-
     status="$(playerctl --player=$mybrowser play-pause && playerctl --player=$mybrowser status)"
 
     if [ "$status" = "Playing" ]; then
