@@ -34,8 +34,8 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 -- Markdown files
-vim.keymap.set("n", "mc", ":! computils %<CR><CR>")
-vim.keymap.set("n", "mv", ":! opout %<CR><CR>")
+vim.keymap.set("n", "<leader>mc", ":! computils %<CR><CR>")
+vim.keymap.set("n", "<leader>mv", ":! opout %<CR><CR>")
 
 -- Nice remaps
 vim.keymap.set("n", "<leader>rs", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
