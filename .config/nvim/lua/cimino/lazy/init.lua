@@ -5,6 +5,8 @@ return {
 	-- Undo Tree
 	{ "mbbill/undotree" },
 
+	{ "tpope/vim-surround" },
+
 	-- Latex
 	{ "lervag/vimtex" },
 	{
