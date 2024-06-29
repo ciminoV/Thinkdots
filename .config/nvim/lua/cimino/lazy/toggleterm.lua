@@ -1,16 +1,12 @@
 return {
-	"akinsho/toggleterm.nvim",
-	version = "*",
-	require("toggleterm").setup({
-		size = function(term)
-			if term.direction == "horizontal" then
-				return 15
-			elseif term.direction == "vertical" then
-				return vim.o.columns * 0.4
-			end
-		end,
-	}),
-
+	{
+		"akinsho/toggleterm.nvim",
+		version = "*",
+		opts = {--[[ things you want to change go here]]
+			close_on_exit = true,
+			direction = "horizontal",
+		},
+	},
 	vim.keymap.set("n", "<leader>tv", ":ToggleTerm direction=vertical<CR>"),
-	vim.keymap.set("n", "<leader>th", ":ToggleTerm direction=horizontal<CR>"),
+	vim.keymap.set("n", "<leader>th", ":ToggleTerm<CR>"),
 }
