@@ -313,20 +313,24 @@ myKeys c =
     , ("<XF86MonBrightnessUp>",   addName "Increase light"            $ spawn "sudo xbacklight -inc 5 && lightlevel")                               -- F6
     , ("<XF86Display>",           addName "Select display"            $ spawn "displayselect")                                                      -- F7
     , ("<XF86Favorites>",         addName "Run spotify scratchpad"    $ namedScratchpadAction myScratchPads "spotify")                              -- F12
-    , ("M1-<F1>",					  addName "Toggle audio mute"         $ spawn "pamixer -t && volumelevel")
-	, ("M1-<F2>",					  addName "Lower volume"              $ spawn "pamixer -u -d 5 && volumelevel")
-	, ("M1-<F3>",					  addName "Raise volume"              $ spawn "pamixer -u -i 5 && volumelevel")
-	, ("M1-<F4>",					  addName "Toggle mic mute"           $ spawn "pamixer --source \"alsa_input.pci-0000_00_1f.3.analog-stereo\" -t")
-	, ("M1-<F5>",					  addName "Decrease light"            $ spawn "sudo xbacklight -dec 5 && lightlevel")
-	, ("M1-<F6>",					  addName "Increase light"            $ spawn "sudo xbacklight -inc 5 && lightlevel")
-	, ("M1-<F7>",					  addName "Select display"            $ spawn "displayselect")
-	, ("M1-<F12>",					  addName "Run spotify scratchpad"    $ namedScratchpadAction myScratchPads "spotify")
+    , ("<XF86Tools>",             addName "Run spotify scratchpad"    $ namedScratchpadAction myScratchPads "spotify")
+    , ("M1-<F1>",                 addName "Toggle audio mute"         $ spawn "pamixer -t && volumelevel")
+    , ("M1-<F2>",                 addName "Lower volume"              $ spawn "pamixer -u -d 5 && volumelevel")
+    , ("M1-<F3>",                 addName "Raise volume"              $ spawn "pamixer -u -i 5 && volumelevel")
+    , ("M1-<F4>",                 addName "Toggle mic mute"           $ spawn "pamixer --source \"alsa_input.pci-0000_00_1f.3.analog-stereo\" -t")
+    , ("M1-<F5>",                 addName "Decrease light"            $ spawn "sudo xbacklight -dec 5 && lightlevel")
+    , ("M1-<F6>",                 addName "Increase light"            $ spawn "sudo xbacklight -inc 5 && lightlevel")
+    , ("M1-<F7>",                 addName "Select display"            $ spawn "displayselect")
+    , ("M1-<F12>",                addName "Run spotify scratchpad"    $ namedScratchpadAction myScratchPads "spotify")
     , ("M-<Print>",               addName "Screen selected window"    $ scrotPrompt "home")
     , ("<Print>",                 addName "Take screenshot"           $ spawn "scrot -e 'mv $f ~/pictures' && notify-send 'Saving screenshot in' 'Pictures...'")]
 
     -- Controls for multimedia
     ^++^ subKeys "Spotify"
-    [ ("M-s s",         addName "Toggle play/pause"            $ spawn "mediatoggle spotify")
+    [ ("<XF86AudioPlay>",    addName "Toggle play/pause"       $ spawn "mediatoggle spotify")
+    , ("<XF86AudioNext>",    addName "Skip to next song"       $ spawn "playerctl --player=spotify next")
+    , ("<XF86AudioPrev>",    addName "Skip to prev song"       $ spawn "playerctl --player=spotify previous")
+    , ("M-s s",         addName "Toggle play/pause"            $ spawn "mediatoggle spotify")
     , ("M-s n",         addName "Skip to next song"            $ spawn "playerctl --player=spotify next")
     , ("M-s b",         addName "Skip to prev song"            $ spawn "playerctl --player=spotify previous")
     , ("M-<Space>",     addName "Toggle play/pause browser"    $ spawn ("mediatoggle " ++ myBrowser))]
@@ -362,7 +366,9 @@ myKeys c =
     -- Move to next/prev workspace 
     ^++^ subKeys "Move to next/prev WS"
     [ ("M-<Right>", addName "Move to next WS"    $ moveTo Next nonEmptyNonNSP)
-    , ("M-<Left>",  addName "Move to next WS"    $ moveTo Prev nonEmptyNonNSP)]
+    , ("M-<Left>",  addName "Move to prev WS"    $ moveTo Prev nonEmptyNonNSP)
+    , ("M1-<Left>",  addName "Move to next WS"   $ moveTo Prev nonEmptyNonNSP)
+    , ("M1-<Right>", addName "Move to prev WS"   $ moveTo Next nonEmptyNonNSP)]
 
     -- Send current windows to next/prev workspace 
     ^++^ subKeys "Move window to WS and go there"
