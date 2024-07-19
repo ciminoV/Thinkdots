@@ -2,6 +2,7 @@
 
 # A UI for detecting and selecting all displays
 # Dependencies: xrandr, dmenu, nitrogen, dunst
+# TODO: add dpi settings for multiscreen case
 
 twoscreen() { # If multi-monitor is selected and there are two screens.
 
@@ -52,18 +53,15 @@ multimon() { # Multi-monitor handler.
 
 onescreen() { # If only one output available or chosen.
     xrandr --output "$1" --auto --scale 1.0x1.0 $(echo "$allposs" | grep -v "\b$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ' -)
+
+	updatedpi
     }
 
-postrun() { # Stuff to run to clean up.
-    nitrogen --restore &
-
-    # Manually update the DPI
+updatedi() { # Manually update the DPI
+	current_dpi=$(xrdb -query | awk '/Xft.dpi/ {print $2}')
     dpi=$(echo "96\\n144\\n192" | dmenu -i -p "Select DPI")
-    if [ -n "${dpi}" ]; then
+    if [ -n "${dpi}" ] && ["$current_dpi" != $dpi]; then
         echo "Xft.dpi: $dpi" | xrdb -override -
-
-        # Restart xmonad
-        xmonad --restart
 
         # Restart apps which use gnome settings
         dpi_xsd=$(echo "${dpi}*1024" | bc)
@@ -81,7 +79,16 @@ postrun() { # Stuff to run to clean up.
 		# Update xmobar font size
 		pixel_size_xmobar=$(echo "${dpi}/16+6" | bc)
 		sed -i -E "/pixelsize/s/[0-9]+/${pixel_size_xmobar}/" $XDG_CONFIG_HOME/xmobar/xmobarrc
+
+		xset -dpms
+
+		# Restart xmonad
+		xmonad --restart
     fi
+    }
+
+postrun() { # Stuff to run to clean up.
+    nitrogen --restore &
 
 	# Restart dunst to ensure proper location on screen
     { killall dunst ; setsid -f dunst ;} >/dev/null 2>&1
