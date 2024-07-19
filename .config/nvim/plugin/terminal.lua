@@ -10,8 +10,11 @@ vim.api.nvim_create_autocmd("TermOpen", {
 	end,
 })
 
--- Easily hit escape in terminal mode.
-vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
+vim.keymap.set("t", "<esc><esc>", "<C-\\><C-N>", { silent = true })
+vim.keymap.set("t", "<C-h>", "<C-\\><C-N><C-w>h", { silent = true })
+vim.keymap.set("t", "<C-j>", "<C-\\><C-N><C-w>j", { silent = true })
+vim.keymap.set("t", "<C-k>", "<C-\\><C-N><C-w>k", { silent = true })
+vim.keymap.set("t", "<C-l>", "<C-\\><C-N><C-w>l", { silent = true })
 
 -- Open a terminal at the bottom of the screen with a fixed height.
 vim.keymap.set("n", "<leader>t", function()
@@ -20,4 +23,4 @@ vim.keymap.set("n", "<leader>t", function()
 	vim.api.nvim_win_set_height(0, 12)
 	vim.wo.winfixheight = true
 	vim.cmd.term()
-end)
+end, { desc = "Open Terminal" })
