@@ -79,18 +79,23 @@ updatedi() { # Manually update the DPI
 		# Update xmobar font size
 		pixel_size_xmobar=$(echo "${dpi}/16+6" | bc)
 		sed -i -E "/pixelsize/s/[0-9]+/${pixel_size_xmobar}/" $XDG_CONFIG_HOME/xmobar/xmobarrc
-
-		xset -dpms
-
-		# Restart xmonad
-		xmonad --restart
     fi
     }
 
 postrun() { # Stuff to run to clean up.
     nitrogen --restore &
 
-	# Restart dunst to ensure proper location on screen
+    # Use computer's audio card
+    activesink=$(pactl list sinks | awk '/Active Port/ {print $3}')
+    pactl set-sink-port "alsa_output.pci-0000_00_1f.3.analog-stereo" "$activesink"
+    
+    # Disable screensaver
+    xset -dpms
+    
+    # Restart xmonad
+    /home/cimino/.local/bin/xmonad --restart
+    
+    # Restart dunst to ensure proper location on screen
     { killall dunst ; setsid -f dunst ;} >/dev/null 2>&1
     }
 
