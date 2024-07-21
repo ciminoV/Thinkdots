@@ -57,10 +57,10 @@ onescreen() { # If only one output available or chosen.
 	updatedpi
     }
 
-updatedi() { # Manually update the DPI
+updatedpi() { # Manually update the DPI
 	current_dpi=$(xrdb -query | awk '/Xft.dpi/ {print $2}')
     dpi=$(echo "96\\n144\\n192" | dmenu -i -p "Select DPI")
-    if [ -n "${dpi}" ] && ["$current_dpi" != $dpi]; then
+    if [ -n "${dpi}" ]; then
         echo "Xft.dpi: $dpi" | xrdb -override -
 
         # Restart apps which use gnome settings
