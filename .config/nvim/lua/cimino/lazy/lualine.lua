@@ -4,7 +4,7 @@ return {
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {
 			options = {
-				theme = "auto", -- lualine theme
+				theme = "gruvbox", -- lualine theme
 				component_separators = { left = " ", right = " " },
 				section_separators = { left = " ", right = " " },
 				disabled_filetypes = { -- Filetypes to disable lualine for.

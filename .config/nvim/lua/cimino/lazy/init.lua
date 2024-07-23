@@ -7,6 +7,14 @@ return {
 
 	{ "tpope/vim-surround" },
 
+	-- Hex colors highlight
+	{
+		"norcalli/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup()
+		end,
+	},
+
 	-- Latex
 	{ "lervag/vimtex" },
 	{
