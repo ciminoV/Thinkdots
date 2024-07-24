@@ -91,6 +91,7 @@ postrun() { # Stuff to run to clean up.
     
     # Disable screensaver
     xset -dpms
+	xset s off
     
     # Restart xmonad
     /home/cimino/.local/bin/xmonad --restart
