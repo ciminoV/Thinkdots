@@ -33,8 +33,8 @@ Group.new("Comment", c.gray4:dark(), nil, s.none)
 Group.new("Conceal", c.superwhite, nil, nil)
 Group.new("LineNr", c.gray2, c.gray0)
 Group.new("PreProc", c.violet)
-Group.new("Statement", c.brown)
-Group.new("StorageClass", c.yellow)
+Group.new("Statement", c.aqua)
+Group.new("StorageClass", c.orange)
 Group.new("Visual", nil, c.blue:dark(0.1))
 Group.new("VisualLineMode", g.Visual, g.Visual)
 Group.new("VisualMode", g.Visual, g.Visual)
@@ -68,7 +68,7 @@ Group.new("@type.qualifier", g.type, nil, s.none)
 Group.new("@type.definition", g.type, nil, s.italic)
 
 -- @function             ; function definitions
-Group.new("@function", c.cyan, nil, s.none)
+Group.new("Function", c.cyan, nil, s.none)
 
 Group.new("@keyword", c.violet) -- ; keywords not fitting into specific categories
 Group.new("@keyword.repeat", c.blue) -- ; keywords not fitting into specific categories
