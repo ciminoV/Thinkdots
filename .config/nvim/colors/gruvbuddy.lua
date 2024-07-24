@@ -38,6 +38,8 @@ Group.new("StorageClass", c.orange)
 Group.new("Visual", nil, c.blue:dark(0.1))
 Group.new("VisualLineMode", g.Visual, g.Visual)
 Group.new("VisualMode", g.Visual, g.Visual)
+Group.new("StatusLine", c.gray1, c.blue, nil)
+Group.new("StatusLineNC", c.gray3, c.gray1:light())
 
 -- @variable ; various variable names
 Group.new("@variable", g.Normal)
@@ -47,7 +49,7 @@ Group.new("@variable.builtin", c.purple:light(), nil, s.bold)
 -- @variable.member     ; object and struct fields
 
 -- @constant          ; constant identifiers
-Group.new("@constant", c.orange, nil, s.bold)
+Group.new("Constant", c.orange, nil, s.bold)
 -- @constant.builtin  ; built-in constant values
 -- @constant.macro    ; constants defined by the preprocessor
 
