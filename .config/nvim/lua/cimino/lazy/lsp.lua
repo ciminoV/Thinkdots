@@ -11,6 +11,7 @@ return {
 
 			{ "folke/neodev.nvim", opts = {} },
 		},
+		opts = { autoformat = false },
 		config = function()
 			--  This function gets run when an LSP attaches to a particular buffer.
 			vim.api.nvim_create_autocmd("LspAttach", {

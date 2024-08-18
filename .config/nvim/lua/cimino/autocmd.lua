@@ -29,3 +29,11 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 		vim.opt.conceallevel = 1
 	end,
 })
+
+-- Disable format on save for specific file types
+vim.api.nvim_create_autocmd({ "FileType" }, {
+	pattern = { "c", "cpp", "cc", "h" },
+	callback = function()
+		vim.cmd("FormatDisable")
+	end,
+})
