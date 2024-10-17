@@ -25,6 +25,7 @@ return {
 				lua = { "stylua" },
 				python = { "black" },
 				cpp = { "clang_format" },
+				go = { "gofumpt" },
 			},
 		},
 	},
