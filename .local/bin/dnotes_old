@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd $HOME/documents/notes/
+
+ls -I "index.json" | dmenu -i -p "Open note" -l 10 | xargs -d '\n' st -e nvim
