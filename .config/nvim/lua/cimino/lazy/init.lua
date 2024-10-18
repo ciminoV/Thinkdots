@@ -7,6 +7,8 @@ return {
 
 	{ "tpope/vim-surround" },
 
+	{ "nvim-treesitter/playground" },
+
 	-- Hex colors highlight
 	{
 		"norcalli/nvim-colorizer.lua",
