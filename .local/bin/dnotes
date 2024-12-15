@@ -10,8 +10,8 @@
 declare -A items
 json_input=$(echo $(joplingo-cli getallnotes id title -f title -d asc))
 while IFS= read -r item; do
-    id=$(echo "$item" | jq -r '.id')
-    title=$(echo "$item" | jq -r '.title')
+	id=$(echo "$item" | jq -r '.id')
+	title=$(echo "$item" | jq -r '.title')
 	items["$id"]="$(printf "%-*s %s" "30" "$title" "$id")"
 done < <(echo "$json_input" | jq -c '.[]')
 
@@ -21,16 +21,16 @@ selected_item=$(printf "%s\n" "${items[@]}" | dmenu -i -p "Open note" -l 10)
 # Check if a note is selected
 if [[ -n $selected_item ]]; then
 	selected_id="${selected_item##* }" # get only the id part of the value
-    note_body=$(joplingo-cli getnote "$selected_id" body | jq -r '.body' | sed 's/\\n/\n/g') # pretty format the body
+	note_body=$(joplingo-cli getnote "$selected_id" body | jq -r '.body' | sed 's/\\n/\n/g') # pretty format the body
 
-    # Create a temporary file with the note body and open it in nvim
-    temp_file=$(mktemp /tmp/joplinote-XXXXXX --suffix=.md)
-    echo -e "$note_body" > "$temp_file"
-    st -e nvim -p "$temp_file"
+	# Create a temporary file with the note body and open it in nvim
+	temp_file=$(mktemp /tmp/joplinote-XXXXXX --suffix=.md)
+	echo -e "$note_body" > "$temp_file"
+	st -e nvim -p "$temp_file"
 
 	# Update remote note body
-	joplingo-cli updatenote "$selected_id" body "$(cat $temp_file)"    
+	joplingo-cli updatenote "$selected_id" body "$(cat $temp_file)"
 
-    # Clean up the temporary file
-    trap 'rm -f "$temp_file"' EXIT
+	# Clean up the temporary file
+	trap 'rm -f "$temp_file"' EXIT
 fi
