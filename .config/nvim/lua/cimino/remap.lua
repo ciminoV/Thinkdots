@@ -41,6 +41,9 @@ vim.keymap.set("n", "<leader>mv", ":! opout %<CR><CR>")
 vim.keymap.set("n", "<leader>rs", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<C-i>", "<C-a>")
+vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>")
+vim.keymap.set("n", "<space>x", ":.lua<CR>")
+vim.keymap.set("v", "<space>x", ":lua<CR>")
 
 -- VimTex
 vim.keymap.set("n", "<leader>vv", ":VimtexView<CR>")
