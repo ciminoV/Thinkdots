@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Tmux Sessionizer: 
+# Fuzzy-find directories or sessions to create, attach, or switch.
+
+DIRS=(
+    "$HOME/Documents"
+    "$HOME/Documents/unipd"
+)
+
+# Find session by name or fuzzy find it
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    selected=$(
+        (
+            tmux list-sessions -F '#S' 2>/dev/null
+            find "${DIRS[@]}" -maxdepth 1 -type d | sed "s|^$HOME/||"
+        ) | fzf --ansi --prompt="Select session or directory: "
+    )
+
+    # Prepend $HOME if it's a directory
+    if [[ -n $selected && ! -d "/$selected" && -d "$HOME/$selected" ]]; then
+        selected="$HOME/$selected"
+    fi
+fi
+
+# Nothing selcted, exit
+[[ -z $selected ]] && exit 0
+
+# Get session name
+if [[ -d $selected ]]; then
+	# It's a directory, get session name from its basename
+    selected_name=$(basename "$selected" | tr . _)
+
+    if ! tmux has-session -t "$selected_name" 2>/dev/null; then
+        tmux new-session -ds "$selected_name" -c "$selected"
+    fi
+else
+	# It's an existing session
+    selected_name="$selected"
+fi
+
+# Attach or switch to session
+if [[ -z $TMUX ]]; then
+    tmux attach -t "$selected_name"
+else
+    tmux switch-client -t "$selected_name"
+fi
