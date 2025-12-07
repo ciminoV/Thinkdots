@@ -37,3 +37,14 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 		vim.cmd("FormatDisable")
 	end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "tcl,sdc,xdc,upf",
+	callback = function(args)
+		vim.lsp.start({
+			name = "tclint",
+			cmd = { "tclsp" },
+			root_dir = vim.fs.root(args.buf, { "tclint.toml", ".tclint", "pyproject.toml" }),
+		})
+	end,
+})

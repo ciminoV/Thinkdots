@@ -3,8 +3,8 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		opts = {
-			ensure_installed = { "bash", "c", "lua", "luadoc", "markdown" },
-			ignore_install = { "tcl", "latex" },
+			ensure_installed = { "bash", "c", "lua", "luadoc", "markdown", "tcl" },
+			ignore_install = { "latex" },
 			-- Autoinstall languages that are not installed
 			auto_install = false,
 			highlight = {
