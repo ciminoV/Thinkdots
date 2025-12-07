@@ -26,6 +26,7 @@ return {
 				python = { "black" },
 				cpp = { "clang_format" },
 				go = { "gofumpt" },
+				tcl = { "tclsp" },
 			},
 		},
 	},

@@ -84,6 +84,22 @@ return {
 					},
 				})
 
+			-- Manually register tclsp because mason-lspconfig does not handle it
+			require("lspconfig.configs").tclint = {
+				default_config = {
+					name = "tclint",
+					cmd = { "tclsp" },
+					filetypes = { "tcl", "sdc", "xdc", "upf" },
+					root_dir = function(fname)
+						return vim.fs.root(fname, {
+							"tclint.toml",
+							".tclint",
+						})
+					end,
+					capabilities = capabilities,
+				},
+			}
+
 			require("mason").setup()
 
 			local ensure_installed = vim.tbl_keys(servers or {})
@@ -101,6 +117,8 @@ return {
 					end,
 				},
 			})
+
+			require("lspconfig").tclint.setup({})
 		end,
 	},
 }
