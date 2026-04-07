@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Kill already running duplicate process
+pkill mako swaybg
+
+swaybg --output '*' --mode stretch  --image $HOME/Pictures/wp7287342.jpg &
+
+mako &
+
+foot --server &
+
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots

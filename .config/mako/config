@@ -1,0 +1,27 @@
+font=AdwaitaSans-Regular 11
+padding=10
+border-size=1
+margin=10
+height=200
+border-radius=4
+max-icon-size=52
+
+text-color=#ffffff
+border-color=#282828
+progress-color=over #585b70
+
+default-timeout=50000
+
+[urgency=low]
+default-timeout=4000
+background-color=#101010
+
+[urgency=normal]
+default-timeout=6000
+background-color=#282c34
+
+
+[urgency=critical]
+default-timeout=0
+background-color=#f07178
+border-color=#fab387
