@@ -1,0 +1,73 @@
+#!/bin/sh
+
+# --- Configuration ---
+POLL_INTERVAL=1 # seconds
+COLOR_BAT="81a1c1"
+COLOR_VOL="b48ead"
+COLOR_DATE="a3be8c"
+
+# --- Functions ---
+get_battery() {
+    for bat in BAT0 BAT1; do
+        if [ -d "/sys/class/power_supply/$bat" ]; then
+            perc=$(cat "/sys/class/power_supply/$bat/capacity" | bc -l)
+            stat=$(cat "/sys/class/power_supply/$bat/status")
+            icon="󰁹"
+
+            if [ "$stat" = "Charging" ]; then
+	        icon="󰂄"
+	    else 
+		if [ $perc -le 15 ]; then
+		    icon="󰂃"
+		fi
+	    fi
+
+	    echo -n "^fg(${COLOR_BAT})$icon$perc%"
+        fi
+    done
+}
+
+get_volume() {
+    CURRENT_VOLUME=""
+    VOLUME_ICON=""
+    VOLUME_RAW=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null | awk '/Volume:/ { printf("%s", $2) }')
+    IS_MUTED=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null | awk '/Volume:/ { print $3 }')
+
+    local calculated_percentage="N/A"
+
+    if [ -n "$VOLUME_RAW" ]; then
+        calculated_percentage=$(printf "%.0f" "$(echo "$VOLUME_RAW * 100" | bc -l 2>/dev/null)")
+    fi
+
+    if [ "$IS_MUTED" = "[MUTED]" ]; then
+        VOLUME_ICON=""
+    else
+	if [ $calculated_percentage -eq 0 ]; then
+         VOLUME_ICON=""
+	elif [[ $calculated_percentage -ge 0 ]] && [[ $calculated_percentage -le 70 ]]; then
+          VOLUME_ICON=""
+	else
+         VOLUME_ICON=""
+	fi
+    fi
+
+    CURRENT_VOLUME="${calculated_percentage}%"
+
+    echo "^fg(${COLOR_VOL})${VOLUME_ICON} ${CURRENT_VOLUME}"
+}
+
+get_date() {
+    echo "^fg(${COLOR_DATE})^lm(foot) $(date +"%a %d - %R")"
+}
+
+# --- Main Logic ---
+# Main loop, piping its output directly to dwlb
+while true; do
+    STATUS=""
+    STATUS="$STATUS $(get_battery)"
+    STATUS="$STATUS $(get_volume)"
+    STATUS="$STATUS $(get_date)"
+
+    echo "$STATUS"
+    sleep "$POLL_INTERVAL"
+done | dwlb -status-stdin all

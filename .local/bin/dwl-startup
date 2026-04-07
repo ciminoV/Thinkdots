@@ -3,10 +3,16 @@
 # Kill already running duplicate process
 pkill mako swaybg
 
+dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots
+
 swaybg --output '*' --mode stretch  --image $HOME/Pictures/wp7287342.jpg &
 
 mako &
 
 foot --server &
 
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots
+#dwlb -ipc -font "monospace:size=12" &
+dwlb -ipc -scale 2 &
+
+sleep 0.5
+systemctl --user restart status-bar.service
