@@ -2,11 +2,30 @@
 
 # --- Configuration ---
 POLL_INTERVAL=1 # seconds
+COLOR_FG="d8dee9"
+COLOR_WIFI="ebcb8b"
 COLOR_BAT="81a1c1"
 COLOR_VOL="b48ead"
 COLOR_DATE="a3be8c"
 
 # --- Functions ---
+get_caps() {
+    grep -q "[1-9]" /sys/class/leds/*::capslock/brightness 2>/dev/null \
+	    && echo "^fg(${COLOR_FG})CAPS | "
+}
+
+get_spotify() {
+    # Calls your existing spotify script
+    if [ -f "$HOME/.config/xmobar/xm-spotify" ]; then
+        $HOME/.config/xmobar/xm-spotify | cut -c1-20
+    fi
+}
+
+get_wifi() {
+    ssid=$(iwgetid -r || echo "Disconnected")
+    echo "^fg(${COLOR_WIFI})   ^fg(${COLOR_FG})$ssid"
+}
+
 get_battery() {
     for bat in BAT0 BAT1; do
         if [ -d "/sys/class/power_supply/$bat" ]; then
@@ -22,7 +41,7 @@ get_battery() {
 		fi
 	    fi
 
-	    echo -n "^fg(${COLOR_BAT})$icon$perc%"
+	    echo -n "^fg(${COLOR_BAT})$icon ^fg(${COLOR_FG})$perc "
         fi
     done
 }
@@ -53,19 +72,22 @@ get_volume() {
 
     CURRENT_VOLUME="${calculated_percentage}%"
 
-    echo "^fg(${COLOR_VOL})${VOLUME_ICON} ${CURRENT_VOLUME}"
+    echo "^fg(${COLOR_VOL})${VOLUME_ICON}  ^fg(${COLOR_FG})${CURRENT_VOLUME}"
 }
 
 get_date() {
-    echo "^fg(${COLOR_DATE})^lm(foot) $(date +"%a %d - %R")"
+    echo "^fg(${COLOR_DATE})^lm(foot)  ^fg(${COLOR_FG})$(date +"%a %d - %R")"
 }
 
 # --- Main Logic ---
 # Main loop, piping its output directly to dwlb
 while true; do
     STATUS=""
-    STATUS="$STATUS $(get_battery)"
-    STATUS="$STATUS $(get_volume)"
+    STATUS="$STATUS $(get_caps)"
+    STATUS="$STATUS $(get_spotify)"
+    STATUS="$STATUS $(get_wifi) | "
+    STATUS="$STATUS $(get_battery)| "
+    STATUS="$STATUS $(get_volume) | "
     STATUS="$STATUS $(get_date)"
 
     echo "$STATUS"

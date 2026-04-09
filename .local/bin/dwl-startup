@@ -1,9 +1,11 @@
 #!/bin/sh
 
 # Kill already running duplicate process
-pkill mako swaybg
+pkill gammashift dwlb mako swaybg
 
 dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots
+
+gammastep &
 
 swaybg --output '*' --mode stretch  --image $HOME/Pictures/wp7287342.jpg &
 
@@ -11,8 +13,7 @@ mako &
 
 foot --server &
 
-#dwlb -ipc -font "monospace:size=12" &
-dwlb -ipc -scale 2 &
+dwlb &
 
 sleep 0.5
 systemctl --user restart status-bar.service
