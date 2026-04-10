@@ -1,12 +1,13 @@
 #!/bin/sh
 
-# A dmenu wrapper script for system functions
+# A wmenu wrapper script for system functions
 
 ctl="systemctl"
 
-case "$(printf "sleep\nshutdown\nreboot" | dmenu -i -p 'See you soon: ' -l 3)" in
-	'sleep') slock $ctl suspend -i ;;
-	'reboot') $ctl reboot -i ;;
-	'shutdown') $ctl poweroff -i ;;
+case "$(printf "1: sleep\n2: shutdown\n3: reboot" | wmenu -i -p 'See you soon: ' -l 3)" in
+	#'sleep') slock $ctl suspend -i ;;
+	'1: sleep') $ctl suspend -i ;;
+	'2: shutdown') $ctl poweroff -i ;;
+	'3: reboot') $ctl reboot -i ;;
 	*) exit 1 ;;
 esac

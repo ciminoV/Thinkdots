@@ -1,0 +1,33 @@
+#!/bin/sh
+
+screenshot_dir="${HOME}/Pictures"
+file="$(echo '' | wmenu -p 'Enter filename:')"
+filepath="${screenshot_dir}/${file}.png"
+
+# Take a full-screen screenshot, save it, and copy it.
+fullscreen() {
+    grim -l 6 - | tee "$filepath" >/dev/null
+}
+
+# Select an area using slurp, then capture and copy the screenshot.
+area() {
+    slurp -b 1B1F28CC -c E06B74ff -s C778DD0D -w 2 | grim -l 6 -g- - | tee "$filepath" >/dev/null
+}
+
+# Change to the screenshot directory for commands that expect a relative path.
+cd "$screenshot_dir" || { echo "Failed to change directory to $screenshot_dir"; exit 1; }
+
+case "${1:-}" in
+    --fullscreen)
+        fullscreen
+        ;;
+    --area)
+        area
+        ;;
+    *)
+        echo "Usage: $0 --fullscreen|--area"
+        exit 1
+        ;;
+esac
+
+exit 0
