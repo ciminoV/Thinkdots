@@ -7,5 +7,5 @@ msgTag="mylight"
 # Query pamixer for the current volume and whether or not the speaker is muted
 light="$(xbacklight -get)"
 
-# Show the volume notification
+# Show the light notification
 dunstify -a "changeLight" -u low -h string:x-dunst-stack-tag:$msgTag -h int:value:"$light" " Light: ${light}%"

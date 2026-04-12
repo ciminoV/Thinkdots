@@ -1,0 +1,13 @@
+#!/bin/sh
+# Change light level and notify the current level in percentage.
+# Dependencies: brightnessctl
+
+msgTag="mylight"
+
+if  [ $# -eq 1 ]; then
+	brightnessctl s $1 &>/dev/null
+fi
+
+light="$(brightnessctl i | awk '/Current brightness/ {print $NF}' | tr -d '()%')"
+
+notify-send -a "changeLight" -u low -h string:x-dunst-stack-tag:$msgTag -h int:value:"$light" "  Light: ${light}%"
