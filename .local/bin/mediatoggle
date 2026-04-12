@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # Toggle play-pause music player/browser
-# Dependencies: playerctl, dunst
+# Dependencies: playerctl
 
-myplayer=$MUSIC
-mybrowser="firefox"
+myplayer="spotify"
+mybrowser="brave"
 
 # Check whether the selected player is running or not
 isrun() { \
@@ -16,7 +16,7 @@ player() { \
     status="$(playerctl --player=$myplayer play-pause && playerctl --player=$myplayer status)"
 
     if [ "$status" = "Paused" ]; then
-        dunstify --urgency=LOW -h string:x-dunst-stack-tag:sstatus "$(playerctl --player=$myplayer metadata --format "{{ title }}: {{ album }} - {{ artist }}" | sed "s/: /\n/")"
+        notify-send --urgency=LOW -h string:x-dunst-stack-tag:sstatus "$(playerctl --player=$myplayer metadata --format "{{ title }}: {{ album }} - {{ artist }}" | sed "s/: /\n/")"
     fi
 }
 
@@ -24,7 +24,7 @@ browser() { \
     status="$(playerctl --player=$mybrowser play-pause && playerctl --player=$mybrowser status)"
 
     if [ "$status" = "Playing" ]; then
-        dunstify --urgency=LOW -h string:x-dunst-stack-tag:sstatus "$(playerctl --player=$mybrowser metadata --format "{{ title }}: {{ artist }}" | sed "s/: /\n/")"
+        notify-send --urgency=LOW -h string:x-dunst-stack-tag:sstatus "$(playerctl --player=$mybrowser metadata --format "{{ title }}: {{ artist }}" | sed "s/: /\n/")"
     fi
 }
 

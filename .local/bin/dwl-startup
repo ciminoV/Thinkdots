@@ -15,5 +15,4 @@ foot --server &
 
 dwlb &
 
-sleep 0.5
-systemctl --user restart status-bar.service
+$HOME/.local/bin/status-bar &

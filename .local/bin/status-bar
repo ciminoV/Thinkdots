@@ -15,9 +15,8 @@ get_caps() {
 }
 
 get_spotify() {
-    # Calls your existing spotify script
-    if [ -f "$HOME/.config/xmobar/xm-spotify" ]; then
-        $HOME/.config/xmobar/xm-spotify | cut -c1-20
+    if [ -x "$HOME/.local/bin/spotify-bar" ]; then
+        "$HOME/.local/bin/spotify-bar"
     fi
 }
 
@@ -29,7 +28,7 @@ get_wifi() {
 get_battery() {
     for bat in BAT0 BAT1; do
         if [ -d "/sys/class/power_supply/$bat" ]; then
-            perc=$(cat "/sys/class/power_supply/$bat/capacity" | bc -l)
+		perc=$(upower -i /org/freedesktop/UPower/devices/battery_${bat} | awk '/percentage/{print int($2)}')
             stat=$(cat "/sys/class/power_supply/$bat/status")
             icon="󰁹"
 
@@ -59,14 +58,14 @@ get_volume() {
     fi
 
     if [ "$IS_MUTED" = "[MUTED]" ]; then
-        VOLUME_ICON=""
+        VOLUME_ICON=" "
     else
 	if [ $calculated_percentage -eq 0 ]; then
          VOLUME_ICON=""
 	elif [[ $calculated_percentage -ge 0 ]] && [[ $calculated_percentage -le 70 ]]; then
           VOLUME_ICON=""
 	else
-         VOLUME_ICON=""
+         VOLUME_ICON=" "
 	fi
     fi
 
@@ -76,7 +75,7 @@ get_volume() {
 }
 
 get_date() {
-    echo "^fg(${COLOR_DATE})^lm(foot)  ^fg(${COLOR_FG})$(date +"%a %d - %R")"
+    echo "^fg(${COLOR_DATE})  ^fg(${COLOR_FG})$(date +"%a %d - %R")"
 }
 
 # --- Main Logic ---
@@ -84,11 +83,11 @@ get_date() {
 while true; do
     STATUS=""
     STATUS="$STATUS $(get_caps)"
-    STATUS="$STATUS $(get_spotify)"
-    STATUS="$STATUS $(get_wifi) | "
-    STATUS="$STATUS $(get_battery)| "
-    STATUS="$STATUS $(get_volume) | "
-    STATUS="$STATUS $(get_date)"
+    STATUS="$STATUS ^lm(/home/cimino/.local/bin/mediatoggle spotify)$(get_spotify)^lm()"
+    STATUS="$STATUS ^lm(footclient -T nmtui nmtui)$(get_wifi) |^lm() "
+    STATUS="$STATUS ^lm(footclient -T htop htop)$(get_battery) |^lm() "
+    STATUS="$STATUS ^lm(pavucontrol)$(get_volume) |^lm() "
+    STATUS="$STATUS ^lm(footclient -H -T myCal cal -my)$(get_date)"
 
     echo "$STATUS"
     sleep "$POLL_INTERVAL"

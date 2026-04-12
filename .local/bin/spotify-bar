@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# Spotify status in dwlb
+# Dependencies: spotify, pamixer, playerctl 
+
+COLOR_FG="d8dee9"
+COLOR_SPOT="8fbcbb"
+
+running=$(pidof spotify)
+if [ -z "$running" ]; then 
+    exit 0
+else
+    stats=$(playerctl --player=spotify status 2>/dev/null)
+    playing=$(playerctl --player=spotify metadata --format "{{ title }} - {{ artist }}" | sed 's/\-.*\-/ ... -/g' | cut -c 1-40)
+
+	
+    if [ "$stats" = "Playing" ]; then
+        ads=$(playerctl --player=spotify metadata album 2>/dev/null)
+        
+	# Mute ads
+        if [ -z "$ads" ]; then
+            pamixer -m > /dev/null 2>&1
+        elif [ "$(pamixer --get-mute)" = "true" ]; then
+            pamixer -u > /dev/null 2>&1
+        fi
+        
+        echo "^fg(${COLOR_SPOT}) ^fg(${COLOR_FG})${playing} | "
+    else
+        echo "^fg(${COLOR_SPOT}) ^fg(${COLOR_FG})${playing} | "
+    fi
+fi
