@@ -1,0 +1,10 @@
+#!/bin/sh
+
+MESSAGE=$1
+OPTIONS="Yes\nNo"
+
+CHOICE=$(echo -e "$OPTIONS" | wmenu -i -p "$MESSAGE")
+
+if [ "$CHOICE" = "Yes" ]; then
+    dwlmsg -K
+fi
