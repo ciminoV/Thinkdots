@@ -344,8 +344,9 @@ zdwl_ipc_output_v2_add_listener(struct zdwl_ipc_output_v2 *zdwl_ipc_output_v2,
 #define ZDWL_IPC_OUTPUT_V2_RELEASE 0
 #define ZDWL_IPC_OUTPUT_V2_SET_TAGS 1
 #define ZDWL_IPC_OUTPUT_V2_SET_CLIENT_TAGS 2
-#define ZDWL_IPC_OUTPUT_V2_KILL_ALL_CLIENTS 3
-#define ZDWL_IPC_OUTPUT_V2_SET_LAYOUT 4
+#define ZDWL_IPC_OUTPUT_V2_SET_LAYOUT 3
+#define ZDWL_IPC_OUTPUT_V2_KILL_ALL_CLIENTS 4
+#define ZDWL_IPC_OUTPUT_V2_QUIT 5
 
 /**
  * @ingroup iface_zdwl_ipc_output_v2
@@ -403,11 +404,15 @@ zdwl_ipc_output_v2_add_listener(struct zdwl_ipc_output_v2 *zdwl_ipc_output_v2,
 /**
  * @ingroup iface_zdwl_ipc_output_v2
  */
+#define ZDWL_IPC_OUTPUT_V2_SET_LAYOUT_SINCE_VERSION 1
+/**
+ * @ingroup iface_zdwl_ipc_output_v2
+ */
 #define ZDWL_IPC_OUTPUT_V2_KILL_ALL_CLIENTS_SINCE_VERSION 1
 /**
  * @ingroup iface_zdwl_ipc_output_v2
  */
-#define ZDWL_IPC_OUTPUT_V2_SET_LAYOUT_SINCE_VERSION 1
+#define ZDWL_IPC_OUTPUT_V2_QUIT_SINCE_VERSION 1
 
 /** @ingroup iface_zdwl_ipc_output_v2 */
 static inline void
@@ -473,8 +478,18 @@ zdwl_ipc_output_v2_set_client_tags(struct zdwl_ipc_output_v2 *zdwl_ipc_output_v2
 
 /**
  * @ingroup iface_zdwl_ipc_output_v2
+ */
+static inline void
+zdwl_ipc_output_v2_set_layout(struct zdwl_ipc_output_v2 *zdwl_ipc_output_v2, uint32_t index)
+{
+	wl_proxy_marshal_flags((struct wl_proxy *) zdwl_ipc_output_v2,
+			 ZDWL_IPC_OUTPUT_V2_SET_LAYOUT, NULL, wl_proxy_get_version((struct wl_proxy *) zdwl_ipc_output_v2), 0, index);
+}
+
+/**
+ * @ingroup iface_zdwl_ipc_output_v2
  *
- * Closes all visible clients on the selected output.
+ * Closes all visible clients on current tag.
  */
 static inline void
 zdwl_ipc_output_v2_kill_all_clients(struct zdwl_ipc_output_v2 *zdwl_ipc_output_v2)
@@ -485,12 +500,14 @@ zdwl_ipc_output_v2_kill_all_clients(struct zdwl_ipc_output_v2 *zdwl_ipc_output_v
 
 /**
  * @ingroup iface_zdwl_ipc_output_v2
+ *
+ * This request allows clients to instruct the compositor to quit.
  */
 static inline void
-zdwl_ipc_output_v2_set_layout(struct zdwl_ipc_output_v2 *zdwl_ipc_output_v2, uint32_t index)
+zdwl_ipc_output_v2_quit(struct zdwl_ipc_output_v2 *zdwl_ipc_output_v2)
 {
 	wl_proxy_marshal_flags((struct wl_proxy *) zdwl_ipc_output_v2,
-			 ZDWL_IPC_OUTPUT_V2_SET_LAYOUT, NULL, wl_proxy_get_version((struct wl_proxy *) zdwl_ipc_output_v2), 0, index);
+			 ZDWL_IPC_OUTPUT_V2_QUIT, NULL, wl_proxy_get_version((struct wl_proxy *) zdwl_ipc_output_v2), 0);
 }
 
 #ifdef  __cplusplus

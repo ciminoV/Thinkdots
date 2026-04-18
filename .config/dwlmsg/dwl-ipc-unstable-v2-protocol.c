@@ -47,8 +47,9 @@ static const struct wl_message zdwl_ipc_output_v2_requests[] = {
 	{ "release", "", dwl_ipc_unstable_v2_types + 0 },
 	{ "set_tags", "uu", dwl_ipc_unstable_v2_types + 0 },
 	{ "set_client_tags", "uu", dwl_ipc_unstable_v2_types + 0 },
-	{ "kill_all_clients", "", dwl_ipc_unstable_v2_types + 0 },
 	{ "set_layout", "u", dwl_ipc_unstable_v2_types + 0 },
+	{ "kill_all_clients", "", dwl_ipc_unstable_v2_types + 0 },
+	{ "quit", "", dwl_ipc_unstable_v2_types + 0 },
 };
 
 static const struct wl_message zdwl_ipc_output_v2_events[] = {
@@ -66,7 +67,7 @@ static const struct wl_message zdwl_ipc_output_v2_events[] = {
 
 WL_PRIVATE const struct wl_interface zdwl_ipc_output_v2_interface = {
 	"zdwl_ipc_output_v2", 3,
-	5, zdwl_ipc_output_v2_requests,
+	6, zdwl_ipc_output_v2_requests,
 	10, zdwl_ipc_output_v2_events,
 };
 

@@ -31,7 +31,8 @@ static int cflag;
 static int vflag;
 static int mflag;
 static int fflag;
-static int kflag;
+static int Cflag;
+static int qflag;
 
 static uint32_t occ, seltags, sel, urg;
 
@@ -242,8 +243,11 @@ dwl_ipc_output_frame(void *data, struct zdwl_ipc_output_v2 *dwl_ipc_output)
 
 			zdwl_ipc_output_v2_set_client_tags(dwl_ipc_output, and, xor);
 		}
-		if (kflag) {
+		if (Cflag) {
 			zdwl_ipc_output_v2_kill_all_clients(dwl_ipc_output);
+		}
+		if (qflag) {
+			zdwl_ipc_output_v2_quit(dwl_ipc_output);
 		}
 		wl_display_flush(display);
 		exit(0);
@@ -370,7 +374,7 @@ usage(int code)
 {
 	fprintf(code ? stderr : stdout,
 			"usage:"
-			"\t%1$s [-OTLP]\n"
+			"\t%1$s [-OTLPCq]\n"
 			"\t%1$s [-o <output>] -s [-t <tags>] [-l <layout>] [-c <tags>]\n"
 			"\t%1$s [-o <output>] (-g | -w) [-Ootlcvmf]\n",
 			argv0);
@@ -457,8 +461,12 @@ main(int argc, char *argv[])
 		if (mode & SET) usage(1);
 		mode |= GET;
 		break;
-	case 'K':
-		kflag = 1;
+	case 'C':
+		Cflag = 1;
+		mode |= SET;
+		break;
+	case 'q':
+		qflag = 1;
 		mode |= SET;
 		break;
 	default:

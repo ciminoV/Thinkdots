@@ -158,12 +158,6 @@ I would probably just submit raphi's patchset but I don't think that would be po
       <arg name="xor_tags" type="uint"/>
     </request>
 
-    <request name="kill_all_clients">
-      <description summary="Kill all visible clients">
-        Closes all visible clients on the selected output.
-      </description>
-    </request>
-
     <request name="set_layout">
       <description summary="Set the layout of this output"/>
       <arg name="index" type="uint" summary="index of a layout received by dwl_ipc_manager.layout"/>
@@ -183,5 +177,18 @@ I would probably just submit raphi's patchset but I don't think that would be po
       </description>
       <arg name="is_floating" type="uint" summary="If the selected client is floating. Nonzero is valid, zero invalid"/>
     </event>
+
+    <!-- Version 3 -->
+    <request name="kill_all_clients">
+      <description summary="Kill all visible clients">
+        Closes all visible clients on current tag.
+      </description>
+    </request>
+
+    <request name="quit">
+      <description summary="Quit">
+	This request allows clients to instruct the compositor to quit.
+      </description>
+    </request>
   </interface>
 </protocol>

@@ -6,5 +6,15 @@ OPTIONS="Yes\nNo"
 CHOICE=$(echo -e "$OPTIONS" | wmenu -i -p "$MESSAGE")
 
 if [ "$CHOICE" = "Yes" ]; then
-    dwlmsg -K
+    case "$MESSAGE" in
+        "Quit?")
+            dwlmsg -q
+            ;;
+        "Close all windows?")
+            dwlmsg -C 
+            ;;
+        *)
+	    exit 1
+            ;;
+    esac
 fi
