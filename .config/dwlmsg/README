@@ -1,6 +1,6 @@
 dwlmsg - send ipc messages to dwl
 
-usage:	dwlmsg [-OTLP]
+usage:	dwlmsg [-OTLPCq]
 	dwlmsg [-o <output>] -s [-t <tags>] [-l <layout>] [-c <tags>]
 	dwlmsg [-o <output>] (-g | -w) [-Ootlcvmf]
 
@@ -19,6 +19,8 @@ options:
 -v	get visibility of statusbar
 -m	get fullscreen status
 -f	get floating status
+-C	close all windows on current tag
+-q	quit dwl
 
 examples:
 	# act like dwl stdout
