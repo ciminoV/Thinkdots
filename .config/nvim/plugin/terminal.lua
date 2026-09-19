@@ -29,10 +29,3 @@ vim.keymap.set("n", "<leader>t", function()
 
 	term_id = vim.bo.channel
 end, { desc = "Open Terminal" })
-
--- Compile the current DESERT module.
-vim.keymap.set("n", "<leader>md", function()
-	curr_path = curr_path:gsub("DESERT_Framework/DESERT/", "")
-	curr_path = "DESERT_buildCopy_LOCAL/DESERT-3.5.0-build/" .. curr_path
-	vim.fn.chansend(term_id, { "cd " .. curr_path, "make", "", "make install", "" })
-end, { desc = "Make the current DESERT module" })

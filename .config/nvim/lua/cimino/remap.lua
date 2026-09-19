@@ -45,7 +45,4 @@ vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>")
 vim.keymap.set("n", "<space>x", ":.lua<CR>")
 vim.keymap.set("v", "<space>x", ":lua<CR>")
 
--- VimTex
-vim.keymap.set("n", "<leader>vv", ":VimtexView<CR>")
-vim.keymap.set("n", "<leader>vc", ":VimtexCompile<CR>")
 vim.keymap.set("i", "<C-l>", "<C-g>u<Esc>[s1z=`]a<C-g>u") -- spell check on the fly

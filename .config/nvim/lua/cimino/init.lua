@@ -1,5 +1,5 @@
 require("cimino.remap")
 require("cimino.set")
 require("cimino.autocmd")
-require("cimino.lazy_init")
-require("cimino.snippets")
+require("cimino.lsp")
+require("cimino.diagnostics")
