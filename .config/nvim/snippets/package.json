@@ -1,0 +1,30 @@
+// LATEX SNIPPETS
+// The following convention is used for naming lua tables and respective files:
+// A: Automatic snippet expansion - snippets will activate as soon as their trigger
+// matches.
+// w: Word boundary - With this option the snippet trigger will match when the
+// trigger is a word boundary character. This is the default behavior.
+// b: Beginning of line expansion - A snippet with this option is expanded only if
+// the trigger is the first word on the line (i.e., only whitespace precedes the
+// trigger).
+// i: Inword expansion - Triggers are also expanded in the middle of a word.
+// r: Regular expression
+{
+  "name": "cimino-snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": ["latex", "plaintex"],
+        "path": "./normal_b.json"
+      },
+      {
+        "language": ["latex", "plaintex"],
+        "path": "./normal_bwA.json"
+      }
+      {
+        "language": ["latex", "plaintex"],
+        "path": "./normal_wA.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "Display math": {
+    "prefix": "dm",
+    "body": [
+      "",
+      "\\[",
+      "${1}",
+      "\\]",
+      "$0"
+    ],
+    "description": "Insert display math environment"
+  }
+}

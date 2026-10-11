@@ -1,0 +1,50 @@
+{
+  "Figure": {
+    "prefix": "figh",
+    "body": [
+      "\\begin{figure}[ht]",
+      "\\begin{center}",
+      "\\includegraphics[width=0.55\\textwidth]{${1}}",
+      "\\end{center} ",
+      "\\caption{${2}}",
+      "\\label{fig:$0}",
+      "\\end{figure}"
+    ],
+    "description": "Insert a figure environment"
+  },
+
+  "Equation": {
+    "prefix": "eq",
+    "body": [
+      "\\begin{equation}",
+      "\t$0",
+      "\\label{eq:${1}}",
+      "\\end{equation}"
+    ],
+    "description": "Insert a numbered equation"
+  },
+
+  "Aligned equation": {
+    "prefix": "aeq",
+    "body": [
+      "\\begin{equation*}",
+      "\t\\begin{split}",
+      "\t${1:x(t)} &= $0 \\\\",
+      "\t\\end{split} ",
+      "\\end{equation*}"
+    ],
+    "description": "Insert an aligned equation using split"
+  },
+
+  "System of equations": {
+    "prefix": "seq",
+    "body": [
+      "\\[",
+      "\t${1:x(t)} = \\left\\{\\begin{array}{@{}lr}",
+      "\t$0",
+      "\\end{array}\\right.",
+      "\\]"
+    ],
+    "description": "Insert a system of equations"
+  }
+}
