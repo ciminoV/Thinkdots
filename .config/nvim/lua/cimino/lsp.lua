@@ -50,9 +50,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
           style = "virtual",
         })
       end
-
     end -- end if client
-  end -- end callback
+  end   -- end callback
 })
 
 -- Lua Server (lua-language-server)

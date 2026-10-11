@@ -2,12 +2,12 @@ local set = vim.opt_local
 
 -- Set local settings for terminal buffers
 vim.api.nvim_create_autocmd("TermOpen", {
-	group = vim.api.nvim_create_augroup("custom-term-open", {}),
-	callback = function()
-		set.number = false
-		set.relativenumber = false
-		set.scrolloff = 0
-	end,
+  group = vim.api.nvim_create_augroup("custom-term-open", {}),
+  callback = function()
+    set.number = false
+    set.relativenumber = false
+    set.scrolloff = 0
+  end,
 })
 
 vim.keymap.set("t", "<esc><esc>", "<C-\\><C-N>", { silent = true })
@@ -20,12 +20,12 @@ vim.keymap.set("t", "<C-l>", "<C-\\><C-N><C-w>l", { silent = true })
 local term_id = 0
 local curr_path = ""
 vim.keymap.set("n", "<leader>t", function()
-	curr_path = vim.fn.expand("%:h")
-	vim.cmd.new()
-	vim.cmd.wincmd("J")
-	vim.api.nvim_win_set_height(0, 12)
-	vim.wo.winfixheight = true
-	vim.cmd.term()
+  curr_path = vim.fn.expand("%:h")
+  vim.cmd.new()
+  vim.cmd.wincmd("J")
+  vim.api.nvim_win_set_height(0, 12)
+  vim.wo.winfixheight = true
+  vim.cmd.term()
 
-	term_id = vim.bo.channel
+  term_id = vim.bo.channel
 end, { desc = "Open Terminal" })

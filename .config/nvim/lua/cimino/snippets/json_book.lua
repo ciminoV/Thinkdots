@@ -1,15 +1,15 @@
 local source = {}
 
 local function get_next_id()
-	local bufnr = vim.api.nvim_get_current_buf()
+  local bufnr = vim.api.nvim_get_current_buf()
 
-	local parser = vim.treesitter.get_parser(bufnr, "json")
-	local tree = parser:parse()[1]
-	local root = tree:root()
+  local parser = vim.treesitter.get_parser(bufnr, "json")
+  local tree = parser:parse()[1]
+  local root = tree:root()
 
-	local query = vim.treesitter.query.parse(
-		"json",
-		[[
+  local query = vim.treesitter.query.parse(
+    "json",
+    [[
 			(object
 				(pair
 					key: (string) @key
@@ -18,24 +18,24 @@ local function get_next_id()
 				)
 			)
 		]]
-	)
+  )
 
-	local max_id = 0
+  local max_id = 0
 
-	for _, match, _ in query:iter_matches(root, bufnr) do
-		for id, nodes in pairs(match) do
-			if query.captures[id] == "value" and nodes[1] then
-				local text = vim.treesitter.get_node_text(nodes[1], bufnr)
-				local value = tonumber(text)
+  for _, match, _ in query:iter_matches(root, bufnr) do
+    for id, nodes in pairs(match) do
+      if query.captures[id] == "value" and nodes[1] then
+        local text = vim.treesitter.get_node_text(nodes[1], bufnr)
+        local value = tonumber(text)
 
-				if value then
-					max_id = math.max(max_id, value)
-				end
-			end
-		end
-	end
+        if value then
+          max_id = math.max(max_id, value)
+        end
+      end
+    end
+  end
 
-	return max_id + 1
+  return max_id + 1
 end
 
 function source.new()

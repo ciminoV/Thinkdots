@@ -1,75 +1,51 @@
 vim.pack.add({
-	{
-
-		src = "https://github.com/saghen/blink.cmp",
-
-		version = vim.version.range("^1"),
-
-	},
-
+  {
+    src = "https://github.com/saghen/blink.cmp",
+    version = vim.version.range("^1"),
+  },
 })
-
-
 
 -- Lazy load on first insert mode entry (may not necessary)
 local group = vim.api.nvim_create_augroup("BlinkCmpLazyLoad", { clear = true })
 
-
-
 vim.api.nvim_create_autocmd("InsertEnter", {
+  pattern = "*",
+  group = group,
+  once = true,
+  callback = function()
+    require("blink.cmp").setup({
+      keymap = {
+        -- set to 'none' to disable the 'default' preset
+        preset = 'default',
 
-	pattern = "*",
+        ['<C-p>'] = { 'select_prev', 'fallback' },
+        ['<C-n>'] = { 'select_next', 'fallback' },
+        ['<C-y>'] = { 'select_and_accept', 'fallback' },
+        ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+        ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+      },
 
-	group = group,
+      appearance = {
+        nerd_font_variant = "mono",
+        use_nvim_cmp_as_default = true,
+      },
 
-	once = true,
+      completion = {
+        documentation = { auto_show = false },
+      },
 
-	callback = function()
+      sources = {
+        default = { "lsp", "path", "snippets", "buffer", "book" },
+        providers = {
+          book = {
+            name = "Book",
+            module = "cimino.snippets.json_book",
+          },
+        },
+      },
 
-		require("blink.cmp").setup({
+      fuzzy = { implementation = "prefer_rust_with_warning" },
 
-        keymap = {
-            -- set to 'none' to disable the 'default' preset
-            preset = 'default',
-
-            ['<C-p>'] = { 'select_prev', 'fallback' },
-            ['<C-n>'] = { 'select_next', 'fallback' },
-            ['<C-y>'] = { 'select_and_accept', 'fallback' },
-            ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
-            ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
-         },
-
-			appearance = {
-
-				nerd_font_variant = "mono",
-
-				use_nvim_cmp_as_default = true,
-
-			},
-
-			completion = {
-
-				documentation = { auto_show = false },
-
-			},
-
-			sources = {
-
-				default = { "lsp", "path", "snippets", "buffer", "book" },
-
-                providers = {
-                  book = {
-                    name = "Book",
-                    module = "cimino.snippets.json_book",
-                  },
-                },
-			},
-
-			fuzzy = { implementation = "prefer_rust_with_warning" },
-
-		})
-
-	end,
-
+    })
+  end,
 })
-

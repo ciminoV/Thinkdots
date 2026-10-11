@@ -9,6 +9,11 @@
       "rev": "8b968581e5c19d22a861d5f3fe5dbd83394fa681",
       "src": "https://github.com/tjdevries/colorbuddy.nvim"
     },
+    "conform.nvim": {
+      "rev": "3543d000dafbc41cc7761d860cfdb24e82154f75",
+      "src": "https://github.com/stevearc/conform.nvim",
+      "version": "9.0.0 - 10.0.0"
+    },
     "harpoon": {
       "rev": "87b1a3506211538f460786c23f98ec63ad9af4e5",
       "src": "https://github.com/ThePrimeagen/harpoon",
